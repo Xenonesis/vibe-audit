@@ -193,6 +193,15 @@ python scripts/install_skill.py --host cursor --project .
 
 `--host` supports: `agents`, `codex`, `claude`, `cursor`, `gemini`, `opencode`, `windsurf`, `copilot`. Or install to an arbitrary root with `--dest /path/to/skills-root`. The installer refuses to overwrite an existing destination.
 
+> **`npx skills add … -g` and PromptScript.** If you install globally with the skills CLI and see `✗ vibe-audit → PromptScript: PromptScript does not support global skill installation`, that line is a hardcoded limitation of the `skills` CLI (v1.5.x), not a defect here: PromptScript has no global skills directory (`globalSkillsDir` is unset in the CLI's agent registry), so the CLI refuses to place a global copy. The skill is still installed everywhere else. PromptScript reads skills from the **project-local** `.agents/skills/` root — the same root the universal install already populates. To get a PromptScript-covered install with no failure line, run the CLI **inside your project** without `-g`:
+>
+> ```bash
+> cd /path/to/your-project
+> npx skills add Xenonesis/vibe-audit -y     # no -g → installs to ./.agents/skills/vibe-audit
+> ```
+>
+> The skill then resolves for every project-local agent including PromptScript.
+
 Host-native locations and invocation:
 
 | CLI / host | Skill location(s) | Explicit invocation |
