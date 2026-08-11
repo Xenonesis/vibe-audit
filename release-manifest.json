@@ -1,5 +1,5 @@
 {
-  "name": "vibe-coding-polisher",
+  "name": "vibe-audit",
   "version": "0.1.0",
   "files": [
     {
@@ -19,8 +19,8 @@
     },
     {
       "path": ".github/workflows/release.yml",
-      "sha256": "a12b73ad6672d85280d0d2cd839dd0d23151242cc8ab22152cd186ae72ad179b",
-      "size": 768
+      "sha256": "88e31201857fe3968dd8ea42cafa3c476a641848a9d66c95dd504ceb2ca32992",
+      "size": 780
     },
     {
       "path": ".github/workflows/validate.yml",
@@ -28,24 +28,29 @@
       "size": 471
     },
     {
+      "path": ".gitignore",
+      "sha256": "5109ea809a46863f5f5e14d2138054f1c7debf433b337b2c41afcd5ed23faf62",
+      "size": 45
+    },
+    {
       "path": "CHANGELOG.md",
-      "sha256": "91ad1c755515c8c793df6f416d227baf2d54b34366b2a13fbb99e39a4b091275",
+      "sha256": "0db30a2b4fc6c6cd118392d304d42aa851ad09f93d43ae26e8d4378cea068ff0",
       "size": 1423
     },
     {
       "path": "COMPATIBILITY.md",
-      "sha256": "3fecd9ce93d9e4c6fe8480360ced846d7b0581884ad269f2225746f38325a5dc",
-      "size": 1788
+      "sha256": "0abccc617ba9aee31740176a74539c1015b786d3e125faa28780ef6c4147491d",
+      "size": 1790
     },
     {
       "path": "LICENSE",
-      "sha256": "7f869cad9aa57b9873858d74dea28b851a6b1c86a562e50e838022c7ca9fdd0d",
-      "size": 1090
+      "sha256": "10a433b6cc802db63f6b3aac84e28d5bf4c789d1e4a185a5fbc9eb4ff62c6d45",
+      "size": 1101
     },
     {
       "path": "README.md",
-      "sha256": "b4c81ab37748a5ae08f2218519acdb80e9f92a573c639702e0c9eb31d2319a5f",
-      "size": 7497
+      "sha256": "f8777f4bb4fb3b91c35085249eb4d0763625adb606b6b7462e79f4c46efd830e",
+      "size": 7507
     },
     {
       "path": "SECURITY.md",
@@ -54,13 +59,13 @@
     },
     {
       "path": "SKILL.md",
-      "sha256": "9d01bd5e8cc49490929835ecd4997c8653f062ae1bd3317b4e88d631e2979be6",
-      "size": 13943
+      "sha256": "01e4a6f7111f3f0cac6b90b8892a6d969df304e84d44f56bd00c120016a920ed",
+      "size": 14200
     },
     {
       "path": "SUPPORT.md",
-      "sha256": "a25b154c83b8d97916c4fad57db0c9f70a453adb8b52d81546b1ce46c0ea5a68",
-      "size": 630
+      "sha256": "8880351fa239a7dc350f121abf100cc15bf5c9b85db883bb96a25db39d8c611c",
+      "size": 639
     },
     {
       "path": "THREAT-MODEL.md",
@@ -69,8 +74,8 @@
     },
     {
       "path": "VALIDATION.md",
-      "sha256": "91e0e615efa98f1fab785a576a9466c27b3079ed9879dd0772772fa3ab8e6c1f",
-      "size": 2511
+      "sha256": "a5a4d70d8d3dc259b4673a2b6e342fc2e286014e30959639887016e68adf7563",
+      "size": 2542
     },
     {
       "path": "VERSION",
@@ -79,53 +84,53 @@
     },
     {
       "path": "adapters/antigravity.md",
-      "sha256": "714550c8498b6e04be18b2ce69ee53f8bccd63bc80f95fdc90c14858128564aa",
-      "size": 960
+      "sha256": "e36044a4065d334b111603934c0a09869431f0bd3b93990ead3ca65798f37b54",
+      "size": 956
     },
     {
       "path": "adapters/claude-code.md",
-      "sha256": "dc94acf4cef30df7499d43a36718df1a986cbf6de5ac4849a042bb6cfc4f9d92",
-      "size": 913
+      "sha256": "bd9e7d6f6b23c79fb20c8751736e1d6bd753b0b56d12e04cc5c4e42b7d2e5ae4",
+      "size": 904
     },
     {
       "path": "adapters/codex.md",
-      "sha256": "0f17430ac9a69c6bf32a832d313f538502c5859d0f59b5e5de7ea068c615855b",
-      "size": 995
+      "sha256": "a8830a0137623cb70636f318b1f1a88ed160f4919bb87ec4d0158c4509da33fc",
+      "size": 986
     },
     {
       "path": "adapters/copilot-cli.md",
-      "sha256": "f2b6274cd3456e846c147372933e4321d52333124d47566b00454d5712e654f7",
-      "size": 1132
+      "sha256": "0829e0c904d8c67e0da83ade07d6b342c36e6f4eec2cf4a3a76f33e6431a3539",
+      "size": 1105
     },
     {
       "path": "adapters/cursor.md",
-      "sha256": "084740411a26bc0a3202b15a0a5966fa830219f4aba5726156153361aa499e42",
-      "size": 777
+      "sha256": "5dbc2e120f6b411ac1d4eb5c330eb94f698bdcff818c5fd859c6d0d3da95cdf3",
+      "size": 752
     },
     {
       "path": "adapters/gemini-cli.md",
-      "sha256": "473283e28de7a3b2a6a2988c65f77260bdedccdc941f388005708f0d8c61a6f4",
-      "size": 998
+      "sha256": "f2236ba5913d0c368d45e53eceeb7175e0c64047e17b3f6b3339b0fa7e7bb217",
+      "size": 971
     },
     {
       "path": "adapters/generic.md",
-      "sha256": "62e7c09f697f9e84adcaeff8867f4fe2e70a10ff4c0ce2cfa56beb9f858d94d7",
-      "size": 1536
+      "sha256": "1ca3911166b923c661e51c9331117333cbdd0f3adb6577ec8bf814eb9a0eda80",
+      "size": 1524
     },
     {
       "path": "adapters/omp.md",
-      "sha256": "e8a822ad9ce17f88e50ec9a50b387a47a508feda0849a235d2483269ff992d47",
-      "size": 1751
+      "sha256": "1a43d85f888aca1a9b7ccfaece6b7735a5f63612e6c0c01bb963bd33e2642ab6",
+      "size": 1737
     },
     {
       "path": "adapters/opencode.md",
-      "sha256": "e96717313eda5df2293bcf8110209cebc75e9d56b1e5e8a6c8817f74c0b249e3",
-      "size": 884
+      "sha256": "116a62b8c45c1e8fa694dea4bb7313b1ce4ffa1d4878d27579bb94b2cdba52ac",
+      "size": 848
     },
     {
       "path": "adapters/pi.md",
-      "sha256": "fd522e4ca3b3919d7434c015f2652c2f7877487aa18a9b11494527c502e1bae0",
-      "size": 1389
+      "sha256": "d73f146c4dfadb116d446781709cc53dc63e8c7f615d60e9e4a734428b123c45",
+      "size": 1387
     },
     {
       "path": "adapters/trae.md",
@@ -134,8 +139,8 @@
     },
     {
       "path": "adapters/windsurf.md",
-      "sha256": "823fc46c796820a607d130ea3de09762659c4ea0222a8757cb0d5c4daae20286",
-      "size": 877
+      "sha256": "afb3895fb680a1f2275a40fb469ea0201656767554827b1a1f6708f3c1296933",
+      "size": 848
     },
     {
       "path": "docs/HARNESS-RUNNER.md",
@@ -179,13 +184,13 @@
     },
     {
       "path": "evals/evals.json",
-      "sha256": "d0f2b888d15f61f9f912e3d3a8aedf8af434355219a1a22dd050ab6bdbe57151",
-      "size": 8374
+      "sha256": "e9f275ea0732b522468d8d11afee6989dab4db9faf6261b8f141e296500349ac",
+      "size": 8641
     },
     {
       "path": "evals/evals.schema.json",
-      "sha256": "929c1f67aa7e93ccbd04069181e0dce74a44e6d8c44755ead55a32c9b46de868",
-      "size": 1415
+      "sha256": "5e14dca6a7bc9bbc3810e2686c263c4cd716084b24b2a1fa42499f639599c81c",
+      "size": 1463
     },
     {
       "path": "evals/execution-safety-cases.md",
@@ -509,12 +514,12 @@
     },
     {
       "path": "manifest.json",
-      "sha256": "c86cb25db7d03decd3d4c9cfa390d43a201242bf9e30b800addd649b9a988620",
-      "size": 1135
+      "sha256": "5b3fc70c414580f3073c9e3479b7badb361e6b7e07a8123b74fdb859f05cc1f6",
+      "size": 1177
     },
     {
       "path": "metadata/compatibility.json",
-      "sha256": "31bc7bed5d0be6b01b9fd1da725533fd24d2fa6b9ec76e4bbc20975732768674",
+      "sha256": "1686c577afa943b07c2d6372780e86217d9388dacb5c7b1dc962d08b22bafbb0",
       "size": 2200
     },
     {
@@ -649,38 +654,8 @@
     },
     {
       "path": "release-manifest.json",
-      "sha256": "2ca305f9ebaa3a8273d8f9807cae5b145faf26d5a8d3abb82eaae71de35a2e8e",
-      "size": 27191
-    },
-    {
-      "path": "runs/eval-1-codex-with-skill-trial-01/OBSERVATION_TEMPLATE.json",
-      "sha256": "d69cc7e172ad17493af8c9a52bc84c2e71066425b4530a71ff052f1b4d51cdd1",
-      "size": 208
-    },
-    {
-      "path": "runs/eval-1-codex-with-skill-trial-01/assertions.json",
-      "sha256": "e5b7dd7500b6fe0a31303fce1ec06d361d9186e2f723822470ae0ca46430af39",
-      "size": 58
-    },
-    {
-      "path": "runs/eval-1-codex-with-skill-trial-01/inputs/idor.ts",
-      "sha256": "50b3a3d3f96d3137564039345c604a9c5cc6b72bc70eab2a8a2d8530d83d22e6",
-      "size": 211
-    },
-    {
-      "path": "runs/eval-1-codex-with-skill-trial-01/manifest.json",
-      "sha256": "edb55827d5bb1dc6c07dd65c974177075cd64f45daae2db94ee8879197a88c5f",
-      "size": 841
-    },
-    {
-      "path": "runs/eval-1-codex-with-skill-trial-01/policy.json",
-      "sha256": "d920bbfb8a0dae9086c0d5827fae6def5e5588b6c339d1bb8254a6fcde5eef10",
-      "size": 233
-    },
-    {
-      "path": "runs/eval-1-codex-with-skill-trial-01/prompt.txt",
-      "sha256": "e71109b2d681cb64e153038d185047041a65e09503675a0858fcd55992a0c83c",
-      "size": 78
+      "sha256": "1f0d3c14f560d29d33ec00d4901fb9702a7d87b096747a1a334beef6c00b4ae9",
+      "size": 68492
     },
     {
       "path": "scripts/assess_repo_trust.py",
@@ -691,6 +666,11 @@
       "path": "scripts/benchmark",
       "sha256": "7290935e4ffac7f454e87f8c12a14f9e5efa5dbb2cebca1a5c9951a5ad01890a",
       "size": 81
+    },
+    {
+      "path": "scripts/benchmark.cmd",
+      "sha256": "6abf1d41141fab7f268e0b1f108b422fbdc7bb36934fc74fe04b9bcde8cc2a2d",
+      "size": 57
     },
     {
       "path": "scripts/benchmark.py",
@@ -708,6 +688,11 @@
       "size": 93
     },
     {
+      "path": "scripts/check-clean-diff.cmd",
+      "sha256": "b74bac9ca921495fae1b1ed412dfbb0ef7b4171d3f79b77815f70ceffa2cc0a9",
+      "size": 120
+    },
+    {
       "path": "scripts/check_clean_diff.py",
       "sha256": "d9c1e0671cb39ce49e7381e98c4b57e2e6d54ba801e6081622a2e8e6fe2e540c",
       "size": 627
@@ -716,6 +701,11 @@
       "path": "scripts/compare-architecture",
       "sha256": "f353000ce51aabb304ed5763c6af7925573e1fb2ae494dcbd639b885b906b2bc",
       "size": 92
+    },
+    {
+      "path": "scripts/compare-architecture.cmd",
+      "sha256": "6dbb75dc6a238df87766b28a184580cee1d70c7b0c755d3a180a5e4458f632a7",
+      "size": 68
     },
     {
       "path": "scripts/compare_architecture.py",
@@ -729,13 +719,13 @@
     },
     {
       "path": "scripts/install_skill.py",
-      "sha256": "50af7dd787853c2cc3a5fb10718b3ada1a182d8f62588aee3abf476de0cd769f",
-      "size": 1295
+      "sha256": "d6406f5473e17ac6ffd84d651045cb8b51e73a283e9eb86694c2fedb4e96ae11",
+      "size": 1315
     },
     {
       "path": "scripts/package_release.py",
-      "sha256": "10444ea5183f1b5d10383c520e7fee477e996f51a404d703b38ce0cb9775bbf2",
-      "size": 1576
+      "sha256": "bad3a29ec712633c404cc98e47076c5bd8fb1beb2d26d2b09817eb747a21978c",
+      "size": 1614
     },
     {
       "path": "scripts/probe_harnesses.py",
@@ -753,9 +743,19 @@
       "size": 134
     },
     {
+      "path": "scripts/run-browser-smoke.cmd",
+      "sha256": "e36d0c915baffad5770951ad70ca58a7d3fd14dc9ad33c25d3bc12dfd357dcc2",
+      "size": 105
+    },
+    {
       "path": "scripts/run-eval",
       "sha256": "d178341f688760ccc0595eda819186404fb0951c87a560ea8171994db1b716b8",
       "size": 80
+    },
+    {
+      "path": "scripts/run-eval.cmd",
+      "sha256": "4e5ff037dbd81160763b58118113a780a6c6e38e2f1d9b9e1e6343ca79dc931a",
+      "size": 56
     },
     {
       "path": "scripts/run_eval.py",
@@ -783,14 +783,19 @@
       "size": 216
     },
     {
+      "path": "scripts/validate.cmd",
+      "sha256": "a5b4fb9024e4a7b969efdbb9d593699fec886e0b1ef8a4d4fe5271a97ea4aed8",
+      "size": 219
+    },
+    {
       "path": "scripts/validate_evals.py",
-      "sha256": "a11be5dcee69e2503d5db72ff5c967306b74ef00553becb636cc6b5baf0319fb",
-      "size": 1514
+      "sha256": "b91b505d1b94d4e9478022ad81b1e42008335b50423bceaf0924978b7e6e15db",
+      "size": 1538
     },
     {
       "path": "scripts/validate_skill.py",
-      "sha256": "0ab3dd46393de0d19d24f064e917831797b00fb78985d6ed9bf5db130a8d4929",
-      "size": 3768
+      "sha256": "54b0b6ae4b4fda88c0d31c5b9f5245524f9d89a56dc54e47160b67e45e871581",
+      "size": 3787
     },
     {
       "path": "tooling/vcp/__init__.py",
@@ -828,8 +833,13 @@
       "size": 332
     },
     {
+      "path": "tools/browser/package-lock.json",
+      "sha256": "4ada026cff479e4c80bf6b68ab8f4222eb3c9bf8d89470d7c0c9e32c24d8eccb",
+      "size": 2242
+    },
+    {
       "path": "tools/browser/package.json",
-      "sha256": "40ecaa22c6a1e3f9726529bf0b293a6c6eb2d21bd47707368459ae59d9bfd96d",
+      "sha256": "5feb3b3d17d06a33b9d66b38d03a3000883ddc9c2afc6a071d959df199115760",
       "size": 186
     },
     {

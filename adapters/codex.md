@@ -3,15 +3,15 @@
 Codex supports the Agent Skills open standard.
 
 ## Recommended locations
-- Project/repository: `.agents/skills/vibe-coding-polisher/`
-- User: `~/.agents/skills/vibe-coding-polisher/`
+- Project/repository: `.agents/skills/vibe-audit/`
+- User: `~/.agents/skills/vibe-audit/`
 - Admin-managed Linux/container installs may use `/etc/codex/skills/`.
 
 Codex scans `.agents/skills` from the current working directory up to the repository root. Symlinked skill folders are supported.
 
 ## Invocation
 - Implicit: Codex may select the skill when the request matches `description`.
-- Explicit: use `/skills` or type `$` and select/mention `vibe-coding-polisher`.
+- Explicit: use `/skills` or type `$` and select/mention `vibe-audit`.
 
 ## Notes
 - Keep `SKILL.md` standards-compatible; do not depend on Codex-only metadata for core behavior.

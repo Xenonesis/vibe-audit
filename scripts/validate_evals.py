@@ -11,7 +11,7 @@ try:
 except Exception as exc:
     print(f'FAIL parse {path}: {exc}')
     raise SystemExit(1)
-if data.get('skill_name')!='vibe-coding-polisher': errors.append('skill_name mismatch')
+if data.get('skill_name')!='vibe-audit': errors.append('skill_name mismatch')
 if not isinstance(data.get('evals'), list) or not data['evals']: errors.append('evals must be non-empty list')
 seen=set()
 for e in data.get('evals',[]):

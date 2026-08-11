@@ -1,6 +1,6 @@
 # Support
 
-Vibe-Coding Polisher is a portable skill package, not a managed security service.
+Vibe Audit is a portable skill package, not a managed security service.
 
 ## Best support request
 Include:

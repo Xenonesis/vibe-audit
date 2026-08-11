@@ -6,10 +6,10 @@ Verified against current Oh My Pi (OMP) skill documentation when this package wa
 OMP provider/custom-directory discovery expects each skill one level below a configured skills root:
 
 ```text
-<skills-root>/vibe-coding-polisher/SKILL.md
+<skills-root>/vibe-audit/SKILL.md
 ```
 
-Provider/custom scans are non-recursive under the configured skills root, so do not bury the skill at `<skills-root>/group/vibe-coding-polisher/SKILL.md` unless the configured custom directory points directly to `group` as the skill parent root.
+Provider/custom scans are non-recursive under the configured skills root, so do not bury the skill at `<skills-root>/group/vibe-audit/SKILL.md` unless the configured custom directory points directly to `group` as the skill parent root.
 
 ## Providers/locations
 OMP supports multiple providers and custom skill directories. Its current docs describe `.agent[s]/skills` as the canonical OMP-native provider while also supporting other provider layouts/custom directories. Prefer the user's configured provider rather than hard-coding one universal path.
@@ -18,16 +18,16 @@ OMP supports multiple providers and custom skill directories. Its current docs d
 OMP exposes discovered skills to the model when the read tool is available. Explicit loading can use:
 
 ```text
-skill://vibe-coding-polisher
+skill://vibe-audit
 ```
 
 and, when skill commands are enabled:
 
 ```text
-/skill:vibe-coding-polisher
+/skill:vibe-audit
 ```
 
-Relative assets can be resolved as `skill://vibe-coding-polisher/references/security.md` by OMP's skill URL mechanism.
+Relative assets can be resolved as `skill://vibe-audit/references/security.md` by OMP's skill URL mechanism.
 
 ## Automatic-selection limitation
 Discovery does not guarantee the model will choose/load the skill for every matching prompt. Test automatic routing separately from explicit `skill://` or `/skill:` invocation.

@@ -1,5 +1,5 @@
 ---
-name: vibe-coding-polisher
+name: vibe-audit
 description: >
   Audit, harden, optimize, verify, and safely polish vibe-coded or AI-generated web applications. Use for production-readiness reviews, security hardening, correctness and business-logic audits, reliability reviews, performance optimization, AI-generated-code smell detection, maintainability cleanup, runtime/UI verification, or safe remediation where existing behavior and architecture should be preserved unless a change is justified and approved.
 license: MIT
@@ -12,7 +12,7 @@ metadata:
   freshness-date: "2026-08-11"
 ---
 
-# Vibe-Coding Polisher
+# Vibe Audit
 
 ## Purpose
 

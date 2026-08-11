@@ -1,6 +1,6 @@
-# Vibe-Coding Polisher v0.1
+# Vibe Audit v0.1
 
-[![skills.sh](https://skills.sh/b/Xenonesis/Anti-Vibe-Code-)](https://skills.sh/Xenonesis/Anti-Vibe-Code-)
+[![skills.sh](https://skills.sh/b/Xenonesis/vibe-audit)](https://skills.sh/Xenonesis/vibe-audit)
 
 A portable, evidence-first Agent Skill and validation toolkit for safely auditing and incrementally polishing vibe-coded / AI-generated web applications.
 
@@ -47,7 +47,7 @@ This package is an **Agent Skill**: a `SKILL.md` with `name`/`description` front
 2. When a user request matches the skill's `description`, the harness loads `SKILL.md` (implicit activation).
 3. The skill then pulls in only the `references/*.md` and `profiles/*.md` needed for the active phase (progressive disclosure).
 
-Install the **entire `vibe-coding-polisher/` directory** — never only `SKILL.md` — or the relative references/evals/adapters are lost.
+Install the **entire `vibe-audit/` directory** — never only `SKILL.md` — or the relative references/evals/adapters are lost.
 
 ### Install for any CLI (generic)
 
@@ -55,7 +55,7 @@ Copy the whole directory into the harness's documented skills root. The most int
 
 ```bash
 mkdir -p .agents/skills
-cp -r vibe-coding-polisher .agents/skills/
+cp -r vibe-audit .agents/skills/
 ```
 
 User-level (available in every project): copy into `~/.agents/skills/` instead. If your harness has no skill support, you can still use the skill manually by pasting `SKILL.md` content (and referenced files) into the agent conversation.
@@ -76,15 +76,15 @@ Host-native locations and invocation:
 
 | CLI / host | Skill location(s) | Explicit invocation |
 |---|---|---|
-| Codex | `.agents/skills/vibe-coding-polisher/`, `~/.agents/skills/`, `/etc/codex/skills/` | `/skills`, or `$` → mention `vibe-coding-polisher` |
-| Claude Code | `.claude/skills/vibe-coding-polisher/`, `~/.claude/skills/` | `/vibe-coding-polisher` |
-| Cursor | `.agents/skills/`, `.cursor/skills/`, `~/.cursor/skills/` | `/` in Agent chat → search `vibe-coding-polisher` |
+| Codex | `.agents/skills/vibe-audit/`, `~/.agents/skills/`, `/etc/codex/skills/` | `/skills`, or `$` → mention `vibe-audit` |
+| Claude Code | `.claude/skills/vibe-audit/`, `~/.claude/skills/` | `/vibe-audit` |
+| Cursor | `.agents/skills/`, `.cursor/skills/`, `~/.cursor/skills/` | `/` in Agent chat → search `vibe-audit` |
 | Gemini CLI | `.gemini/skills/`, `.agents/skills/` (alias) | `/skills list`, then activate; `/skills reload` after install |
 | OpenCode | `.opencode/skills/` | `/skills` |
 | Windsurf / Cascade | `.windsurf/skills/` | `/skills` |
 | GitHub Copilot CLI | `.github/skills/` | `/skills` |
 | Google Antigravity | host-documented skill root | host-documented skill command |
-| OMP (Oh My Pi) | `<skills-root>/vibe-coding-polisher/SKILL.md` | `skill://vibe-coding-polisher` or `/skill:vibe-coding-polisher` |
+| OMP (Oh My Pi) | `<skills-root>/vibe-audit/SKILL.md` | `skill://vibe-audit` or `/skill:vibe-audit` |
 
 Full per-host details, provider caveats, and invocation fallbacks: `adapters/`.
 
@@ -133,7 +133,7 @@ Use `--backend gvisor` when Docker is configured with the `runsc` runtime. The h
 ## Package a release
 
 ```bash
-python scripts/package_release.py . --output dist/vibe-coding-polisher-v0.1.zip
+python scripts/package_release.py . --output dist/vibe-audit-v0.1.zip
 ```
 
 ## Release confidence

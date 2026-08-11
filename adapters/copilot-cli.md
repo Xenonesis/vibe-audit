@@ -4,13 +4,13 @@ GitHub Copilot CLI supports Agent Skills with instructions, scripts, and resourc
 
 ## Locations
 Project skills may be placed under:
-- `.github/skills/vibe-coding-polisher/`
-- `.claude/skills/vibe-coding-polisher/`
-- `.agents/skills/vibe-coding-polisher/`
+- `.github/skills/vibe-audit/`
+- `.claude/skills/vibe-audit/`
+- `.agents/skills/vibe-audit/`
 
 Personal skills may be placed under:
-- `~/.copilot/skills/vibe-coding-polisher/`
-- `~/.agents/skills/vibe-coding-polisher/`
+- `~/.copilot/skills/vibe-audit/`
+- `~/.agents/skills/vibe-audit/`
 
 For maximum cross-agent portability, prefer `.agents/skills/` unless the repository has a deliberate Copilot-specific convention.
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Deterministic structural validation for vibe-coding-polisher v2."""
+"""Deterministic structural validation for vibe-audit v2."""
 from __future__ import annotations
 from pathlib import Path
 import json, re, sys
@@ -8,7 +8,7 @@ def c(name,ok,detail=''): checks.append((name,bool(ok),detail))
 skill=root/'SKILL.md'; text=skill.read_text(encoding='utf-8') if skill.exists() else ''
 version=(root/'VERSION').read_text(encoding='utf-8').strip() if (root/'VERSION').exists() else ''
 c('SKILL.md exists',skill.is_file()); c('frontmatter starts first',text.startswith('---\n'))
-c('frontmatter name',re.search(r'(?m)^name:\s*vibe-coding-polisher\s*$',text) is not None)
+c('frontmatter name',re.search(r'(?m)^name:\s*vibe-audit\s*$',text) is not None)
 c('frontmatter description',re.search(r'(?m)^description:\s*>?',text) is not None)
 c('frontmatter license',re.search(r'(?m)^license:\s*MIT\s*$',text) is not None)
 c('metadata version matches VERSION',f'version: "{version}"' in text,version)

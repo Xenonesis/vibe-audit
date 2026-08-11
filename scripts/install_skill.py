@@ -22,9 +22,9 @@ if not a.dest and not a.host:
     p.error('provide --dest or --host')
 dest_root=Path(a.dest).expanduser().resolve() if a.dest else presets[a.host]
 src=Path(__file__).resolve().parents[1]
-dest=dest_root/'vibe-coding-polisher'
+dest=dest_root/'vibe-audit'
 if dest.exists():
     print(f'ERROR: destination exists: {dest}', file=sys.stderr); sys.exit(1)
 dest_root.mkdir(parents=True, exist_ok=True)
-shutil.copytree(src, dest, ignore=shutil.ignore_patterns('.git','__pycache__','*.pyc'))
+shutil.copytree(src, dest, ignore=shutil.ignore_patterns('.git','__pycache__','*.pyc','node_modules','dist','runs'))
 print(dest)

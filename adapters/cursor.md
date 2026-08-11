@@ -4,18 +4,18 @@ Cursor natively supports Agent Skills and progressive resource loading.
 
 ## Locations
 Project:
-- `.agents/skills/vibe-coding-polisher/`
-- `.cursor/skills/vibe-coding-polisher/`
+- `.agents/skills/vibe-audit/`
+- `.cursor/skills/vibe-audit/`
 
 User:
-- `~/.agents/skills/vibe-coding-polisher/`
-- `~/.cursor/skills/vibe-coding-polisher/`
+- `~/.agents/skills/vibe-audit/`
+- `~/.cursor/skills/vibe-audit/`
 
 Cursor also reads Claude/Codex skill directories for compatibility.
 
 ## Invocation
 - Automatic: Agent may choose the skill based on context/description.
-- Manual: type `/` in Agent chat and search for `vibe-coding-polisher`.
+- Manual: type `/` in Agent chat and search for `vibe-audit`.
 
 ## CLI isolation
 For destructive-risk evals, Cursor CLI worktrees can provide an additional isolation layer. Worktree isolation does not waive the skill's approval gates.

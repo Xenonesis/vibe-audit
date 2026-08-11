@@ -1,4 +1,4 @@
-# Validation Report — Vibe-Coding Polisher 0.1.0
+# Validation Report — Vibe Audit 0.1.0
 
 **Validation date:** 2026-08-11  
 **Artifact version:** 0.1.0

@@ -16,7 +16,7 @@ jobs:
         with:
           python-version: '3.12'
       - run: python scripts/release_gate.py .
-      - run: python scripts/package_release.py . --output dist/vibe-coding-polisher-${{ github.ref_name }}.zip
+      - run: python scripts/package_release.py . --output dist/vibe-audit-${{ github.ref_name }}.zip
       - run: |
           echo 'Publish only after behavioral compatibility evidence is reviewed.'
           echo 'This workflow intentionally does not expose release credentials or auto-publish artifacts.'

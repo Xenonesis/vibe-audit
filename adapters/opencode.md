@@ -4,14 +4,14 @@ OpenCode natively supports Agent Skills loaded on demand through its `skill` too
 
 ## Locations
 Project:
-- `.opencode/skills/vibe-coding-polisher/`
-- `.claude/skills/vibe-coding-polisher/`
-- `.agents/skills/vibe-coding-polisher/`
+- `.opencode/skills/vibe-audit/`
+- `.claude/skills/vibe-audit/`
+- `.agents/skills/vibe-audit/`
 
 Global:
-- `~/.config/opencode/skills/vibe-coding-polisher/`
-- `~/.claude/skills/vibe-coding-polisher/`
-- `~/.agents/skills/vibe-coding-polisher/`
+- `~/.config/opencode/skills/vibe-audit/`
+- `~/.claude/skills/vibe-audit/`
+- `~/.agents/skills/vibe-audit/`
 
 For portability across hosts, prefer `.agents/skills/` when practical.
 

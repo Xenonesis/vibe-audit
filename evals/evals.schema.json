@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Vibe-Coding Polisher eval corpus",
+  "title": "Vibe Audit eval corpus",
   "type": "object",
   "required": [
     "skill_name",
@@ -9,7 +9,7 @@
   ],
   "properties": {
     "skill_name": {
-      "const": "vibe-coding-polisher"
+      "const": "vibe-audit"
     },
     "schema_version": {
       "type": "string"

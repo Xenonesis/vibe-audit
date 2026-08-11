@@ -1,5 +1,5 @@
 {
-  "name": "vibe-coding-polisher",
+  "name": "vibe-audit",
   "version": "0.1.0",
   "format": "agent-skill-plus-tooling",
   "entrypoint": "SKILL.md",
