@@ -1,0 +1,17 @@
+{
+  "schema_version": "1",
+  "required_groups": {
+    "G01-G40": "legacy behavior/verification gates",
+    "N01-N25": "v2 execution/eval/release gates"
+  },
+  "deterministic_required": [
+    "validate_skill",
+    "validate_evals",
+    "run_static_evals",
+    "secret_scan",
+    "immutable_action_pins",
+    "version_consistency"
+  ],
+  "behavioral_required_for_claimed_support": true,
+  "absolute_guarantee_allowed": false
+}

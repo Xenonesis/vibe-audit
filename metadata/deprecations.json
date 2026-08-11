@@ -1,0 +1,25 @@
+{
+  "schema_version": "1",
+  "items": [
+    {
+      "id": "automatic-skill-routing-guarantee",
+      "status": "forbidden-assumption",
+      "replacement": "explicit invocation fallback + host probe"
+    },
+    {
+      "id": "blind-package-install-baseline",
+      "status": "forbidden",
+      "replacement": "static-first trust assessment"
+    },
+    {
+      "id": "absolute-readiness-claim",
+      "status": "forbidden",
+      "replacement": "measured gates + remaining risks"
+    },
+    {
+      "id": "mutable-github-action-tags",
+      "status": "forbidden-in-release-workflows",
+      "replacement": "full commit SHA pins"
+    }
+  ]
+}

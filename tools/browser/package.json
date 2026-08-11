@@ -1,0 +1,11 @@
+{
+  "name": "vcp-browser-smoke",
+  "private": true,
+  "version": "2.0.0",
+  "scripts": {
+    "test": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.62.0"
+  }
+}

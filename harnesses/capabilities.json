@@ -1,0 +1,15 @@
+{
+  "schema_version": "1",
+  "generated_at": "2026-08-11",
+  "capabilities": [
+    "native_skills",
+    "explicit_skill_invocation",
+    "disable_skills",
+    "headless",
+    "structured_trace",
+    "usage_metrics",
+    "tool_policy",
+    "builtin_sandbox"
+  ],
+  "policy": "Drivers must probe installed versions. A documented capability is not a behavioral PASS."
+}

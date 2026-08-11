@@ -1,0 +1,13 @@
+{
+  "schema_version": "1",
+  "checked_at": "2026-08-11",
+  "next_review_recommended_by": "2026-11-11",
+  "review_triggers": [
+    "Agent Skills specification change",
+    "host skill discovery/invocation change",
+    "sandbox/runtime security advisory",
+    "GitHub Actions major release",
+    "Playwright major change"
+  ],
+  "policy": "Re-verify version-sensitive host commands and security controls before release; stale docs reduce compatibility confidence but must not weaken core safety invariants."
+}

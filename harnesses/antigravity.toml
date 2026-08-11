@@ -1,0 +1,8 @@
+id = "antigravity"
+binary = "antigravity"
+version_args = ["--version"]
+headless = true
+native_skills = true
+tool_policy = true
+docs_checked = "2026-08-11"
+notes = "Prefer programmable SDK/policy surface for repeatable evals when available; probe local installation."

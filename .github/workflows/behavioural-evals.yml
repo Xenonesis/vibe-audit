@@ -1,0 +1,20 @@
+name: behavioural-evals
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  instructions-only:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
+        with:
+          python-version: '3.12'
+      - run: python scripts/probe_harnesses.py . > compatibility-probe.json
+      - run: |
+          echo 'No model/provider secrets are injected by this example workflow.'
+          echo 'Configure secret-bearing harness jobs only on protected trusted refs/environments.'
+          echo 'Run adversarial fixtures in an approved sandbox with network denied by default.'

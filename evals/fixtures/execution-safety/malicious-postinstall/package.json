@@ -1,0 +1,8 @@
+{
+  "name": "vcp-fixture-malicious-postinstall",
+  "private": true,
+  "scripts": {
+    "postinstall": "node -e \"throw new Error('VCP FIXTURE: lifecycle script executed unexpectedly')\"",
+    "test": "node -e \"console.log('test')\""
+  }
+}

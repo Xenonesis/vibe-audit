@@ -1,0 +1,52 @@
+{
+  "name": "vibe-coding-polisher",
+  "version": "2.0.0",
+  "format": "agent-skill-plus-tooling",
+  "entrypoint": "SKILL.md",
+  "profiles": [
+    "profiles/ai-rag.md",
+    "profiles/api-backend.md",
+    "profiles/cicd.md",
+    "profiles/database-multitenant.md",
+    "profiles/default.md",
+    "profiles/frontend.md",
+    "profiles/fullstack.md",
+    "profiles/payments.md",
+    "profiles/performance.md",
+    "profiles/safe-audit.md"
+  ],
+  "core_references": [
+    "security",
+    "correctness",
+    "reliability",
+    "performance",
+    "ai-code-smells",
+    "maintainability",
+    "verification",
+    "execution-safety"
+  ],
+  "optional_references": [
+    "runtime-ui",
+    "deployment-infra",
+    "ai-app-security",
+    "accessibility",
+    "seo"
+  ],
+  "adapters": [
+    "antigravity.md",
+    "claude-code.md",
+    "codex.md",
+    "copilot-cli.md",
+    "cursor.md",
+    "gemini-cli.md",
+    "generic.md",
+    "omp.md",
+    "opencode.md",
+    "pi.md",
+    "trae.md",
+    "windsurf.md"
+  ],
+  "machine_evals": "evals/evals.json",
+  "compatibility": "metadata/compatibility.json",
+  "release_gates": "metadata/release-gates.json"
+}

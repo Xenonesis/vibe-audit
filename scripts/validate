@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+set -euo pipefail
+python "$(dirname "$0")/validate_skill.py" "${1:-.}"
+python "$(dirname "$0")/validate_evals.py" "${1:-.}/evals/evals.json"
+python "$(dirname "$0")/run_static_evals.py" "${1:-.}"

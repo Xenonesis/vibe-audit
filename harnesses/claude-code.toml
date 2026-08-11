@@ -1,0 +1,8 @@
+id = "claude-code"
+binary = "claude"
+version_args = ["--version"]
+headless = true
+native_skills = true
+explicit_skill_invocation = true
+docs_checked = "2026-08-11"
+notes = "Use print/JSON automation only after verifying current permissions and tool controls."

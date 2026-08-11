@@ -1,0 +1,95 @@
+{
+  "schema_version": "1",
+  "package_version": "2.0.0",
+  "generated_at": "2026-08-11",
+  "meaning": {
+    "documented": "current official documentation supports the integration concept",
+    "behavioral": "actually exercised in a target harness/version"
+  },
+  "hosts": [
+    {
+      "id": "generic",
+      "documented_confidence": "high",
+      "behavioral_confidence": "unknown",
+      "probe": "n/a"
+    },
+    {
+      "id": "codex",
+      "binary": "codex",
+      "documented_confidence": "high",
+      "behavioral_confidence": "unknown",
+      "tier": "A"
+    },
+    {
+      "id": "claude-code",
+      "binary": "claude",
+      "documented_confidence": "high",
+      "behavioral_confidence": "unknown",
+      "tier": "A"
+    },
+    {
+      "id": "pi",
+      "binary": "pi",
+      "documented_confidence": "high",
+      "behavioral_confidence": "unknown",
+      "tier": "A"
+    },
+    {
+      "id": "copilot-cli",
+      "binary": "copilot",
+      "documented_confidence": "high",
+      "behavioral_confidence": "unknown",
+      "tier": "A"
+    },
+    {
+      "id": "cursor",
+      "binary": "agent",
+      "fallback_binaries": [
+        "cursor"
+      ],
+      "documented_confidence": "high",
+      "behavioral_confidence": "unknown",
+      "tier": "A"
+    },
+    {
+      "id": "antigravity",
+      "binary": "antigravity",
+      "documented_confidence": "high",
+      "behavioral_confidence": "unknown",
+      "tier": "A/B"
+    },
+    {
+      "id": "gemini-cli",
+      "binary": "gemini",
+      "documented_confidence": "high",
+      "behavioral_confidence": "unknown",
+      "tier": "B"
+    },
+    {
+      "id": "omp",
+      "binary": "omp",
+      "documented_confidence": "high",
+      "behavioral_confidence": "unknown",
+      "tier": "B"
+    },
+    {
+      "id": "opencode",
+      "binary": "opencode",
+      "documented_confidence": "medium",
+      "behavioral_confidence": "unknown",
+      "tier": "B"
+    },
+    {
+      "id": "trae",
+      "documented_confidence": "medium",
+      "behavioral_confidence": "unknown",
+      "tier": "B"
+    },
+    {
+      "id": "windsurf",
+      "documented_confidence": "medium",
+      "behavioral_confidence": "unknown",
+      "tier": "B"
+    }
+  ]
+}

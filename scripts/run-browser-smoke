@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+set -euo pipefail
+echo "Start the application inside an approved sandbox, then run: cd tools/browser && npm test"

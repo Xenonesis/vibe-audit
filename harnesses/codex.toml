@@ -1,0 +1,9 @@
+id = "codex"
+binary = "codex"
+version_args = ["--version"]
+headless = true
+native_skills = true
+explicit_skill_invocation = true
+builtin_sandbox = true
+docs_checked = "2026-08-11"
+notes = "Prefer codex exec for automation; probe installed flags before use."

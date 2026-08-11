@@ -1,0 +1,10 @@
+id = "pi"
+binary = "pi"
+version_args = ["--version"]
+headless = true
+native_skills = true
+explicit_skill_invocation = true
+disable_skills = true
+tool_policy = true
+docs_checked = "2026-08-11"
+notes = "Pi documents -p, --skill, --no-skills, tool allowlists, and project trust controls; probe installed version."

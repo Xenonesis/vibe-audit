@@ -1,0 +1,11 @@
+name: unsafe
+on: [pull_request]
+permissions: write-all
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: echo "$PROD_SECRET"
+        env:
+          PROD_SECRET: ${{ secrets.PROD_SECRET }}

@@ -1,0 +1,17 @@
+name: browser-tooling-structure
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate-browser-tooling:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - run: |
+          test -f tools/browser/package.json
+          test -f tools/browser/playwright.config.ts
+          test -f tools/browser/tests/runtime-smoke.spec.ts
+          echo 'Runtime execution intentionally requires a separately sandboxed trusted fixture/app.'
