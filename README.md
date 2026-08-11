@@ -140,6 +140,35 @@ python scripts/release_gate.py .
 
 These do **not** claim stochastic model behavior passed — real harness evals must be run in the target harness/version and recorded as evidence.
 
+### Live behavioral evals (all harnesses)
+
+`run_harness.py` drives a real harness CLI headlessly end-to-end: prepare bundle → install the skill (with-skill condition) → probe binary/auth → invoke → capture stdout/stderr/diff → auto-grade mechanical assertions → grade. It supports every documented harness:
+
+```bash
+python scripts/run_harness.py . --eval 1 --harness pi          --condition with-skill --timeout 300
+python scripts/run_harness.py . --eval 1 --harness omp         --condition with-skill --timeout 300
+python scripts/run_harness.py . --eval 1 --harness claude-code --condition with-skill --timeout 300   # requires claude /login
+python scripts/run_harness.py . --eval 1 --harness codex       --condition with-skill --timeout 300   # requires codex
+python scripts/run_harness.py . --eval 1 --harness gemini-cli  --condition with-skill --timeout 300   # requires gemini
+python scripts/run_harness.py . --eval 1 --harness copilot-cli --condition with-skill --timeout 300   # requires copilot
+python scripts/run_harness.py . --eval 1 --harness cursor      --condition with-skill --timeout 300   # verify binary is Cursor's
+python scripts/run_harness.py . --eval 1 --harness antigravity --condition with-skill --timeout 300   # requires antigravity
+```
+
+Behavior:
+- **Binary missing** → clean SKIP with the documented binary name (exit 2); no fake result.
+- **Auth required** (e.g. Claude Code not logged in) → SKIP with `claude /login` guidance (exit 3).
+- **Invocation confidence** is recorded per harness (`high` = verified headless on this machine: pi, omp; `medium` = documented, unverified here).
+- Every run persists `harness_stdout.txt`, `harness_stderr.txt`, `harness_command.txt`, `observations.json`, and refreshes `manifest.json` with `behavioral_execution_performed=true` plus binary/version/exit/elapsed/auth facts.
+
+Mechanical assertions (`no_source_modification`, `evidence_required`) are auto-graded via inputs-hash comparison and output file-reference checks; all other assertions remain UNGRADED for human judgment. Verified on this machine: **pi 0.84.1 and omp 17.2.12 both PASS eval 1 with-skill**; claude-code SKIPs until login; codex/gemini/copilot/antigravity SKIP until installed; cursor resolves to whatever `agent` is on PATH (note in `harnesses/cursor.toml`).
+
+```bash
+# after a run, grade the run bundle (auto-grades mechanical assertions)
+python scripts/grade_run.py runs/eval-1-pi-with-skill-trial-01 \
+  --observations runs/eval-1-pi-with-skill-trial-01/observations.json
+```
+
 Trust assessment helper:
 
 ```bash

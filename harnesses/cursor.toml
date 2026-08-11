@@ -6,4 +6,4 @@ headless = true
 native_skills = true
 explicit_skill_invocation = true
 docs_checked = "2026-08-11"
-notes = "Headless agent may have write/shell capability; outer sandbox is mandatory for autonomous adversarial evals."
+notes = "Headless agent may have write/shell capability; outer sandbox is mandatory for autonomous adversarial evals. The bare `agent` name is ambiguous on PATH (e.g. grok also ships an `agent` binary); verify the resolved binary belongs to Cursor before trusting behavioral results."
