@@ -1,4 +1,4 @@
-# Compatibility Matrix — v2.0.0
+# Compatibility Matrix — v0.1.0
 
 This file describes **intended/documented integration**, not a guarantee that every current host version has been behaviorally tested.
 

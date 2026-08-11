@@ -6,7 +6,7 @@ license: MIT
 compatibility: >
   Portable Agent Skills package. Core instructions require only file access. Optional deterministic tooling uses Python 3.11+. Dynamic execution of unknown repositories requires an approved sandbox backend; browser verification optionally uses Playwright.
 metadata:
-  version: "2.0.0"
+  version: "0.1.0"
   policy-version: "execution-safety-v1"
   eval-schema-version: "1"
   freshness-date: "2026-08-11"

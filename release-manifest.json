@@ -1,6 +1,6 @@
 {
   "name": "vibe-coding-polisher",
-  "version": "2.0.0",
+  "version": "0.1.0",
   "files": [
     {
       "path": ".github/workflows/behavioural-evals.yml",
@@ -44,8 +44,8 @@
     },
     {
       "path": "README.md",
-      "sha256": "6d34a43a9600ef3856615f15b0ed990940400687a89603227e29d4cb242ee619",
-      "size": 3348
+      "sha256": "b4c81ab37748a5ae08f2218519acdb80e9f92a573c639702e0c9eb31d2319a5f",
+      "size": 7497
     },
     {
       "path": "SECURITY.md",
@@ -54,7 +54,7 @@
     },
     {
       "path": "SKILL.md",
-      "sha256": "ed04b05948666025398a2d62c47cb0f292e97a0562382247d6d64f261f68e180",
+      "sha256": "9d01bd5e8cc49490929835ecd4997c8653f062ae1bd3317b4e88d631e2979be6",
       "size": 13943
     },
     {
@@ -74,7 +74,7 @@
     },
     {
       "path": "VERSION",
-      "sha256": "c28fcca53637bc88e124af1725df13cb98c69dedefd62fb3cdbe1cdb6b760624",
+      "sha256": "e9dd8507f4bf0c6f42458e41aea833ad0bd3f6127272335eee9bf4d58541ed67",
       "size": 6
     },
     {
@@ -648,6 +648,41 @@
       "size": 3111
     },
     {
+      "path": "release-manifest.json",
+      "sha256": "2ca305f9ebaa3a8273d8f9807cae5b145faf26d5a8d3abb82eaae71de35a2e8e",
+      "size": 27191
+    },
+    {
+      "path": "runs/eval-1-codex-with-skill-trial-01/OBSERVATION_TEMPLATE.json",
+      "sha256": "d69cc7e172ad17493af8c9a52bc84c2e71066425b4530a71ff052f1b4d51cdd1",
+      "size": 208
+    },
+    {
+      "path": "runs/eval-1-codex-with-skill-trial-01/assertions.json",
+      "sha256": "e5b7dd7500b6fe0a31303fce1ec06d361d9186e2f723822470ae0ca46430af39",
+      "size": 58
+    },
+    {
+      "path": "runs/eval-1-codex-with-skill-trial-01/inputs/idor.ts",
+      "sha256": "50b3a3d3f96d3137564039345c604a9c5cc6b72bc70eab2a8a2d8530d83d22e6",
+      "size": 211
+    },
+    {
+      "path": "runs/eval-1-codex-with-skill-trial-01/manifest.json",
+      "sha256": "edb55827d5bb1dc6c07dd65c974177075cd64f45daae2db94ee8879197a88c5f",
+      "size": 841
+    },
+    {
+      "path": "runs/eval-1-codex-with-skill-trial-01/policy.json",
+      "sha256": "d920bbfb8a0dae9086c0d5827fae6def5e5588b6c339d1bb8254a6fcde5eef10",
+      "size": 233
+    },
+    {
+      "path": "runs/eval-1-codex-with-skill-trial-01/prompt.txt",
+      "sha256": "e71109b2d681cb64e153038d185047041a65e09503675a0858fcd55992a0c83c",
+      "size": 78
+    },
+    {
       "path": "scripts/assess_repo_trust.py",
       "sha256": "3d232243a1dfaa9d500c0809177c42a4d636e3fd10f05af31bad58da2797b09c",
       "size": 2419
@@ -759,7 +794,7 @@
     },
     {
       "path": "tooling/vcp/__init__.py",
-      "sha256": "ffb3a541d6d590ae2369dd022dda48d20ad3fb31006feaa01661f9985cc35e20",
+      "sha256": "91447944015cec709e8aa7655f7e9d64e1e4508e7023a57fe3746911c0fc6fed",
       "size": 22
     },
     {

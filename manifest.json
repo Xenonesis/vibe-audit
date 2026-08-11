@@ -1,6 +1,6 @@
 {
   "name": "vibe-coding-polisher",
-  "version": "2.0.0",
+  "version": "0.1.0",
   "format": "agent-skill-plus-tooling",
   "entrypoint": "SKILL.md",
   "profiles": [
