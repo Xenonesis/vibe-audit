@@ -1,5 +1,7 @@
 # Vibe-Coding Polisher v0.1
 
+[![skills.sh](https://skills.sh/b/Xenonesis/Anti-Vibe-Code-)](https://skills.sh/Xenonesis/Anti-Vibe-Code-)
+
 A portable, evidence-first Agent Skill and validation toolkit for safely auditing and incrementally polishing vibe-coded / AI-generated web applications.
 
 ## What v0.1 adds
