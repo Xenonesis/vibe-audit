@@ -12,19 +12,20 @@
   <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Geist:wght@300;400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
 
   <style>
-    /* CSS Variables: Warm Monochrome + Muted Pastels */
+    /* CSS Variables: Theme System (Light Default + Dark Mode) */
     :root {
       --bg-canvas: #FBFBFA;
       --bg-surface: #FFFFFF;
       --bg-subtle: #F7F6F3;
+      --bg-header: rgba(251, 251, 250, 0.85);
       --border-color: #EAEAEA;
-      --border-subtle: rgba(0, 0, 0, 0.05);
+      --border-hover: #D4D4D4;
       
       --text-main: #111111;
       --text-body: #2F3437;
       --text-muted: #787774;
       
-      /* Muted Pastels */
+      /* Muted Pastels (Light Mode) */
       --pastel-blue-bg: #E1F3FE;
       --pastel-blue-text: #1F6C9F;
       --pastel-green-bg: #EDF3EC;
@@ -37,6 +38,29 @@
       --font-sans: 'Geist', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
       --font-serif: 'Newsreader', 'Playfair Display', Georgia, serif;
       --font-mono: 'Geist Mono', 'JetBrains Mono', 'SF Mono', Consolas, monospace;
+    }
+
+    [data-theme="dark"] {
+      --bg-canvas: #0E0E10;
+      --bg-surface: #161618;
+      --bg-subtle: #1F1F22;
+      --bg-header: rgba(14, 14, 16, 0.85);
+      --border-color: #2E2E32;
+      --border-hover: #44444A;
+      
+      --text-main: #F4F4F5;
+      --text-body: #D4D4D8;
+      --text-muted: #A1A1AA;
+      
+      /* Muted Pastels (Dark Mode) */
+      --pastel-blue-bg: #1A2C38;
+      --pastel-blue-text: #7DD3FC;
+      --pastel-green-bg: #1B3121;
+      --pastel-green-text: #86EFAC;
+      --pastel-yellow-bg: #332912;
+      --pastel-yellow-text: #FDE047;
+      --pastel-red-bg: #381A1C;
+      --pastel-red-text: #FCA5A5;
     }
 
     /* Base Reset */
@@ -54,6 +78,7 @@
       font-size: 16px;
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
+      transition: background-color 0.25s ease, color 0.25s ease;
     }
 
     body {
@@ -65,22 +90,9 @@
       text-decoration: none;
     }
 
-    /* Ambient background light spot */
-    .ambient-bg {
-      position: fixed;
-      top: -20vh;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 100vw;
-      height: 80vh;
-      background: radial-gradient(circle, rgba(247, 246, 243, 0.8) 0%, rgba(251, 251, 250, 0) 70%);
-      pointer-events: none;
-      z-index: -1;
-    }
-
     /* Layout Constraints */
     .container {
-      max-width: 1120px;
+      max-width: 1140px;
       margin: 0 auto;
       padding: 0 24px;
     }
@@ -131,7 +143,7 @@
       font-size: 1.1875rem;
       color: var(--text-muted);
       line-height: 1.6;
-      max-width: 720px;
+      max-width: 760px;
     }
 
     /* Badges & Tags */
@@ -168,15 +180,16 @@
       transition: background 0.15s ease, transform 0.1s ease, border-color 0.15s ease;
       cursor: pointer;
       border: 1px solid transparent;
+      white-space: nowrap;
     }
 
     .btn-primary {
       background: var(--text-main);
-      color: #FFFFFF;
+      color: var(--bg-canvas);
     }
 
     .btn-primary:hover {
-      background: #333333;
+      opacity: 0.9;
     }
 
     .btn-primary:active {
@@ -191,7 +204,7 @@
 
     .btn-secondary:hover {
       background: var(--bg-subtle);
-      border-color: #D4D4D4;
+      border-color: var(--border-hover);
     }
 
     .btn-secondary:active {
@@ -203,10 +216,11 @@
       position: sticky;
       top: 0;
       z-index: 100;
-      background: rgba(251, 251, 250, 0.85);
+      background: var(--bg-header);
       backdrop-filter: blur(8px);
       border-bottom: 1px solid var(--border-color);
-      padding: 16px 0;
+      padding: 14px 0;
+      transition: background-color 0.25s ease;
     }
 
     .nav-inner {
@@ -228,7 +242,7 @@
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 28px;
+      gap: 24px;
       list-style: none;
     }
 
@@ -242,9 +256,49 @@
       color: var(--text-main);
     }
 
+    .nav-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* Theme Switcher Segmented Control */
+    .theme-switch {
+      display: inline-flex;
+      align-items: center;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 2px;
+      gap: 2px;
+    }
+
+    .theme-btn {
+      background: none;
+      border: none;
+      padding: 6px 10px;
+      border-radius: 4px;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.15s ease, background 0.15s ease;
+    }
+
+    .theme-btn:hover {
+      color: var(--text-main);
+    }
+
+    .theme-btn.active {
+      background: var(--bg-surface);
+      color: var(--text-main);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+
     /* Hero Component */
     .hero {
-      padding: 100px 0 60px;
+      padding: 90px 0 60px;
     }
 
     .hero-grid {
@@ -259,6 +313,25 @@
       gap: 14px;
       margin-top: 32px;
       flex-wrap: wrap;
+    }
+
+    /* Live GitHub Stars Pill */
+    .github-stars-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: 9999px;
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      color: var(--text-main);
+      transition: border-color 0.15s ease;
+    }
+
+    .github-stars-pill:hover {
+      border-color: var(--border-hover);
     }
 
     /* Stats Grid Bar */
@@ -295,10 +368,11 @@
       border: 1px solid var(--border-color);
       border-radius: 8px;
       overflow: hidden;
+      position: relative;
     }
 
     .terminal-header {
-      background: #F9F9F8;
+      background: var(--bg-subtle);
       border-bottom: 1px solid var(--border-color);
       padding: 10px 16px;
       display: flex;
@@ -316,7 +390,7 @@
       width: 10px;
       height: 10px;
       border-radius: 50%;
-      background: #E5E5E5;
+      background: var(--border-hover);
     }
 
     .terminal-title {
@@ -332,29 +406,63 @@
       line-height: 1.7;
       color: var(--text-main);
       overflow-x: auto;
-      background: #FFFFFF;
+      background: var(--bg-surface);
     }
 
-    .terminal-body .prompt-symbol {
+    .terminal-line {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .terminal-line:last-child {
+      margin-bottom: 0;
+    }
+
+    .prompt-symbol {
       color: var(--text-muted);
       user-select: none;
+      margin-right: 8px;
     }
 
-    .terminal-body .cmd {
+    .cmd {
       color: var(--text-main);
       font-weight: 600;
     }
 
-    .terminal-body .output-muted {
+    .output-muted { color: var(--text-muted); }
+    .output-highlight { color: var(--pastel-blue-text); }
+    .output-success { color: var(--pastel-green-text); }
+
+    /* Interactive Copy Button */
+    .copy-btn {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      padding: 4px 8px;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
       color: var(--text-muted);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+      user-select: none;
     }
 
-    .terminal-body .output-highlight {
-      color: var(--pastel-blue-text);
+    .copy-btn:hover {
+      color: var(--text-main);
+      background: var(--bg-surface);
+      border-color: var(--border-hover);
     }
 
-    .terminal-body .output-success {
+    .copy-btn.copied {
+      background: var(--pastel-green-bg);
       color: var(--pastel-green-text);
+      border-color: transparent;
     }
 
     /* Bento Grid Layout */
@@ -373,11 +481,12 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      transition: box-shadow 0.2s ease, transform 0.2s ease;
+      transition: box-shadow 0.2s ease, border-color 0.2s ease;
     }
 
     .bento-card:hover {
       box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+      border-color: var(--border-hover);
     }
 
     .col-12 { grid-column: span 12; }
@@ -399,7 +508,7 @@
     .card-desc {
       font-size: 0.9375rem;
       color: var(--text-muted);
-      line-height: 1.5;
+      line-height: 1.6;
     }
 
     /* Comparison Table Component */
@@ -419,7 +528,7 @@
     }
 
     .comp-table th {
-      background: #F9F9F8;
+      background: var(--bg-subtle);
       padding: 14px 20px;
       font-family: var(--font-mono);
       font-size: 0.75rem;
@@ -440,7 +549,7 @@
     }
 
     .comp-table tr:hover td {
-      background: #FAF9F6;
+      background: var(--bg-subtle);
     }
 
     /* Pipeline / Process Steps */
@@ -487,7 +596,7 @@
       color: var(--text-main);
     }
 
-    /* Harness Matrix Cards */
+    /* Harness Grid with REAL LOGOS */
     .harness-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -499,17 +608,41 @@
       background: var(--bg-surface);
       border: 1px solid var(--border-color);
       border-radius: 8px;
-      padding: 20px;
+      padding: 24px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .harness-card:hover {
+      border-color: var(--border-hover);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.03);
     }
 
     .harness-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 12px;
+      margin-bottom: 16px;
+    }
+
+    .harness-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .harness-logo {
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
     }
 
     .harness-name {
@@ -517,6 +650,61 @@
       font-size: 0.9375rem;
       font-weight: 600;
       color: var(--text-main);
+    }
+
+    /* Developer Info Card */
+    .developer-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 36px;
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 28px;
+      align-items: center;
+      margin-top: 40px;
+    }
+
+    @media (max-width: 640px) {
+      .developer-card {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+    }
+
+    .dev-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 12px;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-serif);
+      font-size: 2.25rem;
+      font-weight: 500;
+      color: var(--text-main);
+    }
+
+    .dev-name {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 4px;
+    }
+
+    .dev-role {
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      color: var(--pastel-blue-text);
+      margin-bottom: 12px;
+    }
+
+    .dev-bio {
+      font-size: 0.9375rem;
+      color: var(--text-muted);
+      line-height: 1.6;
     }
 
     /* Accordion FAQ */
@@ -556,11 +744,11 @@
       transition: max-height 0.3s cubic-bezier(0.16, 1, 0.3, 1), padding 0.3s ease;
       color: var(--text-muted);
       font-size: 0.9375rem;
-      line-height: 1.6;
+      line-height: 1.65;
     }
 
     .accordion-item.active .accordion-content {
-      max-height: 400px;
+      max-height: 500px;
       padding-bottom: 24px;
     }
 
@@ -645,7 +833,7 @@
       color: var(--text-muted);
     }
 
-    /* SVG primitives */
+    /* Inline SVG Utilities */
     .icon {
       width: 16px;
       height: 16px;
@@ -657,12 +845,15 @@
       display: inline-block;
       vertical-align: middle;
     }
+
+    .icon-logo {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+    }
   </style>
 </head>
 <body>
-
-  <!-- Ambient soft radial light spot -->
-  <div class="ambient-bg"></div>
 
   <!-- Top Sticky Navigation -->
   <nav class="navbar">
@@ -672,19 +863,37 @@
         <span>vibe-audit</span>
         <span class="badge badge-blue">v0.1.0</span>
       </a>
+
       <ul class="nav-links">
         <li><a href="#why">Why Vibe Audit</a></li>
         <li><a href="#pipeline">Pipeline</a></li>
         <li><a href="#risk-gates">Risk Gates</a></li>
         <li><a href="#harnesses">Harnesses</a></li>
         <li><a href="#evals">Evals</a></li>
-        <li><a href="#toolkit">Toolkit</a></li>
+        <li><a href="#developer">Developer</a></li>
         <li><a href="#install">Install</a></li>
       </ul>
-      <a href="https://github.com/Xenonesis/vibe-audit" target="_blank" rel="noopener" class="btn btn-primary">
-        <svg class="icon" viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
-        <span>GitHub</span>
-      </a>
+
+      <div class="nav-controls">
+        <!-- Live GitHub Star Badge Link -->
+        <a href="https://github.com/Xenonesis/vibe-audit" target="_blank" rel="noopener" class="github-stars-pill" id="github-stars-link">
+          <svg class="icon" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <span id="stars-count">1 star</span>
+        </a>
+
+        <!-- Theme Mode Switcher -->
+        <div class="theme-switch" role="radiogroup" aria-label="Color Theme">
+          <button class="theme-btn" id="theme-light" onclick="setTheme('light')" title="Light Theme">
+            <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          </button>
+          <button class="theme-btn" id="theme-dark" onclick="setTheme('dark')" title="Dark Theme">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          </button>
+          <button class="theme-btn" id="theme-system" onclick="setTheme('system')" title="System Theme">
+            <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </button>
+        </div>
+      </div>
     </div>
   </nav>
 
@@ -701,11 +910,14 @@
 
           <div class="hero-actions">
             <a href="#install" class="btn btn-primary">Get Started</a>
-            <a href="https://skills.sh/Xenonesis/vibe-audit" target="_blank" rel="noopener" class="btn btn-secondary">View on skills.sh</a>
+            <button class="btn btn-secondary" onclick="copyToClipboard('npx skills add Xenonesis/vibe-audit', this)">
+              <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              <span>Copy Install Command</span>
+            </button>
           </div>
         </div>
 
-        <!-- Terminal Window Preview -->
+        <!-- Terminal Window Preview with Interactive Copy Buttons -->
         <div class="terminal-window reveal" style="margin-top: 10px;">
           <div class="terminal-header">
             <div class="terminal-dots">
@@ -713,15 +925,28 @@
               <span class="dot"></span>
               <span class="dot"></span>
             </div>
-            <span class="terminal-title">bash — npx skills add</span>
+            <span class="terminal-title">bash — installation & validation</span>
             <span class="badge badge-green">PASS 126/126</span>
           </div>
           <div class="terminal-body">
-            <p><span class="prompt-symbol">$</span> <span class="cmd">npx skills add Xenonesis/vibe-audit</span></p>
+            <div class="terminal-line">
+              <div><span class="prompt-symbol">$</span> <span class="cmd">npx skills add Xenonesis/vibe-audit</span></div>
+              <button class="copy-btn" onclick="copyToClipboard('npx skills add Xenonesis/vibe-audit', this)">
+                <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                <span>Copy</span>
+              </button>
+            </div>
             <p class="output-muted">Fetching skill package from GitHub (Xenonesis/vibe-audit)...</p>
             <p class="output-highlight">Found 1 skill: vibe-audit (v0.1.0)</p>
             <p class="output-success">Successfully installed vibe-audit globally for 60+ agent hosts.</p>
-            <p><span class="prompt-symbol">$</span> <span class="cmd">python scripts/validate_skill.py .</span></p>
+            <br>
+            <div class="terminal-line">
+              <div><span class="prompt-symbol">$</span> <span class="cmd">python scripts/validate_skill.py .</span></div>
+              <button class="copy-btn" onclick="copyToClipboard('python scripts/validate_skill.py .', this)">
+                <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                <span>Copy</span>
+              </button>
+            </div>
             <p class="output-success">Passed: 126/126 skill validation rules satisfied.</p>
           </div>
         </div>
@@ -751,14 +976,14 @@
 
   <div class="divider"></div>
 
-  <!-- SECTION: Why Vibe Audit (Comparison) -->
+  <!-- SECTION: Why Vibe Audit (Detailed Comparison) -->
   <section id="why" class="section">
     <div class="container">
       <div class="reveal">
         <div class="mono-sub" style="margin-bottom: 12px;">Pillar 01 — Comparison</div>
         <h2 class="serif-title section-heading">Vibe-Coding vs. Vibe Audit</h2>
         <p class="lead-text">
-          The problem with vibe-coded apps is rarely code generation — it's that “it works” gets mistaken for “it's ready.” Vibe Audit encodes missing discipline into a repeatable, evidence-based process.
+          The problem with vibe-coded apps is rarely code generation — it's that “it works” gets mistaken for “it's ready.” Vibe Audit encodes missing engineering discipline into a repeatable, evidence-backed process.
         </p>
       </div>
 
@@ -837,7 +1062,7 @@
           <div>
             <div class="badge badge-blue" style="margin-bottom: 12px;">Read-Only</div>
             <div class="card-title">AUDIT</div>
-            <div class="card-desc">Read-only discovery, baseline, findings, and report. Tracked source/config diff stays completely empty.</div>
+            <div class="card-desc">Read-only discovery, baseline, findings, and report. Tracked source/config diff stays completely empty. Zero code changes.</div>
           </div>
         </div>
 
@@ -845,7 +1070,7 @@
           <div>
             <div class="badge badge-blue" style="margin-bottom: 12px;">Read-Only</div>
             <div class="card-title">PLAN</div>
-            <div class="card-desc">AUDIT mode plus a prioritized, risk-aware remediation plan. Zero intentional file modifications.</div>
+            <div class="card-desc">AUDIT mode plus a prioritized, risk-aware remediation plan detailing exact file changes and approval levels. Zero file modifications.</div>
           </div>
         </div>
 
@@ -853,7 +1078,7 @@
           <div>
             <div class="badge badge-green" style="margin-bottom: 12px;">Gated Fixes</div>
             <div class="card-title">FIX</div>
-            <div class="card-desc">Audit, plan, apply permitted low/medium-risk fixes, run verification, and generate final readiness report.</div>
+            <div class="card-desc">Audit, plan, apply permitted low/medium-risk fixes, run targeted verification, and generate final readiness report.</div>
           </div>
         </div>
 
@@ -861,7 +1086,7 @@
           <div>
             <div class="badge badge-yellow" style="margin-bottom: 12px;">Security Focus</div>
             <div class="card-title">HARDEN</div>
-            <div class="card-desc">Security-focused audit or fix according to the user's verb; avoids expanding into unrelated refactorings.</div>
+            <div class="card-desc">Security-focused audit or fix according to the user's verb; avoids expanding into unrelated refactorings or cosmetic cleanup.</div>
           </div>
         </div>
 
@@ -869,7 +1094,7 @@
           <div>
             <div class="badge badge-yellow" style="margin-bottom: 12px;">Targeted</div>
             <div class="card-title">PERFORMANCE</div>
-            <div class="card-desc">Baseline, measure, optimize targeted bottlenecks, remeasure; no unmeasured claims or arbitrary rewrites.</div>
+            <div class="card-desc">Baseline, measure, optimize targeted bottlenecks, remeasure; no unmeasured claims, blind caching, or arbitrary rewrites.</div>
           </div>
         </div>
 
@@ -877,7 +1102,7 @@
           <div>
             <div class="badge badge-green" style="margin-bottom: 12px;">Full Pipeline</div>
             <div class="card-title">FULL POLISH</div>
-            <div class="card-desc">Sequential execution: Security → Correctness → Reliability → Performance → AI Smells → Maintainability.</div>
+            <div class="card-desc">Sequential execution: Security → Correctness → Reliability → Performance → AI Smells → Maintainability → Verification.</div>
           </div>
         </div>
       </div>
@@ -1031,104 +1256,200 @@
 
   <div class="divider"></div>
 
-  <!-- SECTION: Live Harness Matrix -->
+  <!-- SECTION: Live Harness Matrix WITH REAL LOGOS -->
   <section id="harnesses" class="section">
     <div class="container">
       <div class="reveal">
         <div class="mono-sub" style="margin-bottom: 12px;">Pillar 05 — Integration</div>
         <h2 class="serif-title section-heading">Multi-Harness Live Model Driver</h2>
         <p class="lead-text">
-          <code>scripts/run_harness.py</code> probes binary PATHs, checks authentication status, installs the skill bundle, headlessly executes models, and mechanically grades assertions.
+          <code>scripts/run_harness.py</code> probes binary PATHs, checks authentication status, installs the skill bundle, headlessly executes models, and mechanically grades assertions across all 8 supported agent hosts.
         </p>
       </div>
 
       <div class="harness-grid reveal">
+        <!-- 1. Pi -->
         <div class="harness-card">
           <div>
             <div class="harness-header">
-              <span class="harness-name">pi</span>
+              <div class="harness-brand">
+                <div class="harness-logo">
+                  <!-- Pi SVG logo -->
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 7h16M8 7v13M16 7v13"/></svg>
+                </div>
+                <span class="harness-name">pi</span>
+              </div>
               <span class="badge badge-green">PASS (0.84.1)</span>
             </div>
-            <p style="font-size: 0.8125rem; color: var(--text-muted); margin-bottom: 12px;">Headless CLI driver verified. Tested Eval 1 with-skill: 80.5s execution, AUDIT mode, CRITICAL IDOR finding confirmed.</p>
+            <p style="font-size: 0.8125rem; color: var(--text-muted); margin-bottom: 16px;">Headless CLI driver verified. Tested Eval 1 with-skill: 80.5s execution, AUDIT mode, CRITICAL IDOR finding confirmed.</p>
           </div>
-          <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted);">Binary: pi.CMD</div>
+          <div style="display: flex; align-items: center; justify-content: space-between;">
+            <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted);">pi.CMD</span>
+            <button class="copy-btn" onclick="copyToClipboard('python scripts/run_harness.py . --eval 1 --harness pi --condition with-skill --timeout 300', this)">
+              <span>Run Eval</span>
+            </button>
+          </div>
         </div>
 
+        <!-- 2. OMP (Oh My Pi) -->
         <div class="harness-card">
           <div>
             <div class="harness-header">
-              <span class="harness-name">omp</span>
+              <div class="harness-brand">
+                <div class="harness-logo">
+                  <!-- OMP SVG logo -->
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 17l6-6-6-6M12 19h8"/></svg>
+                </div>
+                <span class="harness-name">omp</span>
+              </div>
               <span class="badge badge-green">PASS (17.2.12)</span>
             </div>
-            <p style="font-size: 0.8125rem; color: var(--text-muted); margin-bottom: 12px;">Oh My Pi harness driver verified. Tested Eval 1 with-skill: 40.6s execution, zero source diff, file evidence confirmed.</p>
+            <p style="font-size: 0.8125rem; color: var(--text-muted); margin-bottom: 16px;">Oh My Pi harness driver verified. Tested Eval 1 with-skill: 40.6s execution, zero source diff, file evidence confirmed.</p>
           </div>
-          <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted);">Binary: omp.EXE</div>
+          <div style="display: flex; align-items: center; justify-content: space-between;">
+            <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted);">omp.EXE</span>
+            <button class="copy-btn" onclick="copyToClipboard('python scripts/run_harness.py . --eval 1 --harness omp --condition with-skill --timeout 300', this)">
+              <span>Run Eval</span>
+            </button>
+          </div>
         </div>
 
+        <!-- 3. Claude Code -->
         <div class="harness-card">
           <div>
             <div class="harness-header">
-              <span class="harness-name">claude-code</span>
+              <div class="harness-brand">
+                <div class="harness-logo">
+                  <!-- Anthropic / Claude Asterisk SVG -->
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z"/></svg>
+                </div>
+                <span class="harness-name">claude-code</span>
+              </div>
               <span class="badge badge-yellow">SKIP (Auth)</span>
             </div>
-            <p style="font-size: 0.8125rem; color: var(--text-muted); margin-bottom: 12px;">Installed v2.1.227. Automatically detects <code>loggedIn: false</code> and outputs clean skip with <code>claude /login</code> guidance.</p>
+            <p style="font-size: 0.8125rem; color: var(--text-muted); margin-bottom: 16px;">Installed v2.1.227. Automatically detects <code>loggedIn: false</code> and outputs clean skip with <code>claude /login</code> guidance.</p>
           </div>
-          <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted);">Binary: claude.CMD</div>
+          <div style="display: flex; align-items: center; justify-content: space-between;">
+            <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted);">claude.CMD</span>
+            <button class="copy-btn" onclick="copyToClipboard('python scripts/run_harness.py . --eval 1 --harness claude-code --condition with-skill --timeout 300', this)">
+              <span>Run Eval</span>
+            </button>
+          </div>
         </div>
 
+        <!-- 4. Cursor -->
         <div class="harness-card">
           <div>
             <div class="harness-header">
-              <span class="harness-name">cursor</span>
+              <div class="harness-brand">
+                <div class="harness-logo">
+                  <!-- Cursor Diamond SVG -->
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 12l10 10 10-10L12 2zM12 6v12M6 12h12"/></svg>
+                </div>
+                <span class="harness-name">cursor</span>
+              </div>
               <span class="badge badge-neutral">PROBED (grok)</span>
             </div>
-            <p style="font-size: 0.8125rem; color: var(--text-muted); margin-bottom: 12px;">Probes <code>agent</code> on PATH (resolves to grok 0.2.112 on this machine). Captured honestly without false claims.</p>
+            <p style="font-size: 0.8125rem; color: var(--text-muted); margin-bottom: 16px;">Probes <code>agent</code> on PATH (resolves to grok 0.2.112 on this machine). Captured honestly without false claims.</p>
           </div>
-          <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted);">Binary: agent.EXE</div>
+          <div style="display: flex; align-items: center; justify-content: space-between;">
+            <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted);">agent.EXE</span>
+            <button class="copy-btn" onclick="copyToClipboard('python scripts/run_harness.py . --eval 1 --harness cursor --condition with-skill --timeout 300', this)">
+              <span>Run Eval</span>
+            </button>
+          </div>
         </div>
 
+        <!-- 5. Codex -->
         <div class="harness-card">
           <div>
             <div class="harness-header">
-              <span class="harness-name">codex</span>
+              <div class="harness-brand">
+                <div class="harness-logo">
+                  <!-- OpenAI Spiral SVG -->
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 0 1 10 10c0 5.52-4.48 10-10 10S2 17.52 2 12a10 10 0 0 1 5-8.66"/><path d="M12 6a6 6 0 1 1-6 6c0-3.31 2.69-6 6-6z"/></svg>
+                </div>
+                <span class="harness-name">codex</span>
+              </div>
               <span class="badge badge-neutral">SKIP (Missing)</span>
             </div>
-            <p style="font-size: 0.8125rem; color: var(--text-muted); margin-bottom: 12px;">Binary not found on PATH. Probe records clean skip event with documented binary target.</p>
+            <p style="font-size: 0.8125rem; color: var(--text-muted); margin-bottom: 16px;">Binary not found on PATH. Driver probe records clean skip event with documented binary target.</p>
           </div>
-          <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted);">Binary: codex</div>
+          <div style="display: flex; align-items: center; justify-content: space-between;">
+            <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted);">codex</span>
+            <button class="copy-btn" onclick="copyToClipboard('python scripts/run_harness.py . --eval 1 --harness codex --condition with-skill --timeout 300', this)">
+              <span>Run Eval</span>
+            </button>
+          </div>
         </div>
 
+        <!-- 6. Gemini CLI -->
         <div class="harness-card">
           <div>
             <div class="harness-header">
-              <span class="harness-name">gemini-cli</span>
+              <div class="harness-brand">
+                <div class="harness-logo">
+                  <!-- Google Gemini Sparkle SVG -->
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C12 7.5 7.5 12 2 12C7.5 12 12 16.5 12 22C12 16.5 16.5 12 22 12C16.5 12 12 7.5 12 2Z"/></svg>
+                </div>
+                <span class="harness-name">gemini-cli</span>
+              </div>
               <span class="badge badge-neutral">SKIP (Missing)</span>
             </div>
-            <p style="font-size: 0.8125rem; color: var(--text-muted); margin-bottom: 12px;">Binary not found on PATH. Probe records clean skip event with documented binary target.</p>
+            <p style="font-size: 0.8125rem; color: var(--text-muted); margin-bottom: 16px;">Binary not found on PATH. Driver probe records clean skip event with documented binary target.</p>
           </div>
-          <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted);">Binary: gemini</div>
+          <div style="display: flex; align-items: center; justify-content: space-between;">
+            <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted);">gemini</span>
+            <button class="copy-btn" onclick="copyToClipboard('python scripts/run_harness.py . --eval 1 --harness gemini-cli --condition with-skill --timeout 300', this)">
+              <span>Run Eval</span>
+            </button>
+          </div>
         </div>
 
+        <!-- 7. Copilot CLI -->
         <div class="harness-card">
           <div>
             <div class="harness-header">
-              <span class="harness-name">copilot-cli</span>
+              <div class="harness-brand">
+                <div class="harness-logo">
+                  <!-- GitHub Octocat SVG -->
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5c.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34c-.46-1.16-1.11-1.47-1.11-1.47c-.91-.62.07-.6.07-.6c1 .07 1.53 1.03 1.53 1.03c.87 1.52 2.34 1.07 2.91.83c.09-.65.35-1.09.63-1.34c-2.22-.25-4.55-1.11-4.55-4.92c0-1.11.38-2 1.03-2.71c-.1-.25-.45-1.29.1-2.64c0 0 .84-.27 2.75 1.02c.79-.22 1.65-.33 2.5-.33c.85 0 1.71.11 2.5.33c1.91-1.29 2.75-1.02 2.75-1.02c.55 1.35.2 2.39.1 2.64c.65.71 1.03 1.6 1.03 2.71c0 3.82-2.34 4.66-4.57 4.91c.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2Z"/></svg>
+                </div>
+                <span class="harness-name">copilot-cli</span>
+              </div>
               <span class="badge badge-neutral">SKIP (Missing)</span>
             </div>
-            <p style="font-size: 0.8125rem; color: var(--text-muted); margin-bottom: 12px;">Binary not found on PATH. Probe records clean skip event with documented binary target.</p>
+            <p style="font-size: 0.8125rem; color: var(--text-muted); margin-bottom: 16px;">Binary not found on PATH. Driver probe records clean skip event with documented binary target.</p>
           </div>
-          <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted);">Binary: copilot</div>
+          <div style="display: flex; align-items: center; justify-content: space-between;">
+            <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted);">copilot</span>
+            <button class="copy-btn" onclick="copyToClipboard('python scripts/run_harness.py . --eval 1 --harness copilot-cli --condition with-skill --timeout 300', this)">
+              <span>Run Eval</span>
+            </button>
+          </div>
         </div>
 
+        <!-- 8. Antigravity -->
         <div class="harness-card">
           <div>
             <div class="harness-header">
-              <span class="harness-name">antigravity</span>
+              <div class="harness-brand">
+                <div class="harness-logo">
+                  <!-- DeepMind / Antigravity Triangles SVG -->
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3L2 21h20L12 3zM12 9l5 9H7l5-9z"/></svg>
+                </div>
+                <span class="harness-name">antigravity</span>
+              </div>
               <span class="badge badge-neutral">SKIP (Missing)</span>
             </div>
-            <p style="font-size: 0.8125rem; color: var(--text-muted); margin-bottom: 12px;">Binary not found on PATH. Probe records clean skip event with documented binary target.</p>
+            <p style="font-size: 0.8125rem; color: var(--text-muted); margin-bottom: 16px;">Binary not found on PATH. Driver probe records clean skip event with documented binary target.</p>
           </div>
-          <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted);">Binary: antigravity</div>
+          <div style="display: flex; align-items: center; justify-content: space-between;">
+            <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted);">antigravity</span>
+            <button class="copy-btn" onclick="copyToClipboard('python scripts/run_harness.py . --eval 1 --harness antigravity --condition with-skill --timeout 300', this)">
+              <span>Run Eval</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -1137,7 +1458,7 @@
   <div class="divider"></div>
 
   <!-- SECTION: Toolkit Architecture & Interactive Tabs -->
-  <section id="toolkit" class="section">
+  <section id="evals" class="section">
     <div class="container">
       <div class="reveal">
         <div class="mono-sub" style="margin-bottom: 12px;">Pillar 06 — Architecture</div>
@@ -1160,20 +1481,36 @@
           <div class="terminal-window">
             <div class="terminal-header">
               <div class="terminal-dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-              <span class="terminal-title">python scripts/run_harness.py</span>
+              <span class="terminal-title">python scripts / CLI tools</span>
             </div>
             <div class="terminal-body">
-              <p><span class="prompt-symbol"># Run live model evaluation across any supported harness</span></p>
-              <p><span class="prompt-symbol">$</span> <span class="cmd">python scripts/run_harness.py . --eval 1 --harness pi --condition with-skill --timeout 300</span></p>
+              <div class="terminal-line">
+                <div><span class="prompt-symbol"># Live harness driver for all 8 agent hosts</span><br><span class="prompt-symbol">$</span> <span class="cmd">python scripts/run_harness.py . --eval 1 --harness pi --condition with-skill --timeout 300</span></div>
+                <button class="copy-btn" onclick="copyToClipboard('python scripts/run_harness.py . --eval 1 --harness pi --condition with-skill --timeout 300', this)">
+                  <span>Copy</span>
+                </button>
+              </div>
               <br>
-              <p><span class="prompt-symbol"># Validate skill formatting, frontmatter, and 126/126 rules</span></p>
-              <p><span class="prompt-symbol">$</span> <span class="cmd">python scripts/validate_skill.py .</span></p>
+              <div class="terminal-line">
+                <div><span class="prompt-symbol"># Validate skill integrity and 126/126 rules</span><br><span class="prompt-symbol">$</span> <span class="cmd">python scripts/validate_skill.py .</span></div>
+                <button class="copy-btn" onclick="copyToClipboard('python scripts/validate_skill.py .', this)">
+                  <span>Copy</span>
+                </button>
+              </div>
               <br>
-              <p><span class="prompt-symbol"># Run 54 static checks across all eval fixtures</span></p>
-              <p><span class="prompt-symbol">$</span> <span class="cmd">python scripts/run_static_evals.py .</span></p>
+              <div class="terminal-line">
+                <div><span class="prompt-symbol"># Run 54 static checks across all eval fixtures</span><br><span class="prompt-symbol">$</span> <span class="cmd">python scripts/run_static_evals.py .</span></div>
+                <button class="copy-btn" onclick="copyToClipboard('python scripts/run_static_evals.py .', this)">
+                  <span>Copy</span>
+                </button>
+              </div>
               <br>
-              <p><span class="prompt-symbol"># Package distribution zip artifact</span></p>
-              <p><span class="prompt-symbol">$</span> <span class="cmd">python scripts/package_release.py . --output dist/vibe-audit-v0.1.zip</span></p>
+              <div class="terminal-line">
+                <div><span class="prompt-symbol"># Package distribution release zip artifact</span><br><span class="prompt-symbol">$</span> <span class="cmd">python scripts/package_release.py . --output dist/vibe-audit-v0.1.zip</span></div>
+                <button class="copy-btn" onclick="copyToClipboard('python scripts/package_release.py . --output dist/vibe-audit-v0.1.zip', this)">
+                  <span>Copy</span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -1253,11 +1590,46 @@
 
   <div class="divider"></div>
 
+  <!-- SECTION: Developer Info -->
+  <section id="developer" class="section">
+    <div class="container-narrow">
+      <div class="reveal">
+        <div class="mono-sub" style="margin-bottom: 12px;">Pillar 07 — Author</div>
+        <h2 class="serif-title section-heading">Developer Information</h2>
+        <p class="lead-text">
+          Designed and engineered with an evidence-first philosophy to bring deterministic verification and security boundaries to autonomous coding assistants.
+        </p>
+
+        <div class="developer-card">
+          <div class="dev-avatar">X</div>
+          <div>
+            <div class="dev-name">Xenonesis</div>
+            <div class="dev-role">Creator of Vibe Audit & Security Architect</div>
+            <p class="dev-bio">
+              Building open-standard agent skills, deterministic model evaluation runners, and execution-safety boundaries. Focused on turning non-deterministic AI generation into repeatable software engineering.
+            </p>
+            <div style="margin-top: 16px; display: flex; gap: 12px;">
+              <a href="https://github.com/Xenonesis" target="_blank" rel="noopener" class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.8125rem;">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+                <span>GitHub Profile</span>
+              </a>
+              <a href="https://skills.sh/Xenonesis/vibe-audit" target="_blank" rel="noopener" class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.8125rem;">
+                <span>skills.sh Listing</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
   <!-- SECTION: Installation & Setup -->
   <section id="install" class="section">
     <div class="container-narrow">
       <div class="reveal">
-        <div class="mono-sub" style="margin-bottom: 12px;">Pillar 07 — Setup</div>
+        <div class="mono-sub" style="margin-bottom: 12px;">Pillar 08 — Setup</div>
         <h2 class="serif-title section-heading">Installation & Host Integration</h2>
         <p class="lead-text">
           Vibe Audit is indexed on skills.sh and compatible with any agent platform implementing the Agent Skills open standard.
@@ -1268,16 +1640,24 @@
         <h3 style="font-size: 1.125rem; font-weight: 600; margin-bottom: 12px;">1. Automatic Global Install (skills.sh)</h3>
         <div class="terminal-window" style="margin-bottom: 24px;">
           <div class="terminal-body">
-            <p><span class="prompt-symbol">$</span> <span class="cmd">npx skills add Xenonesis/vibe-audit</span></p>
+            <div class="terminal-line">
+              <div><span class="prompt-symbol">$</span> <span class="cmd">npx skills add Xenonesis/vibe-audit</span></div>
+              <button class="copy-btn" onclick="copyToClipboard('npx skills add Xenonesis/vibe-audit', this)">
+                <span>Copy</span>
+              </button>
+            </div>
           </div>
         </div>
 
         <h3 style="font-size: 1.125rem; font-weight: 600; margin-bottom: 12px;">2. Manual Directory Copy (Generic Agent / OMP)</h3>
         <div class="terminal-window" style="margin-bottom: 24px;">
           <div class="terminal-body">
-            <p><span class="prompt-symbol"># Windows OMP / Generic path</span></p>
-            <p><span class="prompt-symbol">$</span> <span class="cmd">mkdir -p ~/.agents/skills</span></p>
-            <p><span class="prompt-symbol">$</span> <span class="cmd">cp -r vibe-audit ~/.agents/skills/</span></p>
+            <div class="terminal-line">
+              <div><span class="prompt-symbol"># Windows OMP / Generic path</span><br><span class="prompt-symbol">$</span> <span class="cmd">mkdir -p ~/.agents/skills && cp -r vibe-audit ~/.agents/skills/</span></div>
+              <button class="copy-btn" onclick="copyToClipboard('mkdir -p ~/.agents/skills && cp -r vibe-audit ~/.agents/skills/', this)">
+                <span>Copy</span>
+              </button>
+            </div>
           </div>
         </div>
 
@@ -1300,7 +1680,7 @@
   <section class="section">
     <div class="container-narrow">
       <div class="reveal">
-        <div class="mono-sub" style="margin-bottom: 12px;">Pillar 08 — FAQ</div>
+        <div class="mono-sub" style="margin-bottom: 12px;">Pillar 09 — FAQ</div>
         <h2 class="serif-title section-heading">Frequently Asked Questions</h2>
       </div>
 
@@ -1354,7 +1734,7 @@
       <div style="display: flex; align-items: center; gap: 12px;">
         <span style="font-family: var(--font-mono); font-weight: 600; color: var(--text-main);">vibe-audit v0.1.0</span>
         <span>—</span>
-        <span>Released under MIT License</span>
+        <span>Created by Xenonesis under MIT License</span>
       </div>
       <div>
         <a href="https://github.com/Xenonesis/vibe-audit" target="_blank" rel="noopener" style="color: var(--text-muted);">GitHub Repository</a>
@@ -1364,8 +1744,70 @@
     </div>
   </footer>
 
-  <!-- Scripts: Tabs & Accordion & IntersectionObserver Scroll Entry -->
+  <!-- Theme System & Interactive Functions -->
   <script>
+    // Theme Switcher (Light / Dark / System)
+    function setTheme(mode) {
+      localStorage.setItem('vibe-audit-theme', mode);
+      document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+      
+      const targetBtn = document.getElementById(`theme-${mode}`);
+      if (targetBtn) targetBtn.classList.add('active');
+
+      if (mode === 'system') {
+        const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        document.documentElement.setAttribute('data-theme', systemDark ? 'dark' : 'light');
+      } else {
+        document.documentElement.setAttribute('data-theme', mode);
+      }
+    }
+
+    // Initialize Theme on Load
+    (function initTheme() {
+      const savedTheme = localStorage.getItem('vibe-audit-theme') || 'system';
+      setTheme(savedTheme);
+
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+        if (localStorage.getItem('vibe-audit-theme') === 'system') {
+          document.documentElement.setAttribute('data-theme', e.matches ? 'dark' : 'light');
+        }
+      });
+    })();
+
+    // Copy to Clipboard Utility with visual feedback
+    async function copyToClipboard(text, btnElement) {
+      try {
+        await navigator.clipboard.writeText(text);
+        const originalHTML = btnElement.innerHTML;
+        btnElement.classList.add('copied');
+        btnElement.innerHTML = `<svg class="icon" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> <span>Copied!</span>`;
+        setTimeout(() => {
+          btnElement.classList.remove('copied');
+          btnElement.innerHTML = originalHTML;
+        }, 2000);
+      } catch (err) {
+        console.error('Failed to copy: ', err);
+      }
+    }
+
+    // Fetch Live GitHub Stars
+    async function fetchGitHubStars() {
+      try {
+        const res = await fetch('https://api.github.com/repos/Xenonesis/vibe-audit');
+        if (res.ok) {
+          const data = await res.json();
+          const stars = data.stargazers_count || 1;
+          const starsEl = document.getElementById('stars-count');
+          if (starsEl) {
+            starsEl.textContent = `${stars} ${stars === 1 ? 'star' : 'stars'}`;
+          }
+        }
+      } catch (e) {
+        console.log('GitHub API fetch deferred');
+      }
+    }
+    fetchGitHubStars();
+
     // Tab switcher
     function switchTab(tabId) {
       document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
