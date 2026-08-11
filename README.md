@@ -35,14 +35,70 @@ Generic Agent Skills · Codex · Claude Code · Google Antigravity · GitHub Cop
 
 Documentation compatibility is not the same as behavioral compatibility. See `COMPATIBILITY.md` and `metadata/compatibility.json`.
 
-## Project install
-Where supported, prefer:
+## Using it as a skill
 
-```text
-.agents/skills/vibe-coding-polisher/
+This package is an **Agent Skill**: a `SKILL.md` with `name`/`description` frontmatter plus the supporting `references/`, `profiles/`, and `evals/` directories it points to. Any CLI/IDE agent that implements the Agent Skills convention (Codex, Claude Code, Cursor, Gemini CLI, OpenCode, Windsurf, Copilot CLI, Antigravity, Pi, OMP, …) can discover and load it.
+
+### How a skill loads
+
+1. The harness scans a configured **skills root** for directories containing `SKILL.md`.
+2. When a user request matches the skill's `description`, the harness loads `SKILL.md` (implicit activation).
+3. The skill then pulls in only the `references/*.md` and `profiles/*.md` needed for the active phase (progressive disclosure).
+
+Install the **entire `vibe-coding-polisher/` directory** — never only `SKILL.md` — or the relative references/evals/adapters are lost.
+
+### Install for any CLI (generic)
+
+Copy the whole directory into the harness's documented skills root. The most interoperable project-local root, supported by most hosts:
+
+```bash
+mkdir -p .agents/skills
+cp -r vibe-coding-polisher .agents/skills/
 ```
 
-Host-native locations and explicit invocation fallbacks are documented in `adapters/`.
+User-level (available in every project): copy into `~/.agents/skills/` instead. If your harness has no skill support, you can still use the skill manually by pasting `SKILL.md` content (and referenced files) into the agent conversation.
+
+### Install for a specific CLI
+
+Use the bundled installer:
+
+```bash
+python scripts/install_skill.py --host claude --project .
+python scripts/install_skill.py --host codex  --project .
+python scripts/install_skill.py --host cursor --project .
+```
+
+`--host` supports: `agents` (interoperable `.agents/skills`), `codex`, `claude`, `cursor`, `gemini`, `opencode`, `windsurf`, `copilot`. Or install to an arbitrary root with `--dest /path/to/skills-root`. The installer refuses to overwrite an existing destination.
+
+Host-native locations and invocation:
+
+| CLI / host | Skill location(s) | Explicit invocation |
+|---|---|---|
+| Codex | `.agents/skills/vibe-coding-polisher/`, `~/.agents/skills/`, `/etc/codex/skills/` | `/skills`, or `$` → mention `vibe-coding-polisher` |
+| Claude Code | `.claude/skills/vibe-coding-polisher/`, `~/.claude/skills/` | `/vibe-coding-polisher` |
+| Cursor | `.agents/skills/`, `.cursor/skills/`, `~/.cursor/skills/` | `/` in Agent chat → search `vibe-coding-polisher` |
+| Gemini CLI | `.gemini/skills/`, `.agents/skills/` (alias) | `/skills list`, then activate; `/skills reload` after install |
+| OpenCode | `.opencode/skills/` | `/skills` |
+| Windsurf / Cascade | `.windsurf/skills/` | `/skills` |
+| GitHub Copilot CLI | `.github/skills/` | `/skills` |
+| Google Antigravity | host-documented skill root | host-documented skill command |
+| OMP (Oh My Pi) | `<skills-root>/vibe-coding-polisher/SKILL.md` | `skill://vibe-coding-polisher` or `/skill:vibe-coding-polisher` |
+
+Full per-host details, provider caveats, and invocation fallbacks: `adapters/`.
+
+### Using it
+
+After install, just describe the job in your prompt — the skill activates when the description matches:
+
+- *“Audit this repo before we ship it. Find security and correctness issues; do not change anything.”* → AUDIT
+- *“Polish this app: security, correctness, reliability, performance, in that order. Fix what you safely can.”* → FULL POLISH
+- *“Check for AI-generated code smells and dead code, and clean them up.”* → FIX
+- *“Harden this Next.js app against common web attacks.”* → HARDEN
+- *“This endpoint is slow — profile it and optimize without changing behavior.”* → PERFORMANCE
+
+Explicit invocation is the deterministic fallback if auto-selection misses (see table above). If the harness does not load the skill automatically, paste `SKILL.md` into the conversation and point the agent at the package directory.
+
+The skill picks a mode from your verbs (AUDIT / PLAN / FIX / HARDEN / PERFORMANCE / FULL POLISH), selects the smallest relevant `profiles/*.md`, and enforces its own safety gates: unknown repositories start **static-only**, high-risk changes need explicit approval, and everything is reported with evidence and uncertainty. The host CLI's mode only supplements these rules — it never overrides them.
 
 ## Deterministic validation
 
