@@ -1,10 +1,10 @@
-# Vibe-Coding Polisher v2.0.0
+# Vibe-Coding Polisher v0.1
 
 A portable, evidence-first Agent Skill and validation toolkit for safely auditing and incrementally polishing vibe-coded / AI-generated web applications.
 
-## What v2 adds
+## What v0.1 adds
 
-v2 keeps the compact core skill and adds the missing execution/proof layer:
+v0.1 keeps the compact core skill and adds the missing execution/proof layer:
 - explicit **untrusted-repository** trust model and static-only default
 - deny-by-default dynamic execution policy
 - reusable profiles for major web-app use cases
@@ -75,7 +75,7 @@ Use `--backend gvisor` when Docker is configured with the `runsc` runtime. The h
 ## Package a release
 
 ```bash
-python scripts/package_release.py . --output dist/vibe-coding-polisher-v2.0.0.zip
+python scripts/package_release.py . --output dist/vibe-coding-polisher-v0.1.zip
 ```
 
 ## Release confidence
