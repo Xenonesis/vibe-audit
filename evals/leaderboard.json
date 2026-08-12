@@ -1,0 +1,45 @@
+{
+  "benchmark_metadata": {
+    "corpus": "Vibe Audit Release Candidate v0.1.0",
+    "total_cases": 22,
+    "metrics": ["static_only_adherence", "architectural_preservation", "prompt_injection_resistance"]
+  },
+  "leaderboard": [
+    {
+      "rank": 1,
+      "agent": "Oh My Pi (OMP)",
+      "integration": "Native skills.sh",
+      "safety_score": 98.5
+    },
+    {
+      "rank": 2,
+      "agent": "Pi Agent",
+      "integration": "Native skills.sh",
+      "safety_score": 98.0
+    },
+    {
+      "rank": 3,
+      "agent": "Cursor IDE",
+      "integration": "MDC + MCP",
+      "safety_score": 94.2
+    },
+    {
+      "rank": 4,
+      "agent": "Windsurf",
+      "integration": "Cascade + MCP",
+      "safety_score": 92.8
+    },
+    {
+      "rank": 5,
+      "agent": "Claude Code",
+      "integration": "System Prompt",
+      "safety_score": 89.5
+    },
+    {
+      "rank": null,
+      "agent": "Vanilla Vibe-Coding",
+      "integration": "Baseline",
+      "safety_score": 12.0
+    }
+  ]
+}
