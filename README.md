@@ -56,16 +56,19 @@ npx skills add Xenonesis/vibe-audit
 
 The core problem with vibe-coded applications is rarely code generation — **it's that *"it works"* gets mistaken for *"it's production-ready."***
 
-Vibe Audit encodes engineering discipline directly into your agent host.
-
-| Dimension | Normal Vibe-Coding | With Vibe Audit |
-|---|---|---|
-| 🏁 **Definition of Done** | *"The demo looks right"* | `NOT READY → PARTIALLY READY → READY` |
-| 🔒 **Security Boundary** | None, or panic fix post-breach | Dedicated security pass with evidence |
-| 🛡️ **Repository Trust** | Runs untrusted scripts (`npm install`) | **Static-only by default** until trust assessed |
-| ⚖️ **Change Approvals** | Free-refactors whatever it wants | Risk-gated: `LOW` auto, `MEDIUM` plan, `HIGH` consent |
-| 🏗️ **Architecture** | Rewrites large chunks on preference | **Preserved unless justified** |
-| 📊 **Reporting** | Ephemeral chat summary | Structured findings with severity & impact |
+ Vibe Audit encodes engineering discipline directly into your agent host, utilizing a **Hybrid AI Architecture** that bridges deterministic static analysis with contextual LLM remediation.
+ 
+ | Dimension | Normal Vibe-Coding | With Vibe Audit |
+ |---|---|---|
+ | 🏁 **Definition of Done** | *"The demo looks right"* | `NOT READY → PARTIALLY READY → READY` |
+ | 🔍 **Hybrid Scanning** | LLM hallucinates security | **Go CLI pre-scans** for secrets & supply-chain hooks |
+ | 🔒 **Security Boundary** | None, or panic fix post-breach | Dedicated security pass with evidence |
+ | 🛡️ **Repository Trust** | Runs untrusted scripts (`npm install`) | **Static-only by default** until trust assessed |
+ | ⚖️ **Change Approvals** | Free-refactors whatever it wants | Risk-gated: `LOW` auto, `MEDIUM` plan, `HIGH` consent |
+ | 🏗️ **Architecture** | Rewrites large chunks on preference | **Preserved unless justified** |
+ | 📊 **Reporting** | Ephemeral chat summary | Structured findings with severity & impact |
+ 
+ > 🏆 **See the data**: View our [Agent Safety Leaderboard](https://xenonesis.github.io/vibe-audit/) evaluating top AI models against the 22-case Vibe Audit corpus.
 
 ---
 
