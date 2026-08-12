@@ -203,16 +203,26 @@ This package is an **Agent Skill**: a `SKILL.md` with `name`/`description` front
 
 Install the **entire `vibe-audit/` directory** — never only `SKILL.md` — or the relative references/evals/adapters are lost.
 
-### Install for any CLI (generic)
+### Universal Auto-Installer (Recommended for All IDEs & CLIs)
+
+Run the universal auto-installer to detect installed tools and automatically configure skills, native rules, and MCP servers:
 
 ```bash
-mkdir -p .agents/skills
-cp -r vibe-audit .agents/skills/
+# Auto-detects Cursor, Windsurf, VS Code, JetBrains, Copilot, Neovim, and all 8 CLIs
+python scripts/install_universal.py
+
+# Windows shortcut wrapper
+scripts\run-install-universal.cmd
 ```
 
-User-level (available in every project): copy into `~/.agents/skills/` instead. If your harness has no skill support, paste `SKILL.md` content (and referenced files) into the conversation.
+The installer automatically:
+1. Installs the Agent Skill package (`~/.agents/skills/vibe-audit` and `.agents/skills/vibe-audit`).
+2. Exports native rules (`.cursor/rules/vibe-audit.mdc`, `.windsurfrules`, `.github/copilot-instructions.md`, `.clinerules`, `CONVENTIONS.md`, `.continue/rules/vibe-audit.md`).
+3. Configures Model Context Protocol (MCP) servers (`.cursor/mcp.json`).
 
-### Install for a specific CLI
+For detailed IDE-specific setups (Cursor, Windsurf, JetBrains, Neovim `avante`/`CodeCompanion`, Emacs `gptel`), see [docs/INTEGRATIONS.md](docs/INTEGRATIONS.md).
+
+### Manual Install per CLI / IDE
 
 ```bash
 python scripts/install_skill.py --host claude --project .
@@ -220,8 +230,7 @@ python scripts/install_skill.py --host codex  --project .
 python scripts/install_skill.py --host cursor --project .
 ```
 
-`--host` supports: `agents`, `codex`, `claude`, `cursor`, `gemini`, `opencode`, `windsurf`, `copilot`. Or install to an arbitrary root with `--dest /path/to/skills-root`. The installer refuses to overwrite an existing destination.
-
+`--host` supports: `agents`, `codex`, `claude`, `cursor`, `gemini`, `opencode`, `windsurf`, `copilot`. Or install to an arbitrary root with `--dest /path/to/skills-root`.
 > **`npx skills add … -g` and PromptScript.** If you install globally with the skills CLI and see `✗ vibe-audit → PromptScript: PromptScript does not support global skill installation`, that line is a hardcoded limitation of the `skills` CLI (v1.5.x), not a defect here: PromptScript has no global skills directory (`globalSkillsDir` is unset in the CLI's agent registry), so the CLI refuses to place a global copy. The skill is still installed everywhere else. PromptScript reads skills from the **project-local** `.agents/skills/` root — the same root the universal install already populates. To get a PromptScript-covered install with no failure line, run the CLI **inside your project** without `-g`:
 >
 > ```bash
