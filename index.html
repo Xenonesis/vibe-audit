@@ -1631,48 +1631,121 @@
   <div class="divider"></div>
 
   <!-- SECTION: Installation & Setup -->
+  <!-- SECTION: Installation & Host Integration -->
   <section id="install" class="section">
     <div class="container-narrow">
       <div class="reveal">
         <div class="mono-sub" style="margin-bottom: 12px;">Pillar 08 — Setup</div>
-        <h2 class="serif-title section-heading">Installation & Host Integration</h2>
+        <h2 class="serif-title section-heading">Installation & Multi-System Setup</h2>
         <p class="lead-text">
-          Vibe Audit is indexed on skills.sh and compatible with any agent platform implementing the Agent Skills open standard.
+          Install Vibe Audit across any operating system (Windows, macOS, Linux), IDE, or CLI agent host using automated or manual setup options.
         </p>
       </div>
 
+      <!-- Installation Target Switcher Tabs -->
       <div style="margin-top: 32px;" class="reveal">
-        <h3 style="font-size: 1.125rem; font-weight: 600; margin-bottom: 12px;">1. Automatic Global Install (skills.sh)</h3>
-        <div class="terminal-window" style="margin-bottom: 24px;">
-          <div class="terminal-body">
-            <div class="terminal-line">
-              <div><span class="prompt-symbol">$</span> <span class="cmd">npx skills add Xenonesis/vibe-audit</span></div>
-              <button class="copy-btn" onclick="copyToClipboard('npx skills add Xenonesis/vibe-audit', this)">
-                <span>Copy</span>
-              </button>
+        <div style="display: flex; gap: 8px; border-bottom: 1px solid var(--border-color); margin-bottom: 24px;">
+          <button class="tab-btn active" onclick="switchInstallTab('universal', this)">Automated Universal</button>
+          <button class="tab-btn" onclick="switchInstallTab('skills', this)">skills.sh Directory</button>
+          <button class="tab-btn" onclick="switchInstallTab('ides', this)">IDEs (Cursor / Windsurf / VS Code)</button>
+          <button class="tab-btn" onclick="switchInstallTab('editors', this)">Neovim & Emacs</button>
+        </div>
+
+        <!-- Tab 1: Universal Auto-Installer -->
+        <div id="install-tab-universal" class="tab-content active">
+          <h3 style="font-size: 1.125rem; font-weight: 600; margin-bottom: 8px;">Universal Multi-Tool Installer (Windows / macOS / Linux)</h3>
+          <p style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 16px;">
+            Auto-detects active workspace IDEs and CLIs, installs skill packages, exports native rules (`.mdc`, `.windsurfrules`, `.clinerules`), and configures MCP servers automatically.
+          </p>
+          <div class="terminal-window" style="margin-bottom: 24px;">
+            <div class="terminal-header">
+              <div class="terminal-dots"><span></span><span></span><span></span></div>
+              <div class="terminal-title">bash / powershell — universal installer</div>
+            </div>
+            <div class="terminal-body">
+              <div class="terminal-line">
+                <div><span class="prompt-symbol"># macOS / Linux / WSL</span><br><span class="prompt-symbol">$</span> <span class="cmd">python3 scripts/install_universal.py</span></div>
+                <button class="copy-btn" onclick="copyToClipboard('python3 scripts/install_universal.py', this)">
+                  <span>Copy</span>
+                </button>
+              </div>
+              <div class="terminal-line" style="margin-top: 12px;">
+                <div><span class="prompt-symbol"># Windows Command Prompt / PowerShell</span><br><span class="prompt-symbol">C:\&gt;</span> <span class="cmd">scripts\run-install-universal.cmd</span></div>
+                <button class="copy-btn" onclick="copyToClipboard('scripts\\run-install-universal.cmd', this)">
+                  <span>Copy</span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
 
-        <h3 style="font-size: 1.125rem; font-weight: 600; margin-bottom: 12px;">2. Manual Directory Copy (Generic Agent / OMP)</h3>
-        <div class="terminal-window" style="margin-bottom: 24px;">
-          <div class="terminal-body">
-            <div class="terminal-line">
-              <div><span class="prompt-symbol"># Windows OMP / Generic path</span><br><span class="prompt-symbol">$</span> <span class="cmd">mkdir -p ~/.agents/skills && cp -r vibe-audit ~/.agents/skills/</span></div>
-              <button class="copy-btn" onclick="copyToClipboard('mkdir -p ~/.agents/skills && cp -r vibe-audit ~/.agents/skills/', this)">
-                <span>Copy</span>
-              </button>
+        <!-- Tab 2: skills.sh Directory -->
+        <div id="install-tab-skills" class="tab-content">
+          <h3 style="font-size: 1.125rem; font-weight: 600; margin-bottom: 8px;">Global Agent Skills Registry (skills.sh)</h3>
+          <p style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 16px;">
+            Installs Vibe Audit for all Agent Skills open-standard CLI hosts (Claude Code, OMP, Pi, Codex, Gemini CLI, OpenCode).
+          </p>
+          <div class="terminal-window" style="margin-bottom: 24px;">
+            <div class="terminal-body">
+              <div class="terminal-line">
+                <div><span class="prompt-symbol">$</span> <span class="cmd">npx skills add Xenonesis/vibe-audit</span></div>
+                <button class="copy-btn" onclick="copyToClipboard('npx skills add Xenonesis/vibe-audit', this)">
+                  <span>Copy</span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
 
-        <div style="background: var(--pastel-yellow-bg); border: 1px solid rgba(149, 100, 0, 0.2); border-radius: 8px; padding: 24px; margin-top: 24px;">
-          <h4 style="font-size: 0.9375rem; font-weight: 600; color: var(--pastel-yellow-text); margin-bottom: 6px;">
-            Note on PromptScript Global Installation
+        <!-- Tab 3: IDEs & MCP -->
+        <div id="install-tab-ides" class="tab-content">
+          <h3 style="font-size: 1.125rem; font-weight: 600; margin-bottom: 8px;">IDE Rules & Model Context Protocol (MCP) Setup</h3>
+          <p style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 16px;">
+            Export native rule files or register the stdio MCP server for Cursor, Windsurf, JetBrains, and VS Code (Continue / Roo Code).
+          </p>
+          <div class="terminal-window" style="margin-bottom: 24px;">
+            <div class="terminal-body">
+              <div class="terminal-line">
+                <div><span class="prompt-symbol"># Export native rules for Cursor (.mdc), Windsurf, Copilot, Roo Code</span><br><span class="prompt-symbol">$</span> <span class="cmd">python scripts/export_rules.py --format all</span></div>
+                <button class="copy-btn" onclick="copyToClipboard('python scripts/export_rules.py --format all', this)">
+                  <span>Copy</span>
+                </button>
+              </div>
+              <div class="terminal-line" style="margin-top: 12px;">
+                <div><span class="prompt-symbol"># Launch stdio MCP Server (Cursor / Windsurf / JetBrains / Continue)</span><br><span class="prompt-symbol">$</span> <span class="cmd">python scripts/mcp_server.py</span></div>
+                <button class="copy-btn" onclick="copyToClipboard('python scripts/mcp_server.py', this)">
+                  <span>Copy</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 4: Editors -->
+        <div id="install-tab-editors" class="tab-content">
+          <h3 style="font-size: 1.125rem; font-weight: 600; margin-bottom: 8px;">Neovim & Emacs Editor Integration</h3>
+          <p style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 16px;">
+            Load Vibe Audit directives directly into Neovim (Avante.nvim / CodeCompanion.nvim) or Emacs (gptel).
+          </p>
+          <div class="terminal-window" style="margin-bottom: 24px;">
+            <div class="terminal-body">
+              <div class="terminal-line">
+                <div><span class="prompt-symbol">-- Neovim avante.nvim configuration</span><br><span class="cmd">require('avante').setup({ system_prompt = io.open("~/.agents/skills/vibe-audit/SKILL.md"):read("*a") })</span></div>
+                <button class="copy-btn" onclick="copyToClipboard('require(\'avante\').setup({ system_prompt = io.open(\"~/.agents/skills/vibe-audit/SKILL.md\"):read(\"*a\") })', this)">
+                  <span>Copy</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Note Box -->
+        <div style="background: var(--pastel-yellow-bg); border: 1px solid rgba(149, 100, 0, 0.2); border-radius: 8px; padding: 20px; margin-top: 24px;">
+          <h4 style="font-size: 0.875rem; font-weight: 600; color: var(--pastel-yellow-text); margin-bottom: 4px;">
+            PromptScript & Project-Local Installation
           </h4>
-          <p style="font-size: 0.875rem; color: var(--pastel-yellow-text); line-height: 1.5;">
-            PromptScript CLI v1.5.x has a hardcoded limitation where <code>globalSkillsDir</code> is disabled. To use Vibe Audit in PromptScript, install project-locally inside your target repo using: <br>
-            <code style="font-family: var(--font-mono); font-weight: 600;">npx skills add Xenonesis/vibe-audit -y</code>
+          <p style="font-size: 0.8125rem; color: var(--pastel-yellow-text); line-height: 1.5; margin: 0;">
+            PromptScript CLI v1.5.x requires project-local installs. Run <code>npx skills add Xenonesis/vibe-audit -y</code> inside your project directory to populate <code>./.agents/skills/vibe-audit</code>.
           </p>
         </div>
       </div>
@@ -1751,6 +1824,18 @@
 
   <!-- Theme System & Interactive Functions -->
   <script>
+    // Installation Tab Switcher
+    function switchInstallTab(tabId, btnElement) {
+      const parent = btnElement.parentElement;
+      parent.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btnElement.classList.add('active');
+
+      const container = btnElement.closest('.reveal') || btnElement.parentElement.parentElement;
+      container.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      
+      const target = document.getElementById(`install-tab-${tabId}`);
+      if (target) target.classList.add('active');
+    }
     // Theme Switcher (Light / Dark / System)
     function setTheme(mode) {
       localStorage.setItem('vibe-audit-theme', mode);
