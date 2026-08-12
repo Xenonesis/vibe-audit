@@ -116,7 +116,7 @@ def resolve_binary(meta: dict) -> list[str] | None:
 
 def probe_version(bin_cmd: list[str]) -> str | None:
     try:
-        cp = subprocess.run(bin_cmd + ["--version"], capture_output=True, text=True, timeout=8)
+        cp = subprocess.run(bin_cmd + ["--version"], capture_output=True, text=True, timeout=8, shell=(sys.platform == "win32"))
         return (cp.stdout or cp.stderr or "").strip().splitlines()[0][:300] or None
     except Exception:
         return None
@@ -129,7 +129,7 @@ def check_auth(cfg: dict, bin_cmd: list[str]) -> tuple[bool, str]:
         return True, "not-required"
     try:
         cp = subprocess.run(bin_cmd + [p for p in probe if p != "{binary}"],
-                            capture_output=True, text=True, timeout=15)
+                            capture_output=True, text=True, timeout=15, shell=(sys.platform == "win32"))
         out = (cp.stdout or "").strip()
         if '"loggedIn": false' in out or '"loggedIn": False' in out:
             return False, "not-logged-in"
@@ -243,7 +243,7 @@ def main():
     before = hash_tree(inputs_dir)
     started = time.time()
     try:
-        cp = subprocess.run(cmd, cwd=inputs_dir, capture_output=True, text=True, timeout=a.timeout)
+        cp = subprocess.run(cmd, cwd=inputs_dir, capture_output=True, text=True, timeout=a.timeout, shell=(sys.platform == "win32"))
         exit_code, stdout, stderr = cp.returncode, cp.stdout or "", cp.stderr or ""
     except subprocess.TimeoutExpired as exc:
         exit_code, stdout, stderr = -1, exc.stdout or "", f"TIMEOUT after {a.timeout}s"
