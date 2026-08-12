@@ -26,15 +26,24 @@ Installs for all open-standard CLI agent hosts (Claude Code, OMP, Pi, Codex, Gem
 npx skills add Xenonesis/vibe-audit
 ```
 
- ### 2. Universal Auto-Installer (Zero-Dependency Go Binary)
+ ### 2. Automated Universal Setup (NPM or Homebrew)
  
- Vibe Audit is now powered by a blazing-fast, single executable. It auto-detects active workspace IDEs and configures skill packages, native rules, and MCP servers automatically:
+ Vibe Audit's universal installer detects active workspace IDEs and configures skill packages, native rules, and MCP servers automatically:
  
+ #### Using NPM (Node.js)
  ```bash
- # 1. Build the binary (requires Go)
- cd cli && go build -o vibe-audit
+ npx vibe-audit install .
+ ```
  
- # 2. Run the universal installer
+ #### Using Homebrew (macOS / Linux)
+ ```bash
+ brew install Xenonesis/vibe-audit/vibe-audit
+ vibe-audit install .
+ ```
+ 
+ #### From Source (Go)
+ ```bash
+ cd cli && go build -o vibe-audit
  ./vibe-audit install ..
  ```
 

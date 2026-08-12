@@ -1,0 +1,29 @@
+{
+  "name": "vibe-audit",
+  "version": "0.1.0",
+  "description": "Evidence-first Agent Skill & Deterministic Validation Toolkit",
+  "main": "bin/vibe-audit.js",
+  "bin": {
+    "vibe-audit": "bin/vibe-audit.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Xenonesis/vibe-audit.git"
+  },
+  "keywords": [
+    "ai",
+    "agents",
+    "mcp",
+    "audit",
+    "security"
+  ],
+  "author": "Xenonesis",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Xenonesis/vibe-audit/issues"
+  },
+  "homepage": "https://github.com/Xenonesis/vibe-audit#readme"
+}
