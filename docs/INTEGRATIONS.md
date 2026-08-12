@@ -10,7 +10,7 @@ Run the universal installer script from the root of your workspace:
 
 ```bash
 # Automated auto-discovery & multi-tool installer
-python scripts/install_universal.py
+./vibe-audit install .
 
 # Windows Command Prompt / PowerShell shortcut
 scripts\run-install-universal.cmd

@@ -3,3 +3,8 @@ __pycache__/
 dist/
 runs/
 node_modules/
+
+# Compiled Go binaries
+*.exe
+cli/vibe-audit
+vibe-audit

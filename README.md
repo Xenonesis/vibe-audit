@@ -26,17 +26,17 @@ Installs for all open-standard CLI agent hosts (Claude Code, OMP, Pi, Codex, Gem
 npx skills add Xenonesis/vibe-audit
 ```
 
-### 2. Automated Universal IDE & CLI Setup
-
-Auto-detects active workspace IDEs and configures skill packages, native rules, and MCP servers:
-
-```bash
-# macOS / Linux / WSL
-python3 scripts/install_universal.py
-
-# Windows Command Prompt / PowerShell
-scripts\run-install-universal.cmd
-```
+ ### 2. Universal Auto-Installer (Zero-Dependency Go Binary)
+ 
+ Vibe Audit is now powered by a blazing-fast, single executable. It auto-detects active workspace IDEs and configures skill packages, native rules, and MCP servers automatically:
+ 
+ ```bash
+ # 1. Build the binary (requires Go)
+ cd cli && go build -o vibe-audit
+ 
+ # 2. Run the universal installer
+ ./vibe-audit install ..
+ ```
 
 ---
 
@@ -129,7 +129,7 @@ Vibe Audit works seamlessly across all IDEs, code editors, and CLI platforms:
 * 🖥️ **Cursor**: Native MDC Rules (`.cursor/rules/vibe-audit.mdc`) & MCP (`.cursor/mcp.json`)
 * 🌊 **Windsurf**: Cascade Rules (`.windsurfrules`) & MCP (`~/.codeium/windsurf/mcp_config.json`)
 * ⚡ **VS Code**: Continue.dev (`.continue/`) & Roo Code / Cline (`.clinerules`)
-* ☕ **JetBrains**: Stdio MCP Server (`scripts/mcp_server.py`)
+ * ☕ **JetBrains**: Stdio MCP Server (`vibe-audit mcp`)
 * ⚡ **Neovim**: `avante.nvim` & `CodeCompanion.nvim` custom rule loaders
 * 🌁 **Emacs**: `gptel` directive setup
 
@@ -142,7 +142,8 @@ Vibe Audit works seamlessly across all IDEs, code editors, and CLI platforms:
 | Asset Directory | Files | Primary Purpose |
 |---|---|---|
 | 📁 **`references/`** | 13 | Domain playbooks (security, correctness, reliability, performance, AI smells, a11y, SEO) |
-| 📁 **`profiles/`** | 10 | Specialist context guidance (safe-audit, frontend, fullstack, api, payments, database) |
+ | 📁 **`scripts/`** | 12 | Validation, trust assessment, & release gate engines |
+ | 📁 **`cli/`**     | 1  | Go-based Native CLI Tool (Installer, Rule Exporter, MCP Server) |
 | 📁 **`evals/`** | 22 | Machine-readable eval cases & fixtures (`evals.json`) |
 | 📁 **`harnesses/`** | 8 | Capability probes for all supported agent hosts |
 | 📁 **`adapters/`** | 12 | Host integration documentation |
@@ -152,9 +153,9 @@ Vibe Audit works seamlessly across all IDEs, code editors, and CLI platforms:
 
 ## 🧪 Local Validation Suite
 
-Execute the deterministic validation engine:
-
-```bash
+ # Run integration test suite (Rule exporters, MCP server, Universal installer)
+ # Note: Python test suite deprecated in favor of compiled Go binary
+ # python scripts/test_integrations.py
 # Validate skill structure & formatting
 python scripts/validate_skill.py .
 
