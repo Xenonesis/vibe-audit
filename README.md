@@ -26,9 +26,12 @@ Installs for all open-standard CLI agent hosts (Claude Code, OMP, Pi, Codex, Gem
 npx skills add Xenonesis/vibe-audit
 ```
 
- ### 2. Automated Universal Setup (NPM or Homebrew)
+ ### 2. Automated Universal Setup (VS Code Extension, NPM, or Homebrew)
  
  Vibe Audit's universal installer detects active workspace IDEs and configures skill packages, native rules, and MCP servers automatically:
+ 
+ #### VS Code / Cursor / Windsurf Extension (Easiest)
+ A native extension is available in the `extension/` directory. Once published to the marketplace, simply install **"Vibe Audit for Cursor & Windsurf"** and click "Install" on the prompt when opening any workspace.
  
  #### Using NPM (Node.js)
  ```bash

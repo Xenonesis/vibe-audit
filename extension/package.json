@@ -1,0 +1,38 @@
+{
+  "name": "vibe-audit",
+  "displayName": "Vibe Audit for Cursor & Windsurf",
+  "description": "Evidence-first Agent Skill & Deterministic Validation Toolkit",
+  "version": "0.1.0",
+  "publisher": "Xenonesis",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Machine Learning",
+    "Security",
+    "Testing"
+  ],
+  "icon": "icon.png",
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "vibeAudit.install",
+        "title": "Vibe Audit: Install & Configure Workspace"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.80.0",
+    "@types/node": "18.x",
+    "typescript": "^5.1.3"
+  }
+}
