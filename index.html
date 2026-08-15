@@ -79,10 +79,13 @@
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
       transition: background-color 0.25s ease, color 0.25s ease;
+      overflow-x: hidden;
+      width: 100%;
     }
 
     body {
       overflow-x: hidden;
+      width: 100%;
     }
 
     a {
@@ -1142,7 +1145,7 @@
        }
      }
  
-     @media (max-width: 380px) {
+     @media (max-width: 480px) {
        .stats-bar {
          grid-template-columns: 1fr;
        }
@@ -2043,7 +2046,7 @@
 
       <!-- Installation Target Switcher Tabs -->
       <div style="margin-top: 32px;" class="reveal">
-         <div style="display: flex; gap: 8px; border-bottom: 1px solid var(--border-color); margin-bottom: 24px;">
+         <div class="tabs-nav">
            <button class="tab-btn active" onclick="switchInstallTab('vscode', this)">VS Code Extension</button>
            <button class="tab-btn" onclick="switchInstallTab('universal', this)">NPM / Node.js</button>
            <button class="tab-btn" onclick="switchInstallTab('homebrew', this)">Homebrew</button>
@@ -2219,7 +2222,7 @@
   <!-- Footer -->
   <footer class="footer">
     <div class="container footer-inner">
-      <div style="display: flex; align-items: center; gap: 12px;">
+      <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
         <span style="font-family: var(--font-mono); font-weight: 600; color: var(--text-main);">vibe-audit v0.1.0</span>
         <span>—</span>
         <span>Created by Xenonesis under MIT License</span>
