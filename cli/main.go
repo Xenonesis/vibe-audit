@@ -225,36 +225,32 @@ func handleMCP(req JSONRPCRequest) *JSONRPCResponse {
 				workspace = "."
 			}
 			target := filepath.Join(getRootDir(), workspace)
-			var findings []string
-			if _, err := os.Stat(filepath.Join(target, ".git", "hooks")); err == nil {
-				findings = append(findings, "Git hooks detected in workspace.")
-			}
-			if pkgBytes, err := os.ReadFile(filepath.Join(target, "package.json")); err == nil {
-				content := string(pkgBytes)
-				if strings.Contains(content, "postinstall") || strings.Contains(content, "preinstall") {
-					findings = append(findings, "Package install lifecycle hooks detected.")
-				}
-			}
-			status := "TRUSTED_STATIC"
-			if len(findings) > 0 {
-				status = "REQUIRES_ISOLATION"
-			}
-			resText := fmt.Sprintf("Trust Status: %s\nFindings:\n", status)
-			if len(findings) > 0 {
-				for _, f := range findings {
-					resText += "- " + f + "\n"
-				}
-			} else {
-				resText += "- Clean static surface.\n"
-			}
-			return &JSONRPCResponse{
-				JSONRPC: "2.0",
-				ID:      req.ID,
-				Result: map[string]interface{}{
-					"content": []map[string]interface{}{{"type": "text", "text": resText}},
-				},
-			}
-		}
+ 			// Run the deterministic static scanner
+ 			findings := ScanWorkspace(target)
+ 
+ 			status := "TRUSTED_STATIC"
+ 			if len(findings) > 0 {
+ 				status = "REQUIRES_ISOLATION / HIGH_RISK"
+ 			}
+ 
+ 			resText := fmt.Sprintf("Trust Status: %s\n\nDeterministic Scanner Findings:\n", status)
+ 			if len(findings) > 0 {
+ 				for _, f := range findings {
+ 					resText += fmt.Sprintf("- [%s] %s:%d: %s (%s)\n", f.Severity, f.File, f.Line, f.Rule, f.Message)
+ 				}
+ 				resText += "\nINSTRUCTION: These hardcoded issues must be fixed or verified before addressing architectural concerns.\n"
+ 			} else {
+ 				resText += "- Clean static surface. No hardcoded secrets or suspicious hooks detected.\n"
+ 			}
+ 
+ 			return &JSONRPCResponse{
+ 				JSONRPC: "2.0",
+ 				ID:      req.ID,
+ 				Result: map[string]interface{}{
+ 					"content": []map[string]interface{}{{"type": "text", "text": resText}},
+ 				},
+ 			}
+ 		}
 		if toolName == "vibe_audit_run" {
 			mode, _ := args["mode"].(string)
 			if mode == "" {
