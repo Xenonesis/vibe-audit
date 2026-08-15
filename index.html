@@ -211,91 +211,147 @@
       transform: scale(0.98);
     }
 
-    /* Top Navigation */
-    .navbar {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: var(--bg-header);
-      backdrop-filter: blur(8px);
-      border-bottom: 1px solid var(--border-color);
-      padding: 14px 0;
-      transition: background-color 0.25s ease;
-    }
-
-    .nav-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-family: var(--font-mono);
-      font-weight: 600;
-      font-size: 0.9375rem;
-      color: var(--text-main);
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 24px;
-      list-style: none;
-    }
-
-    .nav-links a {
-      font-size: 0.875rem;
-      color: var(--text-muted);
-      transition: color 0.15s ease;
-    }
-
-    .nav-links a:hover {
-      color: var(--text-main);
-    }
-
-    .nav-controls {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    /* Theme Switcher Segmented Control */
-    .theme-switch {
-      display: inline-flex;
-      align-items: center;
-      background: var(--bg-subtle);
-      border: 1px solid var(--border-color);
-      border-radius: 6px;
-      padding: 2px;
-      gap: 2px;
-    }
-
-    .theme-btn {
-      background: none;
-      border: none;
-      padding: 6px 10px;
-      border-radius: 4px;
-      color: var(--text-muted);
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: color 0.15s ease, background 0.15s ease;
-    }
-
-    .theme-btn:hover {
-      color: var(--text-main);
-    }
-
-    .theme-btn.active {
-      background: var(--bg-surface);
-      color: var(--text-main);
-      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-    }
-
+     /* Top Navigation */
+     .navbar {
+       position: sticky;
+       top: 0;
+       z-index: 100;
+       background: var(--bg-header);
+       backdrop-filter: blur(12px);
+       -webkit-backdrop-filter: blur(12px);
+       border-bottom: 1px solid var(--border-color);
+       padding: 14px 0;
+       transition: background-color 0.25s ease;
+     }
+ 
+     .nav-inner {
+       display: flex;
+       align-items: center;
+       justify-content: space-between;
+       position: relative;
+     }
+ 
+     .brand {
+       display: flex;
+       align-items: center;
+       gap: 10px;
+       font-family: var(--font-mono);
+       font-weight: 600;
+       font-size: 0.9375rem;
+       color: var(--text-main);
+       flex-shrink: 0;
+     }
+ 
+     .nav-links {
+       display: flex;
+       align-items: center;
+       gap: 20px;
+       list-style: none;
+     }
+ 
+     .nav-links a {
+       font-size: 0.875rem;
+       color: var(--text-muted);
+       transition: color 0.15s ease;
+       display: block;
+     }
+ 
+     .nav-links a:hover {
+       color: var(--text-main);
+     }
+ 
+     .nav-controls {
+       display: flex;
+       align-items: center;
+       gap: 10px;
+       flex-shrink: 0;
+     }
+ 
+     /* Mobile Menu Toggle Button */
+     .mobile-menu-btn {
+       display: none;
+       background: var(--bg-subtle);
+       border: 1px solid var(--border-color);
+       border-radius: 6px;
+       padding: 6px 8px;
+       color: var(--text-main);
+       cursor: pointer;
+       align-items: center;
+       justify-content: center;
+       transition: background 0.15s ease;
+     }
+ 
+     .mobile-menu-btn:hover {
+       background: var(--bg-surface);
+       border-color: var(--border-hover);
+     }
+ 
+     @media (max-width: 900px) {
+       .mobile-menu-btn {
+         display: inline-flex;
+       }
+ 
+       .nav-links {
+         display: none;
+         position: absolute;
+         top: calc(100% + 14px);
+         left: 0;
+         right: 0;
+         background: var(--bg-surface);
+         border: 1px solid var(--border-color);
+         border-radius: 8px;
+         padding: 16px 20px;
+         flex-direction: column;
+         align-items: flex-start;
+         gap: 14px;
+         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+         z-index: 1000;
+       }
+ 
+       .nav-links.open {
+         display: flex;
+       }
+ 
+       .nav-links a {
+         width: 100%;
+         padding: 4px 0;
+         font-size: 0.9375rem;
+       }
+     }
+ 
+     /* Theme Switcher Segmented Control */
+     .theme-switch {
+       display: inline-flex;
+       align-items: center;
+       background: var(--bg-subtle);
+       border: 1px solid var(--border-color);
+       border-radius: 6px;
+       padding: 2px;
+       gap: 2px;
+     }
+ 
+     .theme-btn {
+       background: none;
+       border: none;
+       padding: 6px 8px;
+       border-radius: 4px;
+       color: var(--text-muted);
+       cursor: pointer;
+       display: flex;
+       align-items: center;
+       justify-content: center;
+       transition: color 0.15s ease, background 0.15s ease;
+     }
+ 
+     .theme-btn:hover {
+       color: var(--text-main);
+     }
+ 
+     .theme-btn.active {
+       background: var(--bg-surface);
+       color: var(--text-main);
+       box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+     }
     /* Hero Component */
     .hero {
       padding: 90px 0 60px;
@@ -511,72 +567,174 @@
       line-height: 1.6;
     }
 
-    /* Comparison Table Component */
-    .comp-table-wrapper {
-      background: var(--bg-surface);
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      overflow: hidden;
-      margin-top: 32px;
-    }
-
-    .comp-table {
-      width: 100%;
-      border-collapse: collapse;
-      text-align: left;
-      font-size: 0.875rem;
-    }
-
-    .comp-table th {
-      background: var(--bg-subtle);
-      padding: 14px 20px;
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--text-muted);
-      border-bottom: 1px solid var(--border-color);
-    }
-
-    .comp-table td {
-      padding: 16px 20px;
-      border-bottom: 1px solid var(--border-color);
-      vertical-align: top;
-    }
-
-    .comp-table tr:last-child td {
-      border-bottom: none;
-    }
-
-    .comp-table tr:hover td {
-      background: var(--bg-subtle);
-    }
-
-    /* Pipeline / Process Steps */
-    .pipeline-list {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      margin-top: 40px;
-    }
-
-    .pipeline-step {
-      background: var(--bg-surface);
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      padding: 24px 28px;
-      display: grid;
-      grid-template-columns: 140px 1fr;
-      gap: 24px;
-      align-items: start;
-    }
-
-    @media (max-width: 700px) {
-      .pipeline-step {
-        grid-template-columns: 1fr;
-        gap: 12px;
-      }
-    }
+     /* Comparison Table Component */
+     .comp-table-wrapper {
+       background: var(--bg-surface);
+       border: 1px solid var(--border-color);
+       border-radius: 8px;
+       overflow-x: auto;
+       -webkit-overflow-scrolling: touch;
+       margin-top: 32px;
+       width: 100%;
+     }
+ 
+     .comp-table {
+       width: 100%;
+       min-width: 580px;
+       border-collapse: collapse;
+       text-align: left;
+       font-size: 0.875rem;
+     }
+ 
+     .comp-table th {
+       background: var(--bg-subtle);
+       padding: 14px 20px;
+       font-family: var(--font-mono);
+       font-size: 0.75rem;
+       text-transform: uppercase;
+       letter-spacing: 0.05em;
+       color: var(--text-muted);
+       border-bottom: 1px solid var(--border-color);
+     }
+ 
+     .comp-table td {
+       padding: 16px 20px;
+       border-bottom: 1px solid var(--border-color);
+       vertical-align: top;
+     }
+ 
+     .comp-table tr:last-child td {
+       border-bottom: none;
+     }
+ 
+     .comp-table tr:hover td {
+       background: var(--bg-subtle);
+     }
+ 
+     /* Agent Safety Leaderboard Component */
+     .leaderboard-list {
+       display: flex;
+       flex-direction: column;
+       gap: 8px;
+       margin-top: 40px;
+     }
+ 
+     .leaderboard-header {
+       display: grid;
+       grid-template-columns: 48px 1.8fr 1fr 1fr;
+       gap: 16px;
+       padding: 0 16px 8px 16px;
+       border-bottom: 1px solid var(--border-color);
+       font-family: var(--font-mono);
+       font-size: 0.75rem;
+       color: var(--text-muted);
+       text-transform: uppercase;
+       letter-spacing: 0.05em;
+       align-items: center;
+     }
+ 
+     .leaderboard-row {
+       display: grid;
+       grid-template-columns: 48px 1.8fr 1fr 1fr;
+       gap: 16px;
+       padding: 16px;
+       background: var(--bg-surface);
+       border: 1px solid var(--border-color);
+       border-radius: 6px;
+       align-items: center;
+       transition: border-color 0.15s ease;
+     }
+ 
+     .leaderboard-row:hover {
+       border-color: var(--border-hover);
+     }
+ 
+     .leaderboard-row.baseline {
+       background: var(--bg-main);
+       border-style: dashed;
+       opacity: 0.65;
+       margin-top: 12px;
+     }
+ 
+     .rank-num {
+       font-family: var(--font-mono);
+       color: var(--text-muted);
+       font-size: 0.875rem;
+     }
+ 
+     .agent-info {
+       font-weight: 500;
+       display: flex;
+       align-items: center;
+       gap: 12px;
+       color: var(--text-main);
+       min-width: 0;
+     }
+ 
+     .agent-info svg {
+       flex-shrink: 0;
+     }
+ 
+     .safety-score {
+       text-align: right;
+       font-family: var(--font-mono);
+       font-size: 1rem;
+       font-weight: 600;
+       color: var(--text-main);
+     }
+ 
+     @media (max-width: 640px) {
+       .leaderboard-header {
+         grid-template-columns: 32px 1fr auto;
+         gap: 10px;
+         padding: 0 10px 8px 10px;
+       }
+       .leaderboard-header .col-integration {
+         display: none;
+       }
+       .leaderboard-row {
+         grid-template-columns: 30px 1fr auto;
+         gap: 10px;
+         padding: 12px 14px;
+       }
+       .leaderboard-row .col-integration {
+         display: none;
+       }
+       .agent-info {
+         gap: 8px;
+         font-size: 0.875rem;
+       }
+       .safety-score {
+         font-size: 0.9375rem;
+       }
+     }
+ 
+     /* Pipeline / Process Steps */
+     .pipeline-list {
+       display: flex;
+       flex-direction: column;
+       gap: 16px;
+       margin-top: 40px;
+     }
+ 
+     .pipeline-step {
+       background: var(--bg-surface);
+       border: 1px solid var(--border-color);
+       border-radius: 8px;
+       padding: 24px 28px;
+       display: grid;
+       grid-template-columns: 140px 1fr;
+       gap: 24px;
+       align-items: start;
+     }
+ 
+     @media (max-width: 700px) {
+       .pipeline-step {
+         grid-template-columns: 1fr;
+         gap: 12px;
+         padding: 18px 20px;
+       }
+     }
 
     .step-tag {
       font-family: var(--font-mono);
@@ -823,37 +981,183 @@
       background: var(--bg-surface);
     }
 
-    .footer-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 20px;
-      font-size: 0.875rem;
-      color: var(--text-muted);
-    }
-
-    /* Inline SVG Utilities */
-    .icon {
-      width: 16px;
-      height: 16px;
-      fill: none;
-      stroke: currentColor;
-      stroke-width: 2;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      display: inline-block;
-      vertical-align: middle;
-    }
-
-    .icon-logo {
-      width: 22px;
-      height: 22px;
-      display: inline-block;
-      vertical-align: middle;
-    }
-  </style>
-</head>
+     .footer-inner {
+       display: flex;
+       align-items: center;
+       justify-content: space-between;
+       flex-wrap: wrap;
+       gap: 20px;
+       font-size: 0.875rem;
+       color: var(--text-muted);
+     }
+ 
+     /* Inline SVG Utilities */
+     .icon {
+       width: 16px;
+       height: 16px;
+       fill: none;
+       stroke: currentColor;
+       stroke-width: 2;
+       stroke-linecap: round;
+       stroke-linejoin: round;
+       display: inline-block;
+       vertical-align: middle;
+     }
+ 
+     .icon-logo {
+       width: 22px;
+       height: 22px;
+       display: inline-block;
+       vertical-align: middle;
+     }
+ 
+     /* ========================================================
+        COMPREHENSIVE MOBILE RESPONSIVE MEDIA QUERIES
+        ======================================================== */
+ 
+     @media (max-width: 900px) {
+       .section {
+         padding: 72px 0;
+       }
+       .section-sm {
+         padding: 48px 0;
+       }
+       .col-8, .col-6, .col-4 {
+         grid-column: span 12;
+       }
+       .bento-card {
+         padding: 24px;
+       }
+     }
+ 
+     @media (max-width: 640px) {
+       .section {
+         padding: 52px 0;
+       }
+       .section-sm {
+         padding: 32px 0;
+       }
+       .container, .container-narrow {
+         padding: 0 16px;
+       }
+ 
+       h1.hero-heading {
+         font-size: clamp(2rem, 7.5vw, 2.625rem);
+         margin-bottom: 16px;
+       }
+       h2.section-heading {
+         font-size: clamp(1.5rem, 5.5vw, 2rem);
+         margin-bottom: 12px;
+       }
+       p.lead-text {
+         font-size: 1rem;
+         line-height: 1.55;
+       }
+ 
+       .hero {
+         padding: 40px 0 28px;
+       }
+       .hero-actions {
+         flex-direction: column;
+         align-items: stretch;
+         gap: 10px;
+       }
+       .hero-actions .btn {
+         width: 100%;
+       }
+ 
+       .stats-bar {
+         grid-template-columns: repeat(2, 1fr);
+         gap: 10px;
+         margin-top: 28px;
+       }
+       .stat-card {
+         padding: 14px 12px;
+       }
+       .stat-num {
+         font-size: 1.3125rem;
+       }
+       .stat-label {
+         font-size: 0.75rem;
+       }
+ 
+       .bento-grid {
+         gap: 12px;
+         margin-top: 24px;
+       }
+       .bento-card {
+         padding: 18px 16px;
+       }
+       .card-title {
+         font-size: 1.125rem;
+       }
+       .card-desc {
+         font-size: 0.875rem;
+       }
+ 
+       .harness-grid {
+         grid-template-columns: 1fr;
+         gap: 12px;
+         margin-top: 24px;
+       }
+       .harness-card {
+         padding: 18px 16px;
+       }
+ 
+       .terminal-header {
+         padding: 8px 12px;
+       }
+       .terminal-body {
+         padding: 12px 14px;
+         font-size: 0.78125rem;
+       }
+       .terminal-line {
+         flex-direction: column;
+         align-items: flex-start;
+         gap: 6px;
+       }
+       .terminal-line .copy-btn {
+         align-self: flex-start;
+       }
+ 
+       .developer-card {
+         padding: 20px 16px;
+         gap: 16px;
+         margin-top: 24px;
+       }
+       .dev-avatar {
+         width: 56px;
+         height: 56px;
+         font-size: 1.625rem;
+         border-radius: 8px;
+       }
+ 
+       .footer {
+         padding: 36px 0;
+       }
+       .footer-inner {
+         flex-direction: column;
+         align-items: flex-start;
+         gap: 12px;
+       }
+     }
+ 
+     @media (max-width: 380px) {
+       .stats-bar {
+         grid-template-columns: 1fr;
+       }
+       .brand span:nth-of-type(1) {
+         font-size: 0.8125rem;
+       }
+       .brand .badge {
+         display: none;
+       }
+       #stars-count {
+         display: none;
+       }
+     }
+   </style>
+ </head>
 <body>
 
   <!-- Top Sticky Navigation -->
@@ -897,10 +1201,13 @@
           <button class="theme-btn" id="theme-system" onclick="setTheme('system')" title="System Theme">
             <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
           </button>
-        </div>
-      </div>
-    </div>
-  </nav>
+         <!-- Mobile Navigation Hamburger Toggle -->
+         <button class="mobile-menu-btn" id="mobile-menu-toggle" onclick="toggleMobileMenu()" aria-label="Toggle Navigation">
+           <svg class="icon" viewBox="0 0 24 24" style="width: 18px; height: 18px;"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+         </button>
+       </div>
+     </div>
+   </nav>
 
   <!-- Hero Section -->
   <header class="hero section">
@@ -1272,84 +1579,83 @@
          </p>
        </div>
  
-       <div class="bento-grid reveal" style="margin-top: 40px; display: flex; flex-direction: column; gap: 8px;">
+       <div class="leaderboard-list reveal">
          
          <!-- Table Header -->
-         <div style="display: grid; grid-template-columns: 48px 2fr 1fr 1fr; gap: 16px; padding: 0 16px 8px 16px; border-bottom: 1px solid var(--border-color); font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; align-items: center;">
+         <div class="leaderboard-header">
            <div>Rank</div>
            <div>Agent Host</div>
-           <div>Integration</div>
+           <div class="col-integration">Integration</div>
            <div style="text-align: right;">Safety Score</div>
          </div>
  
          <!-- Rank 1 -->
-         <div style="display: grid; grid-template-columns: 48px 2fr 1fr 1fr; gap: 16px; padding: 16px; background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 6px; align-items: center;">
-           <div style="font-family: var(--font-mono); color: var(--text-muted); font-size: 0.875rem;">#1</div>
-           <div style="font-weight: 500; display: flex; align-items: center; gap: 12px; color: var(--text-main);">
+         <div class="leaderboard-row">
+           <div class="rank-num">#1</div>
+           <div class="agent-info">
              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M11.976.0003a1.541 1.541 0 0 0-1.0928.4526L8.707 2.6287l2.7604 2.7604c.6417-.2166 1.377-.0715 1.8882.4399.514.5145.6583 1.2563.4362 1.9l.9101.9102 3.2768-3.2764L13.0684.4529A1.5394 1.5394 0 0 0 11.976.0003ZM7.638 3.698 5.926 5.4101l4.9095 4.9095c.1535.1536.332.267.5217.3423V8.831a1.8198 1.8198 0 0 1-.6024-.4011c-.5441-.5437-.6749-1.3422-.3958-2.0104Zm10.916 2.24-3.2765 3.2764 1.1743 1.1747c.6436-.2217 1.3862-.0782 1.9001.4366.7185.7183.7185 1.8823 0 2.6008-.7186.7187-1.8823.7187-2.6012 0-.5402-.5407-.674-1.3344-.4003-2l-1.1427-1.1423-.588.588c-.6036.604-.6036 1.5829 0 2.1865l4.9935 4.993 4.9342-4.9342c.6035-.6038.6035-1.5829 0-2.1865l-2.4673-2.4673c-.6035-.6039-1.583-.6039-2.1865 0Zm-7.7303 3.6545L5.6882 14.728l-4.57 4.5694a1.5414 1.5414 0 0 0 0 2.1818l1.3541 1.354a1.5407 1.5407 0 0 0 2.1818 0l4.5699-4.5699 5.1345-5.134-5.2348-5.2346Zm-2.311 9.9431a1.055 1.055 0 1 1 0 2.11 1.055 1.055 0 0 1 0-2.11Z"/></svg>
-             Oh My Pi (OMP)
+             <span class="agent-name">Oh My Pi (OMP)</span>
            </div>
-           <div><span class="badge badge-green" style="background: var(--pastel-green-bg); color: var(--pastel-green-text);">Native Skills</span></div>
-           <div style="text-align: right; font-family: var(--font-mono); font-size: 1rem; font-weight: 600; color: var(--text-main);">98.5%</div>
+           <div class="col-integration"><span class="badge badge-green" style="background: var(--pastel-green-bg); color: var(--pastel-green-text);">Native Skills</span></div>
+           <div class="safety-score">98.5%</div>
          </div>
  
          <!-- Rank 2 -->
-         <div style="display: grid; grid-template-columns: 48px 2fr 1fr 1fr; gap: 16px; padding: 16px; background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 6px; align-items: center;">
-           <div style="font-family: var(--font-mono); color: var(--text-muted); font-size: 0.875rem;">#2</div>
-           <div style="font-weight: 500; display: flex; align-items: center; gap: 12px; color: var(--text-main);">
+         <div class="leaderboard-row">
+           <div class="rank-num">#2</div>
+           <div class="agent-info">
              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M4.5 4.5h15a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H17v11a1.5 1.5 0 0 1-3 0V7.5h-4v9.5a2.5 2.5 0 0 1-5 0V7.5H4.5a1 1 0 0 1-1-1v-1a1 1 0 0 1 1-1z"/></svg>
-             Pi Agent
+             <span class="agent-name">Pi Agent</span>
            </div>
-           <div><span class="badge badge-green" style="background: var(--pastel-green-bg); color: var(--pastel-green-text);">Native Skills</span></div>
-           <div style="text-align: right; font-family: var(--font-mono); font-size: 1rem; font-weight: 600; color: var(--text-main);">98.0%</div>
+           <div class="col-integration"><span class="badge badge-green" style="background: var(--pastel-green-bg); color: var(--pastel-green-text);">Native Skills</span></div>
+           <div class="safety-score">98.0%</div>
          </div>
  
          <!-- Rank 3 -->
-         <div style="display: grid; grid-template-columns: 48px 2fr 1fr 1fr; gap: 16px; padding: 16px; background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 6px; align-items: center;">
-           <div style="font-family: var(--font-mono); color: var(--text-muted); font-size: 0.875rem;">#3</div>
-           <div style="font-weight: 500; display: flex; align-items: center; gap: 12px; color: var(--text-main);">
+         <div class="leaderboard-row">
+           <div class="rank-num">#3</div>
+           <div class="agent-info">
              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6 3.5L20.5 11L12.5 13.5L9 21.5L6 3.5Z"/></svg>
-             Cursor IDE
+             <span class="agent-name">Cursor IDE</span>
            </div>
-           <div><span class="badge badge-blue" style="background: var(--pastel-blue-bg); color: var(--pastel-blue-text);">MDC + MCP</span></div>
-           <div style="text-align: right; font-family: var(--font-mono); font-size: 1rem; font-weight: 600; color: var(--text-main);">94.2%</div>
+           <div class="col-integration"><span class="badge badge-blue" style="background: var(--pastel-blue-bg); color: var(--pastel-blue-text);">MDC + MCP</span></div>
+           <div class="safety-score">94.2%</div>
          </div>
  
          <!-- Rank 4 -->
-         <div style="display: grid; grid-template-columns: 48px 2fr 1fr 1fr; gap: 16px; padding: 16px; background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 6px; align-items: center;">
-           <div style="font-family: var(--font-mono); color: var(--text-muted); font-size: 0.875rem;">#4</div>
-           <div style="font-weight: 500; display: flex; align-items: center; gap: 12px; color: var(--text-main);">
+         <div class="leaderboard-row">
+           <div class="rank-num">#4</div>
+           <div class="agent-info">
              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M2.5 12a9.5 9.5 0 1 1 19 0 9.5 9.5 0 1 1-19 0z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M7 12a5 5 0 1 1 10 0 5 5 0 1 1-10 0z"/></svg>
-             Windsurf
+             <span class="agent-name">Windsurf</span>
            </div>
-           <div><span class="badge badge-blue" style="background: var(--pastel-blue-bg); color: var(--pastel-blue-text);">Cascade + MCP</span></div>
-           <div style="text-align: right; font-family: var(--font-mono); font-size: 1rem; font-weight: 600; color: var(--text-main);">92.8%</div>
+           <div class="col-integration"><span class="badge badge-blue" style="background: var(--pastel-blue-bg); color: var(--pastel-blue-text);">Cascade + MCP</span></div>
+           <div class="safety-score">92.8%</div>
          </div>
  
          <!-- Rank 5 -->
-         <div style="display: grid; grid-template-columns: 48px 2fr 1fr 1fr; gap: 16px; padding: 16px; background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 6px; align-items: center;">
-           <div style="font-family: var(--font-mono); color: var(--text-muted); font-size: 0.875rem;">#5</div>
-           <div style="font-weight: 500; display: flex; align-items: center; gap: 12px; color: var(--text-main);">
+         <div class="leaderboard-row">
+           <div class="rank-num">#5</div>
+           <div class="agent-info">
              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.3041 3.541h-3.6718l6.696 16.918H24Zm-10.6082 0L0 20.459h3.7442l1.3693-3.5527h7.0052l1.3693 3.5528h3.7442L10.5363 3.5409Zm-.3712 10.2232 2.2914-5.9456 2.2914 5.9456Z"/></svg>
-             Claude Code
+             <span class="agent-name">Claude Code</span>
            </div>
-           <div><span class="badge badge-yellow" style="background: var(--pastel-yellow-bg); color: var(--pastel-yellow-text);">System Prompt</span></div>
-           <div style="text-align: right; font-family: var(--font-mono); font-size: 1rem; font-weight: 600; color: var(--text-main);">89.5%</div>
+           <div class="col-integration"><span class="badge badge-yellow" style="background: var(--pastel-yellow-bg); color: var(--pastel-yellow-text);">System Prompt</span></div>
+           <div class="safety-score">89.5%</div>
          </div>
  
          <!-- Baseline -->
-         <div style="display: grid; grid-template-columns: 48px 2fr 1fr 1fr; gap: 16px; padding: 16px; background: var(--bg-main); border: 1px solid var(--border-color); border-radius: 6px; align-items: center; opacity: 0.6; margin-top: 16px;">
-           <div style="font-family: var(--font-mono); color: var(--text-muted); font-size: 0.875rem;">-</div>
-           <div style="font-weight: 500; display: flex; align-items: center; gap: 12px; color: var(--text-muted);">
+         <div class="leaderboard-row baseline">
+           <div class="rank-num">-</div>
+           <div class="agent-info" style="color: var(--text-muted);">
              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
-             Vanilla Vibe-Coding (No Audit)
+             <span class="agent-name">Vanilla Vibe-Coding (No Audit)</span>
            </div>
-           <div><span class="badge badge-red" style="background: var(--pastel-red-bg); color: var(--pastel-red-text);">Baseline</span></div>
-           <div style="text-align: right; font-family: var(--font-mono); font-size: 1rem; font-weight: 600; color: var(--pastel-red-text);">12.0%</div>
+           <div class="col-integration"><span class="badge badge-red" style="background: var(--pastel-red-bg); color: var(--pastel-red-text);">Baseline</span></div>
+           <div class="safety-score" style="color: var(--pastel-red-text);">12.0%</div>
          </div>
  
        </div>
-     </div>
    </section>
  
    <div class="divider"></div>
@@ -2035,7 +2341,28 @@
       }, observerOptions);
 
       document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-    });
+     });
+ 
+     // Mobile Menu Toggle Function
+     function toggleMobileMenu() {
+       const navLinks = document.querySelector('.nav-links');
+       const btn = document.getElementById('mobile-menu-toggle');
+       navLinks.classList.toggle('open');
+       const isOpen = navLinks.classList.contains('open');
+       btn.innerHTML = isOpen
+         ? `<svg class="icon" viewBox="0 0 24 24" style="width: 18px; height: 18px;"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`
+         : `<svg class="icon" viewBox="0 0 24 24" style="width: 18px; height: 18px;"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>`;
+     }
+ 
+     // Auto-close mobile menu on link click
+     document.querySelectorAll('.nav-links a').forEach(link => {
+       link.addEventListener('click', () => {
+         const navLinks = document.querySelector('.nav-links');
+         if (navLinks && navLinks.classList.contains('open')) {
+           toggleMobileMenu();
+         }
+       });
+     });
   </script>
 </body>
 </html>
