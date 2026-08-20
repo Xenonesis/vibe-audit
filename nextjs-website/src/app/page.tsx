@@ -272,7 +272,7 @@ export default function Home() {
             <h2 className="serif-title section-heading">Multi-Harness Live Model Driver</h2>
             <p className="lead-text">
               <code>scripts/run_harness.py</code> probes binary PATHs, checks authentication status, installs the skill bundle, 
-              headlessly executes models, and mechanically grades assertions across all 8 supported agent hosts.
+              headlessly executes models, and mechanically grades assertions across all 11 supported agent hosts.
             </p>
           </div>
           <HarnessGrid />

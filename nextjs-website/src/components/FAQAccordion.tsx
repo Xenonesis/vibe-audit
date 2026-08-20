@@ -29,7 +29,7 @@ export default function FAQAccordion() {
     {
       question: 'Which AI agent harnesses are supported?',
       answer:
-        'Vibe Audit includes capability definitions and driver hooks for 8 major harnesses: Pi, OMP (Oh My Pi), Claude Code, Codex, Cursor, Gemini CLI, Copilot CLI, and Antigravity.',
+        'Vibe Audit includes capability definitions and driver hooks for 11 major harnesses: Pi, OMP (Oh My Pi), Claude Code, Codex, Cursor, Gemini CLI, Copilot CLI, Antigravity, OpenCode, TRAE / TraeCode, and Windsurf / Cascade.',
     },
   ];
 

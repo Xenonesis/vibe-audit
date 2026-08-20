@@ -82,6 +82,30 @@ export default function HarnessGrid() {
       description: 'Binary not found on PATH. Driver probe records clean skip event with documented binary target.',
       cmd: 'python scripts/run_harness.py . --eval 1 --harness antigravity --condition with-skill --timeout 300',
     },
+    {
+      id: 'opencode',
+      name: 'opencode',
+      displayName: 'OpenCode',
+      status: { text: 'SKIP (Missing)', className: 'badge-neutral' },
+      description: 'Binary not found on PATH. Driver probe records clean skip event with documented binary target.',
+      cmd: 'python scripts/run_harness.py . --eval 1 --harness opencode --condition with-skill --timeout 300',
+    },
+    {
+      id: 'trae',
+      name: 'trae',
+      displayName: 'TRAE / TraeCode',
+      status: { text: 'SKIP (Missing)', className: 'badge-neutral' },
+      description: 'Binary not found on PATH. Driver probe records clean skip event with documented binary target.',
+      cmd: 'python scripts/run_harness.py . --eval 1 --harness trae --condition with-skill --timeout 300',
+    },
+    {
+      id: 'windsurf',
+      name: 'windsurf',
+      displayName: 'Windsurf / Cascade',
+      status: { text: 'SKIP (Missing)', className: 'badge-neutral' },
+      description: 'Binary not found on PATH. Driver probe records clean skip event with documented binary target.',
+      cmd: 'python scripts/run_harness.py . --eval 1 --harness windsurf --condition with-skill --timeout 300',
+    },
   ];
 
   const copyToClipboard = async (text: string, cmdId: string) => {
@@ -127,6 +151,15 @@ export default function HarnessGrid() {
                     )}
                     {harness.id === 'antigravity' && (
                       <path d="M12 1L9 9l-7 1 6 5-2 8 8-4 8 4-2-8 6-5-7-1z" />
+                    )}
+                    {harness.id === 'opencode' && (
+                      <path d="M12 2L2 7l10 5 10 5-10-5zM2 17l10 5 10-5" />
+                    )}
+                    {harness.id === 'trae' && (
+                      <path d="M4 4h16v16H4z" />
+                    )}
+                    {harness.id === 'windsurf' && (
+                      <path d="M2 3h20l-7 14H9z" />
                     )}
                   </svg>
                 </div>

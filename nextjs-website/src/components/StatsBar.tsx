@@ -10,7 +10,7 @@ export default function StatsBar() {
         <div className="stat-label">Machine-Readable Evals</div>
       </div>
       <div className="stat-card">
-        <div className="stat-num">8</div>
+        <div className="stat-num">11</div>
         <div className="stat-label">Supported Harnesses</div>
       </div>
       <div className="stat-card">
