@@ -12,6 +12,9 @@ Pi currently discovers skills from documented global/project locations including
 
 Pi recursively discovers directories containing `SKILL.md` in skill locations. Project skill loading depends on project trust.
 
+## Plan Mode
+Pi supports the `plan` mode of vibe-audit, which produces a prioritized remediation plan without source changes. Use `/skill:vibe-audit` with plan intent.
+
 ## Installation
 Copy the entire `vibe-audit/` directory under a supported skills root, or configure/pass the skill path using Pi settings/CLI. Keep the skill directory intact so relative `references/` paths resolve.
 

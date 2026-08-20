@@ -14,5 +14,8 @@ The runtime should load `SKILL.md` first and only load `references/*.md` require
 ## Validation
 Where available, use the Agent Skills reference validator (for example `skills-ref validate ./vibe-audit`) to check frontmatter/naming/structure. Behavioral correctness still requires the eval suite.
 
+## Plan Mode
+The generic adapter supports the `plan` mode of vibe-audit, which produces a prioritized remediation plan. Plan mode is identified by the task description requesting a remediation plan without source modifications.
+
 ## Security note
 Skills are instructions with potentially powerful side effects when executed by coding agents. Review the package and harness permissions before use, especially in production repositories.

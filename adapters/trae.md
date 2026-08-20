@@ -13,6 +13,9 @@ Use TRAE's current Skills UI/documented project or personal skill location for t
 ## Integration
 Keep TRAE custom-agent prompts separate from this skill. A custom agent can invoke/use the skill, but the skill remains the source of truth for audit modes, evidence, approval gates, and verification.
 
+## Plan Mode
+TRAE supports the `plan` mode of vibe-audit, which produces a prioritized remediation plan without source changes. Plan mode is identified when the user requests audit and plan output.
+
 Official references:
 - https://docs.trae.ai/ide/skills
 - https://docs.trae.ai/ide/best-practice-for-how-to-write-a-good-skill

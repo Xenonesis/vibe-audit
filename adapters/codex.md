@@ -13,6 +13,9 @@ Codex scans `.agents/skills` from the current working directory up to the reposi
 - Implicit: Codex may select the skill when the request matches `description`.
 - Explicit: use `/skills` or type `$` and select/mention `vibe-audit`.
 
+## Plan Mode
+Codex supports the `plan` mode of vibe-audit, which produces a prioritized remediation plan without source changes. The skill's description includes plan-related keywords for implicit selection.
+
 ## Notes
 - Keep `SKILL.md` standards-compatible; do not depend on Codex-only metadata for core behavior.
 - Optional Codex UI/tool metadata can live in `agents/openai.yaml`, but this package does not require it.

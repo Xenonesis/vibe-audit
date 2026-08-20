@@ -18,4 +18,7 @@ Global:
 ## Rules/workflows distinction
 Do not convert this package into an always-on Rule. The workflow is intentionally a progressively disclosed Skill. Use AGENTS.md/Rules for short persistent project constraints and Workflows for one-shot manual runbooks.
 
+## Plan Mode
+Windsurf supports the `plan` mode of vibe-audit, which produces a prioritized remediation plan without source changes. Use `@vibe-audit` with plan intent for automatic Cascade invocation.
+
 Official reference: https://docs.windsurf.com/windsurf/cascade/skills
