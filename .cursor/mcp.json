@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "vibe-audit": {
+      "args": [
+        "mcp"
+      ],
+      "command": "C:\\Users\\Acer\\Downloads\\vibe-coding-polisher\\cli\\vibe-audit.exe"
+    }
+  }
+}

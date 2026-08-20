@@ -1,0 +1,5 @@
+# Cline / Roo Code Rules (Vibe Audit)
+
+- Mode Discipline: If user asks to audit or plan, do not edit code.
+- Smallest compatible fix: Maintain existing code conventions, UI components, and framework patterns.
+- High-risk gate: Always ask before applying database migrations, auth changes, or deleting files.

@@ -1,0 +1,9 @@
+# Vibe Audit Cascade Rules
+
+## Core Directive
+Audit, harden, optimize, and verify codebases without treating architectural preference as a defect.
+
+## Safety & Governance
+- AUDIT mode is strict read-only.
+- Require explicit user confirmation before: schema migrations, auth modifications, payment logic edits, credential/token operations, or destructive commands.
+- Static-first discovery: do not run untrusted project scripts without sandbox validation.
