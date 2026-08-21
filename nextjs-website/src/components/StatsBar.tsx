@@ -14,8 +14,8 @@ export default function StatsBar() {
         <div className="stat-label">Supported Agent Hosts</div>
       </div>
       <div className="stat-card">
-        <div className="stat-num">Go + LLM</div>
-        <div className="stat-label">Hybrid Static Scanner</div>
+        <div className="stat-num">5</div>
+        <div className="stat-label">Adaptive Harnesses (Live)</div>
       </div>
       <div className="stat-card">
         <div className="stat-num">13</div>
