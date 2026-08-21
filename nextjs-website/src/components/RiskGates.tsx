@@ -1,3 +1,7 @@
+'use client';
+
+import GlitchWave from '@/components/shaders/glitch-wave';
+
 export default function RiskGates() {
   const risks = [
     {
@@ -32,28 +36,43 @@ export default function RiskGates() {
         </div>
       ))}
 
-      {/* Banned Actions Callout Box */}
-      <div className="reveal" style={{
-        background: 'var(--pastel-red-bg)',
-        border: '1px solid rgba(159, 47, 45, 0.2)',
-        borderRadius: '8px',
-        padding: '28px',
-        marginTop: '32px'
-      }}>
-        <h4 style={{
-          fontSize: '1rem',
-          fontWeight: 600,
-          color: 'var(--pastel-red-text)',
-          marginBottom: '8px',
-          textTransform: 'uppercase',
-          letterSpacing: '0.05em',
-          fontFamily: 'var(--font-mono)'
-        }}>
-          Strictly Forbidden Automatic Actions
-        </h4>
-        <p style={{ fontSize: '0.9375rem', color: 'var(--pastel-red-text)', lineHeight: 1.6 }}>
-          Vibe Audit NEVER automatically executes: <code>DROP DATABASE/TABLE</code>, database reset, unsafe mass deletion, forced migrations, git history rewrites, production secret revocation, deployment publish/destroy commands, or package publication.
-        </p>
+      {/* Banned Actions Callout Box with GlitchWave Shader Effect */}
+      <div className="reveal col-12" style={{ gridColumn: 'span 12', marginTop: '32px' }}>
+        <GlitchWave
+          className="banned-glitch-box"
+          speed={0.15}
+          intensity={0.28}
+          colors={['#EF4444', '#991B1B', '#1C1917']}
+          colorBack="#140808"
+        >
+          <div style={{
+            padding: '28px 24px',
+            border: '1px solid rgba(239, 68, 68, 0.45)',
+            borderRadius: '8px',
+            background: 'rgba(20, 8, 8, 0.75)',
+            backdropFilter: 'blur(8px)',
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px', flexWrap: 'wrap' }}>
+              <span className="badge" style={{ background: '#DC2626', color: '#FFFFFF', border: 'none', fontWeight: 600 }}>
+                STRICTLY FORBIDDEN
+              </span>
+              <h4 style={{
+                fontSize: '1rem',
+                fontWeight: 600,
+                color: '#FEE2E2',
+                textTransform: 'uppercase',
+                letterSpacing: '0.05em',
+                fontFamily: 'var(--font-mono)',
+                margin: 0
+              }}>
+                Banned Autonomous Operations
+              </h4>
+            </div>
+            <p style={{ fontSize: '0.9375rem', color: '#FECACA', lineHeight: 1.6, margin: 0 }}>
+              Vibe Audit <strong style={{ color: '#FFFFFF' }}>NEVER</strong> automatically executes: <code style={{ background: 'rgba(0,0,0,0.6)', color: '#FCA5A5', padding: '2px 6px', borderRadius: '4px', border: '1px solid rgba(239,68,68,0.3)' }}>DROP DATABASE/TABLE</code>, database reset, unsafe mass deletion, forced migrations, git history rewrites, production secret revocation, deployment publish/destroy commands, or package publication.
+            </p>
+          </div>
+        </GlitchWave>
       </div>
     </div>
   );

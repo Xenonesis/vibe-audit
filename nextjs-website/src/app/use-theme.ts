@@ -1,46 +1,69 @@
-import { useEffect, useState } from 'react';
+'use client';
 
-export function useTheme() {
-  const [theme, setTheme] = useState<'light' | 'dark' | 'system'>('system');
+import { useSyncExternalStore, useCallback } from 'react';
 
-  useEffect(() => {
-    const savedTheme = localStorage.getItem('vibe-audit-theme') || 'system';
-    setTheme(savedTheme as 'light' | 'dark' | 'system');
-    
-    const applyTheme = (mode: 'light' | 'dark' | 'system') => {
-      const root = document.documentElement;
-      if (mode === 'system') {
-        const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        root.setAttribute('data-theme', systemDark ? 'dark' : 'light');
-      } else {
-        root.setAttribute('data-theme', mode);
-      }
-    };
+type ThemeMode = 'light' | 'dark' | 'system';
 
-    applyTheme(savedTheme as 'light' | 'dark' | 'system');
+function getThemeSnapshot(): ThemeMode {
+  if (typeof window === 'undefined') return 'system';
+  return (localStorage.getItem('vibe-audit-theme') as ThemeMode) || 'system';
+}
 
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    const handleChange = (e: MediaQueryListEvent) => {
-      if (localStorage.getItem('vibe-audit-theme') === 'system') {
-        document.documentElement.setAttribute('data-theme', e.matches ? 'dark' : 'light');
-      }
-    };
-    mediaQuery.addEventListener('change', handleChange);
-    return () => mediaQuery.removeEventListener('change', handleChange);
-  }, []);
+function getThemeServerSnapshot(): ThemeMode {
+  return 'system';
+}
 
-  const setThemeStored = (mode: 'light' | 'dark' | 'system') => {
-    localStorage.setItem('vibe-audit-theme', mode);
-    setTheme(mode);
-    
-    const root = document.documentElement;
-    if (mode === 'system') {
-      const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      root.setAttribute('data-theme', systemDark ? 'dark' : 'light');
-    } else {
-      root.setAttribute('data-theme', mode);
+function subscribeToTheme(callback: () => void) {
+  if (typeof window === 'undefined') return () => {};
+
+  const handleStorage = (e: StorageEvent) => {
+    if (e.key === 'vibe-audit-theme') {
+      applyTheme((e.newValue as ThemeMode) || 'system');
+      callback();
     }
   };
 
-  return { theme, setTheme: setThemeStored };
+  const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+  const handleMediaChange = () => {
+    const current = (localStorage.getItem('vibe-audit-theme') as ThemeMode) || 'system';
+    if (current === 'system') {
+      applyTheme('system');
+      callback();
+    }
+  };
+
+  window.addEventListener('storage', handleStorage);
+  mediaQuery.addEventListener('change', handleMediaChange);
+
+  return () => {
+    window.removeEventListener('storage', handleStorage);
+    mediaQuery.removeEventListener('change', handleMediaChange);
+  };
+}
+
+function applyTheme(mode: ThemeMode) {
+  if (typeof document === 'undefined') return;
+  const root = document.documentElement;
+  if (mode === 'system') {
+    const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    root.setAttribute('data-theme', systemDark ? 'dark' : 'light');
+  } else {
+    root.setAttribute('data-theme', mode);
+  }
+}
+
+export function useTheme() {
+  const theme = useSyncExternalStore(
+    subscribeToTheme,
+    getThemeSnapshot,
+    getThemeServerSnapshot
+  );
+
+  const setTheme = useCallback((mode: ThemeMode) => {
+    localStorage.setItem('vibe-audit-theme', mode);
+    applyTheme(mode);
+    window.dispatchEvent(new StorageEvent('storage', { key: 'vibe-audit-theme', newValue: mode }));
+  }, []);
+
+  return { theme, setTheme };
 }

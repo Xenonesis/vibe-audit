@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useState } from 'react';
 import Navbar from '@/components/Navbar';
 import StatsBar from '@/components/StatsBar';
 import ComparisonTable from '@/components/ComparisonTable';
@@ -12,48 +12,24 @@ import HarnessGrid from '@/components/HarnessGrid';
 import EvalsTabs from '@/components/EvalsTabs';
 import InstallTabs from '@/components/InstallTabs';
 import FAQAccordion from '@/components/FAQAccordion';
+import Footer from '@/components/Footer';
+import GlitchWave from '@/components/shaders/glitch-wave';
 import { useIntersectionReveal } from '@/app/use-intersection-reveal';
 
 export default function Home() {
   useIntersectionReveal();
+  const [copiedKey, setCopiedKey] = useState<string | null>(null);
 
-  // Theme init from localStorage
-  useEffect(() => {
-    const savedTheme = localStorage.getItem('vibe-audit-theme') || 'system';
-    const applyTheme = (mode: string) => {
-      const root = document.documentElement;
-      if (mode === 'system') {
-        const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        root.setAttribute('data-theme', systemDark ? 'dark' : 'light');
-      } else {
-        root.setAttribute('data-theme', mode);
-      }
-    };
-    applyTheme(savedTheme);
-  }, []);
-
-  const copyToClipboard = async (text: string) => {
+  const copyToClipboard = async (text: string, key?: string) => {
     try {
       await navigator.clipboard.writeText(text);
+      if (key) {
+        setCopiedKey(key);
+        setTimeout(() => setCopiedKey(null), 2000);
+      }
     } catch (err) {
       console.error('Failed to copy: ', err);
     }
-  };
-
-  const handleTabClick = (tabId: string) => {
-    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-    const activeBtn = Array.from(document.querySelectorAll('.tab-btn')).find(btn => 
-      btn.textContent?.includes(tabId.replace('install-tab-', '').replace('tab-', ''))
-    );
-    if (activeBtn) activeBtn.classList.add('active');
-    const activeContent = document.getElementById(tabId);
-    if (activeContent) activeContent.classList.add('active');
-  };
-
-  const handleAccordionToggle = (button: HTMLButtonElement) => {
-    const item = button.parentElement;
-    if (item) item.classList.toggle('active');
   };
 
   return (
@@ -65,7 +41,9 @@ export default function Home() {
         <div className="container">
           <div className="hero-grid">
             <div className="reveal" style={{ opacity: 1, transform: 'translateY(0)' }}>
-              <div className="badge badge-blue" style={{ marginBottom: '20px' }}>Agent Skill & Validation Toolkit</div>
+              <div className="badge badge-blue" style={{ marginBottom: '20px' }}>
+                v0.1 · Agent Skill & Validation Toolkit
+              </div>
               <h1 className="serif-title hero-heading">
                 Turn vibe-coded applications into production-ready software.
               </h1>
@@ -77,50 +55,72 @@ export default function Home() {
                 <a href="#install" className="btn btn-primary">Get Started</a>
                 <button
                   className="btn btn-secondary"
-                  onClick={() => copyToClipboard('npx skills add Xenonesis/vibe-audit')}
+                  onClick={() => copyToClipboard('npx skills add Xenonesis/vibe-audit', 'hero-install')}
                 >
                   <svg className="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2" /><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" /></svg>
-                  <span>Copy Install Command</span>
+                  <span>{copiedKey === 'hero-install' ? 'Copied to Clipboard!' : 'Copy skills.sh Install'}</span>
                 </button>
               </div>
             </div>
 
-            {/* Terminal Window Preview */}
-            <div className="terminal-window reveal" style={{ marginTop: '10px' }}>
-              <div className="terminal-header">
-                <div className="terminal-dots">
-                  <span className="dot"></span>
-                  <span className="dot"></span>
-                  <span className="dot"></span>
-                </div>
-                <span className="terminal-title">bash — installation & validation</span>
-                <span className="badge badge-green">PASS 126/126</span>
-              </div>
-              <div className="terminal-body">
-                <div className="terminal-line">
-                  <div>
-                    <span className="prompt-symbol">$</span> <span className="cmd">npx skills add Xenonesis/vibe-audit</span>
+            {/* Terminal Window Preview with GlitchWave Shader */}
+            <div className="reveal" style={{ marginTop: '10px' }}>
+              <GlitchWave
+                className="terminal-glitch-wrapper"
+                speed={0.16}
+                intensity={0.25}
+                colors={['#3B82F6', '#1E40AF', '#0F172A']}
+                colorBack="#0B0F19"
+              >
+                <div className="terminal-window-glitch">
+                  <div className="terminal-header">
+                    <div className="terminal-dots">
+                      <span className="dot"></span>
+                      <span className="dot"></span>
+                      <span className="dot"></span>
+                    </div>
+                    <span className="terminal-title">bash — installation & static pre-scan</span>
+                    <span className="badge badge-green">PASS 126/126</span>
                   </div>
-                  <button className="copy-btn" onClick={() => copyToClipboard('npx skills add Xenonesis/vibe-audit')}>
-                    <svg className="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2" /><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" /></svg>
-                    <span>Copy</span>
-                  </button>
-                </div>
-                <p className="output-muted">Fetching skill package from GitHub (Xenonesis/vibe-audit)...</p>
-                <p className="output-highlight">Found 1 skill: vibe-audit (v0.1.0)</p>
-                <p className="output-success">Successfully installed vibe-audit globally for 60+ agent hosts.</p>
-                <br />
-                <div className="terminal-line">
-                  <div>
-                    <span className="prompt-symbol">$</span> <span className="cmd">python scripts/validate_skill.py .</span>
+                  <div className="terminal-body">
+                    <div className="terminal-line">
+                      <div>
+                        <span className="prompt-symbol">$</span> <span className="cmd">npx skills add Xenonesis/vibe-audit</span>
+                      </div>
+                      <button className="copy-btn" onClick={() => copyToClipboard('npx skills add Xenonesis/vibe-audit', 'term-1')}>
+                        <svg className="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2" /><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" /></svg>
+                        <span>{copiedKey === 'term-1' ? 'Copied!' : 'Copy'}</span>
+                      </button>
+                    </div>
+                    <p className="output-muted">Fetching skill package from GitHub (Xenonesis/vibe-audit)...</p>
+                    <p className="output-highlight">Found 1 skill: vibe-audit (v0.1.0)</p>
+                    <p className="output-success">Installed globally for 60+ open-standard agent hosts.</p>
+                    <br />
+                    <div className="terminal-line">
+                      <div>
+                        <span className="prompt-symbol">$</span> <span className="cmd">vibe-audit scan</span>
+                      </div>
+                      <button className="copy-btn" onClick={() => copyToClipboard('vibe-audit scan', 'term-2')}>
+                        <svg className="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2" /><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" /></svg>
+                        <span>{copiedKey === 'term-2' ? 'Copied!' : 'Copy'}</span>
+                      </button>
+                    </div>
+                    <p className="output-muted">Running Go static scanner across workspace...</p>
+                    <p className="output-success">Clean: 0 hardcoded secrets · 0 untrusted lifecycle hooks.</p>
+                    <br />
+                    <div className="terminal-line">
+                      <div>
+                        <span className="prompt-symbol">$</span> <span className="cmd">python scripts/validate_skill.py .</span>
+                      </div>
+                      <button className="copy-btn" onClick={() => copyToClipboard('python scripts/validate_skill.py .', 'term-3')}>
+                        <svg className="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2" /><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" /></svg>
+                        <span>{copiedKey === 'term-3' ? 'Copied!' : 'Copy'}</span>
+                      </button>
+                    </div>
+                    <p className="output-success">Passed: 126/126 skill validation rules satisfied.</p>
                   </div>
-                  <button className="copy-btn" onClick={() => copyToClipboard('python scripts/validate_skill.py .')}>
-                    <svg className="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2" /><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" /></svg>
-                    <span>Copy</span>
-                  </button>
                 </div>
-                <p className="output-success">Passed: 126/126 skill validation rules satisfied.</p>
-              </div>
+              </GlitchWave>
             </div>
           </div>
 
@@ -131,14 +131,14 @@ export default function Home() {
 
       <div className="divider"></div>
 
-      {/* Why Vibe Audit Section */}
+      {/* Pillar 01: Why Vibe Audit Section */}
       <section id="why" className="section">
         <div className="container">
           <div className="reveal" style={{ opacity: 1, transform: 'translateY(0)' }}>
             <div className="mono-sub" style={{ marginBottom: '12px' }}>Pillar 01 — Comparison</div>
             <h2 className="serif-title section-heading">Vibe-Coding vs. Vibe Audit</h2>
             <p className="lead-text">
-              The problem with vibe-coded apps is rarely code generation — it's that "it works" gets mistaken for "it's ready." 
+              The problem with vibe-coded apps is rarely code generation — it&apos;s that &ldquo;it works&rdquo; gets mistaken for &ldquo;it&apos;s ready.&rdquo; 
               Vibe Audit encodes missing engineering discipline into a repeatable, evidence-backed process.
             </p>
           </div>
@@ -148,7 +148,7 @@ export default function Home() {
 
       <div className="divider"></div>
 
-      {/* Modes Section */}
+      {/* Pillar 02: Modes & Profiles Section */}
       <section id="modes" className="section">
         <div className="container">
           <div className="reveal" style={{ opacity: 1, transform: 'translateY(0)' }}>
@@ -183,7 +183,7 @@ export default function Home() {
               {
                 badge: 'Security Focus',
                 title: 'HARDEN',
-                desc: 'Security-focused audit or fix according to the user\'s verb; avoids expanding into unrelated refactorings or cosmetic cleanup.',
+                desc: 'Security-focused audit or fix according to user instructions; avoids expanding into unrelated refactorings or cosmetic cleanup.',
                 badgeClass: 'badge-yellow',
               },
               {
@@ -201,7 +201,7 @@ export default function Home() {
             ]}
           />
 
-          <div className="reveal" style={{ marginTop: "48px", opacity: 1, transform: "translateY(0)" }}>
+          <div className="reveal" style={{ marginTop: '48px', opacity: 1, transform: 'translateY(0)' }}>
             <h3 style={{ fontSize: '1.125rem', fontWeight: 600, marginBottom: '16px' }}>10 Domain-Specific Profiles</h3>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
               <span className="badge badge-neutral">safe-audit (Untrusted Repos)</span>
@@ -221,16 +221,24 @@ export default function Home() {
 
       <div className="divider"></div>
 
-      {/* Pipeline Section */}
+      {/* Pillar 03: Pipeline Section */}
       <section id="pipeline" className="section">
         <div className="container">
+          <div className="reveal" style={{ opacity: 1, transform: 'translateY(0)' }}>
+            <div className="mono-sub" style={{ marginBottom: '12px' }}>Pillar 03 — Execution Lifecycle</div>
+            <h2 className="serif-title section-heading">Deterministic 6-Phase Pipeline</h2>
+            <p className="lead-text">
+              Every audit follows a structured, risk-aware lifecycle that guards repository trust, records pre-existing defects, 
+              and ensures fixes are verified before claiming production readiness.
+            </p>
+          </div>
           <Pipeline />
         </div>
       </section>
 
       <div className="divider"></div>
 
-      {/* Risk Gates Section */}
+      {/* Pillar 04: Risk Gates Section */}
       <section id="risk-gates" className="section">
         <div className="container">
           <div className="reveal" style={{ opacity: 1, transform: 'translateY(0)' }}>
@@ -238,7 +246,7 @@ export default function Home() {
             <h2 className="serif-title section-heading">Risk-Gated Change Approvals</h2>
             <p className="lead-text">
               Severity describes the issue; Change Risk describes remediation risk. They are independent. 
-              High-risk operations require explicit approval before execution.
+              High-risk operations strictly require explicit approval before execution.
             </p>
           </div>
           <RiskGates />
@@ -247,7 +255,7 @@ export default function Home() {
 
       <div className="divider"></div>
 
-      {/* Leaderboard Section */}
+      {/* Pillar 05: Leaderboard Section */}
       <section id="leaderboard" className="section">
         <div className="container-narrow">
           <div className="reveal" style={{ opacity: 1, transform: 'translateY(0)' }}>
@@ -264,11 +272,11 @@ export default function Home() {
 
       <div className="divider"></div>
 
-      {/* Harnesses Section */}
+      {/* Pillar 06: Harnesses Section */}
       <section id="harnesses" className="section">
         <div className="container">
           <div className="reveal" style={{ opacity: 1, transform: 'translateY(0)' }}>
-            <div className="mono-sub" style={{ marginBottom: '12px' }}>Pillar 05 — Integration</div>
+            <div className="mono-sub" style={{ marginBottom: '12px' }}>Pillar 06 — Multi-Harness Integration</div>
             <h2 className="serif-title section-heading">Multi-Harness Live Model Driver</h2>
             <p className="lead-text">
               <code>scripts/run_harness.py</code> probes binary PATHs, checks authentication status, installs the skill bundle, 
@@ -281,15 +289,15 @@ export default function Home() {
 
       <div className="divider"></div>
 
-      {/* Evals Section */}
+      {/* Pillar 07: Evals & Toolkit Section */}
       <section id="evals" className="section">
         <div className="container">
           <div className="reveal" style={{ opacity: 1, transform: 'translateY(0)' }}>
-            <div className="mono-sub" style={{ marginBottom: '12px' }}>Pillar 06 — Architecture</div>
+            <div className="mono-sub" style={{ marginBottom: '12px' }}>Pillar 07 — Toolkit & Evals</div>
             <h2 className="serif-title section-heading">Toolkit Inventory & CLI Utilities</h2>
             <p className="lead-text">
-              Vibe Audit is fully self-contained. It contains reference playbooks, specialist profiles, 
-              machine-readable evals, capability TOMLs, and deterministic CLI tool scripts.
+              Vibe Audit is fully self-contained. It contains 13 reference playbooks, 10 specialist profiles, 
+              22 machine-readable evals, 11 capability TOMLs, and deterministic CLI validation engines.
             </p>
           </div>
           <EvalsTabs />
@@ -298,11 +306,28 @@ export default function Home() {
 
       <div className="divider"></div>
 
-      {/* Developer Section */}
+      {/* Pillar 08: Installation Section */}
+      <section id="install" className="section">
+        <div className="container-narrow">
+          <div className="reveal" style={{ opacity: 1, transform: 'translateY(0)' }}>
+            <div className="mono-sub" style={{ marginBottom: '12px' }}>Pillar 08 — Setup & Install</div>
+            <h2 className="serif-title section-heading">Installation & Multi-System Setup</h2>
+            <p className="lead-text">
+              Install Vibe Audit across any operating system (Windows, macOS, Linux), IDE, or CLI agent host using 
+              automated or manual setup options.
+            </p>
+          </div>
+          <InstallTabs />
+        </div>
+      </section>
+
+      <div className="divider"></div>
+
+      {/* Pillar 09: Developer Section */}
       <section id="developer" className="section">
         <div className="container-narrow">
           <div className="reveal" style={{ opacity: 1, transform: 'translateY(0)' }}>
-            <div className="mono-sub" style={{ marginBottom: '12px' }}>Pillar 07 — Author</div>
+            <div className="mono-sub" style={{ marginBottom: '12px' }}>Pillar 09 — Author</div>
             <h2 className="serif-title section-heading">Developer Information</h2>
             <p className="lead-text">
               Designed and engineered with an evidence-first philosophy to bring deterministic verification and security 
@@ -319,10 +344,10 @@ export default function Home() {
                   and execution-safety boundaries. Focused on turning non-deterministic AI generation 
                   into repeatable software engineering.
                 </p>
-                <div style={{ marginTop: '16px', display: 'flex', gap: '12px' }}>
+                <div style={{ marginTop: '16px', display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
                   <a href="https://github.com/Xenonesis" target="_blank" rel="noopener noreferrer" className="btn btn-secondary" style={{ padding: '6px 12px', fontSize: '0.8125rem' }}>
                     <svg className="icon" viewBox="0 0 24 24" fill="currentColor" strokeWidth={0}>
-                      <path d="M11.976.0003a1.541 1.541 0 0 0-1.0928.4526L8.707 2.6287l2.7604 2.7604c.6417-.2166 1.377-.0715 1.8882.4399.514.5145.6583 1.2563.4362 1.9l.9101.9102 3.2768-3.2764L13.0684.4529A1.5394 1.5394 0 0 0 11.976.0003ZM7.638 3.698 5.926 5.4101l4.9095 4.9095c.1535.1536.332.267.5217.3423V8.831a1.8198 1.8198 0 0 1-.6024-.4011c-.5441-.5437-.6749-1.3422-.3958-2.0104Zm10.916 2.24-3.2765 3.2764 1.1743 1.1747c.6436-.2217 1.3862-.0782 1.9001.4366.7185.7183.7185 1.8823 0 2.6008-.7186.7187-1.8823.7187-2.6012 0-.5402-.5407-.674-1.3344-.4003-2l-1.1427-1.1423-.588.588c-.6036.604-.6036 1.5829 0 2.1865l4.9935 4.993 4.9342-4.9342c.6035-.6038.6035-1.5829 0-2.1865l-2.4673-2.4673c-.6035-.6039-1.583-.6039-2.1865 0Zm-7.7303 3.6545L5.6882 14.728l-4.57 4.5694a1.5414 1.5414 0 0 0 0 2.1818l1.3541 1.354a1.5407 1.5407 0 0 0 2.1818 0l4.5699-4.5699 5.1345-5.134-5.2348-5.2346Zm-2.311 9.9431a1.055 1.055 0 1 1 0 2.11 1.055 1.055 0 0 1 0-2.11Z" />
+                      <path d="M12 2C6.48 2 2 6.48 2 12c0 4.42 2.87 8.16 6.84 9.49.5.09.67-.22.67-.5 0-.25-.01-1.41-.01-2.48-2.75.6-3.75-1.38-3.75-1.38-.45-1.16-1.1-1.48-1.1-1.48-.9-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.89 1.54 2.34 1.09 2.91.84.09-.66.35-1.09.63-1.34-2.23-.25-4.57-1.12-4.57-4.94 0-1.09.39-1.98 1.02-2.68-.1-.25-.44-1.27.1-2.65 0 0 .83-.27 2.72 1.04A9.57 9.57 0 0112 6.84c.85.01 1.71.11 2.5.34 1.89-1.31 2.72-1.04 2.72-1.04.54 1.38.2 2.4.1 2.65.64.7 1.02 1.59 1.02 2.68 0 3.84-2.34 4.68-4.57 4.93.36.32.67.94.67 1.9 0 1.38-.01 2.5-.01 2.85 0 .28.17.6.67.5A10.01 10.01 0 0022 12c0-5.52-4.48-10-10-10z"></path>
                     </svg>
                     <span>GitHub Profile</span>
                   </a>
@@ -338,49 +363,18 @@ export default function Home() {
 
       <div className="divider"></div>
 
-      {/* Installation Section */}
-      <section id="install" className="section">
+      {/* Pillar 10: FAQ Section */}
+      <section id="faq" className="section">
         <div className="container-narrow">
           <div className="reveal" style={{ opacity: 1, transform: 'translateY(0)' }}>
-            <div className="mono-sub" style={{ marginBottom: '12px' }}>Pillar 08 — Setup</div>
-            <h2 className="serif-title section-heading">Installation & Multi-System Setup</h2>
-            <p className="lead-text">
-              Install Vibe Audit across any operating system (Windows, macOS, Linux), IDE, or CLI agent host using 
-              automated or manual setup options.
-            </p>
-          </div>
-          <InstallTabs />
-        </div>
-      </section>
-
-      <div className="divider"></div>
-
-      {/* FAQ Section */}
-      <section className="section">
-        <div className="container-narrow">
-          <div className="reveal" style={{ opacity: 1, transform: 'translateY(0)' }}>
-            <div className="mono-sub" style={{ marginBottom: '12px' }}>Pillar 09 — FAQ</div>
+            <div className="mono-sub" style={{ marginBottom: '12px' }}>Pillar 10 — FAQ</div>
             <h2 className="serif-title section-heading">Frequently Asked Questions</h2>
           </div>
           <FAQAccordion />
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="footer">
-        <div className="container footer-inner">
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
-            <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 600, color: 'var(--text-main)' }}>vibe-audit v0.1.0</span>
-            <span>—</span>
-            <span>Created by Xenonesis under MIT License</span>
-          </div>
-          <div>
-            <a href="https://github.com/Xenonesis/vibe-audit" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text-muted)' }}>GitHub Repository</a>
-            <span style={{ margin: '0 8px' }}>·</span>
-            <a href="https://skills.sh/Xenonesis/vibe-audit" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text-muted)' }}>skills.sh Directory</a>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </>
   );
 }

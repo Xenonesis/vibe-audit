@@ -2,7 +2,7 @@ export default function ComparisonTable() {
   const rows = [
     {
       dimension: 'Definition of Done',
-      vibeCoded: '"It runs / demo looks right"',
+      vibeCoded: '"It runs / the demo looks right"',
       withVibeAudit: (
         <>
           <span className="badge badge-green">Evidence-based</span> NOT READY → PARTIALLY READY → READY
@@ -10,27 +10,31 @@ export default function ComparisonTable() {
       ),
     },
     {
-      dimension: 'Security & Auth',
-      vibeCoded: 'None, or panic fix after a breach',
-      withVibeAudit: 'Dedicated security pass; IDOR, BOLA, SQLi, and Auth boundary checks',
-    },
-    {
-      dimension: 'Trust Boundary',
-      vibeCoded: 'Blindly runs repo scripts (`npm install`, build hooks)',
+      dimension: 'Hybrid Scanning',
+      vibeCoded: 'LLM hallucinates security without verification',
       withVibeAudit: (
         <>
-          <span className="badge badge-yellow">Static-only default</span> until trust is assessed; sandbox required
+          <span className="badge badge-blue">Go CLI pre-scans</span> deterministic secrets & supply-chain hooks
         </>
       ),
     },
     {
-      dimension: 'Change Risk',
+      dimension: 'Trust Boundary',
+      vibeCoded: 'Runs untrusted scripts (`npm install`, build hooks)',
+      withVibeAudit: (
+        <>
+          <span className="badge badge-yellow">Static-only default</span> until repo trust is assessed; egress denied
+        </>
+      ),
+    },
+    {
+      dimension: 'Change Approvals',
       vibeCoded: 'Agent free-refactors whatever it wants',
-      withVibeAudit: 'Risk-gated: LOW auto-fix, MEDIUM plan first, HIGH explicit approval',
+      withVibeAudit: 'Risk-gated: LOW auto-fix, MEDIUM plan proposal, HIGH explicit consent',
     },
     {
       dimension: 'Architecture',
-      vibeCoded: 'Agent rewrites code to match preferred patterns',
+      vibeCoded: 'Rewrites large codebases to match preferred tropes',
       withVibeAudit: (
         <>
           <strong>Preserved unless justified</strong> — nonstandard working code is not a defect
@@ -39,18 +43,18 @@ export default function ComparisonTable() {
     },
     {
       dimension: 'Dependencies',
-      vibeCoded: 'Added liberally while building',
-      withVibeAudit: 'Smallest justified addition; framework-native first; no blind Redis/cache',
+      vibeCoded: 'Added liberally without vetting size or scope',
+      withVibeAudit: 'Smallest justified addition; framework-native first; no blind caching',
     },
     {
       dimension: 'Verification',
-      vibeCoded: 'Manual click-through, if any',
+      vibeCoded: 'Manual click-through or assumed correct',
       withVibeAudit: 'Baseline → change → re-verify; failures labeled PRE-EXISTING vs INTRODUCED',
     },
     {
       dimension: 'Reporting',
-      vibeCoded: 'Unreproducible chat summary',
-      withVibeAudit: 'Structured findings: severity, confidence, impact, change risk, evidence',
+      vibeCoded: 'Ephemeral, unreproducible chat summary',
+      withVibeAudit: 'Structured findings: severity, confidence, impact, change risk, and file evidence',
     },
   ];
 
@@ -60,8 +64,8 @@ export default function ComparisonTable() {
         <thead>
           <tr>
             <th>Dimension</th>
-            <th>Typical Vibe-Coded Workflow</th>
-            <th>With Vibe Audit Skill</th>
+            <th>Typical Vibe-Coding</th>
+            <th>With Vibe Audit Skill & Toolkit</th>
           </tr>
         </thead>
         <tbody>

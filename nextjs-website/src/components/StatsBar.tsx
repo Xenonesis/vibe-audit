@@ -11,11 +11,15 @@ export default function StatsBar() {
       </div>
       <div className="stat-card">
         <div className="stat-num">11</div>
-        <div className="stat-label">Supported Harnesses</div>
+        <div className="stat-label">Supported Agent Hosts</div>
       </div>
       <div className="stat-card">
-        <div className="stat-num">Static-First</div>
-        <div className="stat-label">Trust & Safety Boundary</div>
+        <div className="stat-num">Go + LLM</div>
+        <div className="stat-label">Hybrid Static Scanner</div>
+      </div>
+      <div className="stat-card">
+        <div className="stat-num">13</div>
+        <div className="stat-label">Domain Playbooks</div>
       </div>
     </div>
   );
