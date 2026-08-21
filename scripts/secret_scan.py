@@ -13,7 +13,7 @@ patterns={
 errors=[]
 for p in root.rglob('*'):
     if not p.is_file(): continue
-    if any(part in {'.git','dist','__pycache__'} for part in p.parts): continue
+    if any(part in {'.git','dist','__pycache__','node_modules','.next','out','.venv','vendor','target','build','runs'} for part in p.parts): continue
     if 'evals' in p.parts and 'fixtures' in p.parts: continue
     if p.stat().st_size > 2_000_000: continue
     try: text=p.read_text(encoding='utf-8')
