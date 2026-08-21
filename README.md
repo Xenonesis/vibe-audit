@@ -8,7 +8,7 @@
 [![skills.sh](https://img.shields.io/badge/skills.sh-Xenonesis%2Fvibe--audit-000000?style=for-the-badge&logo=github)](https://skills.sh/Xenonesis/vibe-audit)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
 [![Release Gate](https://img.shields.io/badge/Release_Gate-PASS_126%2F126-emerald?style=for-the-badge)](#release-confidence)
-|[![Harnesses](https://img.shields.io/badge/Supported_Harnesses-11_Agent_Hosts-purple?style=for-the-badge)](#supported-harnesses)
+[![Harnesses](https://img.shields.io/badge/Supported_Harnesses-11_Agent_Hosts-purple?style=for-the-badge)](#supported-harnesses)
 
 [Overview](#why-vibe-audit) • [Quick Start](#quick-start) • [Toolkit](#toolkit-structure) • [Risk Gates](#risk-gated-approvals) • [Harnesses](#supported-harnesses) • [Deployments](#deployed-websites)
 
@@ -63,7 +63,7 @@ Vibe Audit encodes engineering discipline directly into your agent host, utilizi
 | 📁 **`cli/`** | 1 | Go-based Native CLI Tool (Scanner, Rule Exporter, MCP Server) |
 | 📁 **`scripts/`** | 12 | Python validation, trust assessment, & release gate engines |
 | 📁 **`references/`** | 13 | Domain playbooks (security, correctness, reliability, performance, AI smells, a11y, SEO) |
-| 📁 **`harnesses/`** | 8 | Capability probes for all supported agent hosts |
+| 📁 **`harnesses/`** | 11 | Capability probes for all supported agent hosts |
 | 📁 **`adapters/`** | 12 | Host integration documentation |
 | 📁 **`evals/`** | 22 | Machine-readable eval cases & fixtures (`evals.json`) |
 
@@ -89,7 +89,7 @@ Vibe Audit categorizes remediation operations by risk level:
 
 ## 💻 Supported Harnesses
 
-Vibe Audit includes verified capability drivers for **8 major AI agent hosts**:
+Vibe Audit includes verified capability drivers for **11 major AI agent hosts**:
 
 <details>
 <summary><b>Click to expand Harness Compatibility Matrix</b></summary>
@@ -105,6 +105,10 @@ Vibe Audit includes verified capability drivers for **8 major AI agent hosts**:
 | **Windsurf IDE** | `v1.0+` | Cascade Rules / MCP | ✅ Rule + MCP Ready |
 | **Codex** | System | Headless CLI | ⚪ Probed |
 | **Gemini CLI** | System | Headless CLI | ⚪ Probed |
+| **Copilot CLI** | System | Rules / Stdio MCP | ⚪ Probed |
+| **Antigravity** | System | Harness Driver | ⚪ Probed |
+| **OpenCode** | System | Open Standard CLI | ⚪ Probed |
+| **TRAE / TraeCode** | System | Agentic Integration | ⚪ Probed |
 
 </details>
 
