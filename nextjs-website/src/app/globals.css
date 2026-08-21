@@ -2,9 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Font loading via Google Fonts CDN */
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600;700&family=Newsreader:wght@400;500;700;800&family=Instrument+Serif:wght@500;700;800&display=swap');
+
 /* CSS Variables: Theme System (Light Default + Dark Mode) */
 :root {
+  /* Canvas is the outer background; surface is elevated fills */
   --bg-canvas: #FBFBFA;
+  --bg-main: var(--bg-canvas);
   --bg-surface: #FFFFFF;
   --bg-subtle: #F7F6F3;
   --bg-header: #FFFFFF;
@@ -25,13 +30,26 @@
   --pastel-red-bg: #FDEBEC;
   --pastel-red-text: #9F2F2D;
 
-  --font-sans: 'Geist', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
-  --font-serif: 'Newsreader', 'Playfair Display', Georgia, serif;
+  /* Font stacks with fallbacks */
+  --font-display: 'Newsreader', 'Instrument Serif', Georgia, serif;
+  --font-body: 'Geist', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
   --font-mono: 'Geist Mono', 'JetBrains Mono', 'SF Mono', Consolas, monospace;
+  --font-sans: var(--font-body);
+  --font-serif: var(--font-display);
+  --color-canvas-light: var(--bg-canvas);
+  --color-surface-light: var(--bg-surface);
+  --color-text-primary-light: var(--text-main);
+  --color-text-body-light: var(--text-body);
+  --color-border-light: var(--border-color);
+  --color-pastel-blue-bg: var(--pastel-blue-bg);
+  --color-pastel-blue-text: var(--pastel-blue-text);
+  --color-pastel-green-bg: var(--pastel-green-bg);
+  --color-pastel-green-text: var(--pastel-green-text);
 }
 
 [data-theme="dark"] {
   --bg-canvas: #0E0E10;
+  --bg-main: var(--bg-canvas);
   --bg-surface: #161618;
   --bg-subtle: #1F1F22;
   --bg-header: #0E0E10;
@@ -51,15 +69,18 @@
   --pastel-yellow-text: #FDE047;
   --pastel-red-bg: #381A1C;
   --pastel-red-text: #FCA5A5;
+  
+  /* Color aliases for dark mode */
+  --color-canvas-dark: var(--bg-canvas);
+  --color-surface-dark: var(--bg-surface);
+  --color-text-primary-dark: var(--text-main);
+  --color-text-body-dark: var(--text-body);
+  --color-border-dark: var(--border-color);
+  --color-pastel-blue-bg-dark: var(--pastel-blue-bg);
+  --color-pastel-blue-text-dark: var(--pastel-blue-text);
+  --color-pastel-green-bg-dark: var(--pastel-green-bg);
+  --color-pastel-green-text-dark: var(--pastel-green-text);
 }
-
-/* Base Reset */
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
 html {
   scroll-behavior: smooth;
   background-color: var(--bg-main);
