@@ -1,0 +1,12 @@
+# Internal evaluation and testing fixtures
+evals/
+scripts/
+docs/superpowers/
+Formula/
+nextjs-website/
+.next/
+out/
+runs/
+.github/
+cli/
+*.exe
