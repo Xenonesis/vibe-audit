@@ -2,7 +2,7 @@ export default function StatsBar() {
   return (
     <div className="stats-bar reveal">
       <div className="stat-card">
-        <div className="stat-num">126/126</div>
+        <div className="stat-num">149/149</div>
         <div className="stat-label">Skill Validation Rules</div>
       </div>
       <div className="stat-card">
@@ -10,7 +10,7 @@ export default function StatsBar() {
         <div className="stat-label">Machine-Readable Evals</div>
       </div>
       <div className="stat-card">
-        <div className="stat-num">11</div>
+        <div className="stat-num">21</div>
         <div className="stat-label">Supported Agent Hosts</div>
       </div>
       <div className="stat-card">

@@ -1,0 +1,8 @@
+id = "goose"
+binary = "goose"
+version_args = ["--version"]
+headless = true
+native_skills = true
+explicit_skill_invocation = true
+docs_checked = "2026-08-31"
+notes = "Goose (by Block) is an extensible open-source on-machine developer agent with CLI, session management (.goosehints), and native MCP extension support."

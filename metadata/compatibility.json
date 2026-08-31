@@ -1,6 +1,6 @@
 {
   "schema_version": "1",
-  "package_version": "0.1.0",
+  "package_version": "0.2.0",
   "generated_at": "2026-08-11",
   "meaning": {
     "documented": "current official documentation supports the integration concept",
@@ -88,6 +88,85 @@
     {
       "id": "windsurf",
       "documented_confidence": "medium",
+      "behavioral_confidence": "unknown",
+      "tier": "B"
+    },
+    {
+      "id": "aider",
+      "binary": "aider",
+      "fallback_binaries": ["aider-chat"],
+      "documented_confidence": "high",
+      "behavioral_confidence": "unknown",
+      "tier": "B"
+    },
+    {
+      "id": "cline",
+      "binary": "cline",
+      "fallback_binaries": ["cline-cli"],
+      "documented_confidence": "high",
+      "behavioral_confidence": "unknown",
+      "tier": "B"
+    },
+    {
+      "id": "roo-code",
+      "binary": "roo",
+      "fallback_binaries": ["roo-cline", "roo-code"],
+      "documented_confidence": "high",
+      "behavioral_confidence": "unknown",
+      "tier": "B"
+    },
+    {
+      "id": "openhands",
+      "binary": "openhands",
+      "fallback_binaries": ["openhands-cli", "opendevin"],
+      "documented_confidence": "high",
+      "behavioral_confidence": "unknown",
+      "tier": "B"
+    },
+    {
+      "id": "goose",
+      "binary": "goose",
+      "documented_confidence": "high",
+      "behavioral_confidence": "unknown",
+      "tier": "B"
+    },
+    {
+      "id": "continue",
+      "binary": "continue",
+      "fallback_binaries": ["continue-cli"],
+      "documented_confidence": "high",
+      "behavioral_confidence": "unknown",
+      "tier": "B"
+    },
+    {
+      "id": "zed",
+      "binary": "zed",
+      "fallback_binaries": ["zed-editor", "cli"],
+      "documented_confidence": "medium",
+      "behavioral_confidence": "unknown",
+      "tier": "B"
+    },
+    {
+      "id": "q",
+      "binary": "q",
+      "fallback_binaries": ["amazon-q", "cw"],
+      "documented_confidence": "medium",
+      "behavioral_confidence": "unknown",
+      "tier": "B"
+    },
+    {
+      "id": "devin",
+      "binary": "devin",
+      "fallback_binaries": ["devin-cli"],
+      "documented_confidence": "high",
+      "behavioral_confidence": "unknown",
+      "tier": "B"
+    },
+    {
+      "id": "kilo",
+      "binary": "kilo",
+      "fallback_binaries": ["kilo-cli", "kc"],
+      "documented_confidence": "high",
       "behavioral_confidence": "unknown",
       "tier": "B"
     }

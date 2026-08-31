@@ -17,7 +17,7 @@ func TestExportRules(t *testing.T) {
 	// Run the export command targeting the temp dir
 	cmdExport([]string{tempDir})
 
-	// Verify the 6 rule files were created
+	// Verify the 8 rule files were created
 	expectedFiles := []string{
 		filepath.Join(tempDir, ".cursor", "rules", "vibe-audit.mdc"),
 		filepath.Join(tempDir, ".windsurfrules"),
@@ -25,6 +25,8 @@ func TestExportRules(t *testing.T) {
 		filepath.Join(tempDir, ".clinerules"),
 		filepath.Join(tempDir, "CONVENTIONS.md"),
 		filepath.Join(tempDir, ".continue", "rules", "vibe-audit.md"),
+		filepath.Join(tempDir, ".goosehints"),
+		filepath.Join(tempDir, ".amazonq", "rules", "vibe-audit.md"),
 	}
 
 	for _, file := range expectedFiles {

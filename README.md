@@ -1,14 +1,14 @@
 <div align="center">
 
-# 🛡️ Vibe Audit `v0.1`
+# 🛡️ Vibe Audit `v0.2`
 
 **Evidence-first Agent Skill & Deterministic Validation Toolkit**  
 *Audit, plan, fix, and verify AI-generated web applications without treating architectural preference as a defect.*
 
 [![skills.sh](https://img.shields.io/badge/skills.sh-Xenonesis%2Fvibe--audit-000000?style=for-the-badge&logo=github)](https://skills.sh/Xenonesis/vibe-audit)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
-[![Release Gate](https://img.shields.io/badge/Release_Gate-PASS_126%2F126-emerald?style=for-the-badge)](#release-confidence)
-[![Harnesses](https://img.shields.io/badge/Supported_Harnesses-11_Agent_Hosts-purple?style=for-the-badge)](#supported-harnesses)
+[![Release Gate](https://img.shields.io/badge/Release_Gate-PASS_149%2F149-emerald?style=for-the-badge)](#release-confidence)
+[![Harnesses](https://img.shields.io/badge/Supported_Harnesses-21_Agent_Hosts-purple?style=for-the-badge)](#supported-harnesses)
 
 [Overview](#why-vibe-audit) • [Quick Start](#quick-start) • [Toolkit](#toolkit-structure) • [Risk Gates](#risk-gated-approvals) • [Harnesses](#supported-harnesses) • [Deployments](#deployed-websites)
 
@@ -60,14 +60,13 @@ Vibe Audit encodes engineering discipline directly into your agent host, utilizi
 
 | Asset Directory | Files | Primary Purpose |
 |---|---|---|
-| 📁 **`cli/`** | 1 | Go-based Native CLI Tool (Scanner, Rule Exporter, MCP Server) |
+| 📁 **`cli/`** | 3 | Go-based Native CLI Tool (Scanner, Rule Exporter, MCP Server, Deps & Env checks) |
 | 📁 **`scripts/`** | 12 | Python validation, trust assessment, & release gate engines |
 | 📁 **`references/`** | 13 | Domain playbooks (security, correctness, reliability, performance, AI smells, a11y, SEO) |
-| 📁 **`harnesses/`** | 11 | Capability probes for all supported agent hosts |
-| 📁 **`adapters/`** | 12 | Host integration documentation |
+| 📁 **`profiles/`** | 10 | Specialist profiles (frontend, fullstack, API, payments, RAG, multitenant, CI/CD, etc.) |
+| 📁 **`harnesses/`** | 21 | Capability probes for all supported agent hosts |
+| 📁 **`adapters/`** | 22 | Host integration documentation |
 | 📁 **`evals/`** | 22 | Machine-readable eval cases & fixtures (`evals.json`) |
-
----
 
 ## 🛑 Risk-Gated Approvals
 
@@ -89,26 +88,36 @@ Vibe Audit categorizes remediation operations by risk level:
 
 ## 💻 Supported Harnesses
 
-Vibe Audit includes verified capability drivers for **11 major AI agent hosts**:
+Vibe Audit includes verified capability drivers and adapters for **21 major AI agent hosts**:
 
 <details>
-<summary><b>Click to expand Harness Compatibility Matrix</b></summary>
+<summary><b>Click to expand Harness Compatibility Matrix (21 Hosts)</b></summary>
 
 <br>
 
-| Harness | Version | Execution Mode | Driver Status |
+| Harness | Category | Integration Method | Driver Status |
 |---|---|---|---|
-| **Pi Agent** | `v0.84.1` | Headless CLI (`pi -p`) | ✅ Verified PASS |
-| **Oh My Pi (OMP)** | `v17.2.12` | Headless CLI (`omp -p`) | ✅ Verified PASS |
-| **Claude Code** | `v2.1.227` | Headless CLI (`claude -p`) | 🟡 Probed (Auth Gated) |
-| **Cursor IDE** | `v0.45+` | Native MDC / Agent Chat | ✅ MDC + MCP Ready |
-| **Windsurf IDE** | `v1.0+` | Cascade Rules / MCP | ✅ Rule + MCP Ready |
-| **Codex** | System | Headless CLI | ⚪ Probed |
-| **Gemini CLI** | System | Headless CLI | ⚪ Probed |
-| **Copilot CLI** | System | Rules / Stdio MCP | ⚪ Probed |
-| **Antigravity** | System | Harness Driver | ⚪ Probed |
-| **OpenCode** | System | Open Standard CLI | ⚪ Probed |
-| **TRAE / TraeCode** | System | Agentic Integration | ⚪ Probed |
+| **Pi Agent** | CLI Agent | Headless CLI (`pi -p`) | ✅ Verified PASS |
+| **Oh My Pi (OMP)** | CLI Agent | Headless CLI (`omp -p`) | ✅ Verified PASS |
+| **Claude Code** | CLI Agent | Headless CLI (`claude -p`) | 🟡 Probed (Auth Gated) |
+| **Cursor IDE** | IDE Agent | Native MDC (`.cursor/rules/`) / MCP | ✅ MDC + MCP Ready |
+| **Windsurf IDE** | IDE Agent | Cascade Rules (`.windsurfrules`) / MCP | ✅ Rule + MCP Ready |
+| **Aider** | Pair CLI | Conventions (`CONVENTIONS.md`) / Config | ✅ Export Ready |
+| **Cline** | IDE Agent | Rules (`.clinerules`) / MCP | ✅ Rule + MCP Ready |
+| **Roo Code** | Multi-Mode Agent | Modes (`.roomodes`) / Rules / MCP | ✅ Multi-mode Ready |
+| **OpenHands** | Autonomous Sandbox | Microagents / `AGENTS.md` | ⚪ Probed |
+| **Goose (Block)** | CLI / Desktop Agent | Hints (`.goosehints`) / MCP | ⚪ Probed |
+| **Continue** | IDE Assistant | Rules (`.continue/rules/`) / MCP | ⚪ Probed |
+| **Codex** | CLI Agent | Headless CLI | ⚪ Probed |
+| **Gemini CLI** | CLI Agent | Headless CLI | ⚪ Probed |
+| **Copilot CLI** | CLI / IDE | Instructions / Stdio MCP | ⚪ Probed |
+| **Antigravity** | Agent Driver | Harness Driver | ⚪ Probed |
+| **OpenCode** | Open CLI | Open Standard CLI (`.agents/skills/`) | ⚪ Probed |
+| **TRAE / TraeCode** | IDE Agent | Agentic Integration | ⚪ Probed |
+| **Zed AI** | Editor Agent | Context Providers / System Prompt | ⚪ Probed |
+| **Amazon Q Developer** | Cloud CLI | Rules (`.amazonq/rules/`) | ⚪ Probed |
+| **Devin (Cognition)** | Cloud Autonomous | `AGENTS.md` / Cloud Sandbox | ⚪ Probed |
+| **Kilo Code** | Terminal Agent | Open Skills (`.agents/skills/`) | ⚪ Probed |
 
 </details>
 
@@ -132,10 +141,10 @@ python scripts/assess_repo_trust.py .
 
 The toolkit showcase website is a Next.js 16+ App Router project with:
 - Static export to GitHub Pages
-- 5 adaptive harnesses (Pi, OMP, Cursor, Windsurf, Claude Code)
+- 21 adaptive harnesses (Cursor, Claude Code, Windsurf, Aider, Cline, Roo Code, Goose, OpenHands, Devin, etc.)
 - Interactive eval explorer with 22 machine-readable fixtures
 - Risk-gated change approval visualization
-
+- Agent safety leaderboard across evaluated model drivers
 ### Development
 
 ```bash

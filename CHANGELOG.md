@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.2.0 — 2026-08-31
+
+### Added
+- Feature design spec for v0.2.0 (`docs/superpowers/specs/2026-08-31-vibe-audit-v02-features-design.md`).
+- Dependency Time-Bomb Scanner (`vibe-audit deps`).
+- Environment Parity Checker (`vibe-audit env`).
+- Production Readiness Scorecard (`vibe-audit score`).
+- Observability Gap Audit (`references/observability.md`).
+- Dedicated Database Risk Profile (`references/database-risks.md`).
+- AI Test Generation Evaluator (`references/test-quality.md`).
+- Pre-launch Deployment Safety Checklist (`references/deployment-gate.md`).
+- Compliance Profiles: GDPR Lite, HIPAA Lite, SOC2-lite (`profiles/gdpr.md`, `profiles/hipaa.md`, `profiles/compliance-lite.md`).
+
+### Changed
+- Version bump across package, CLI, manifests, and extension to v0.2.0.
+
 ## 0.1.0 — 2026-08-11
 
 ### Added

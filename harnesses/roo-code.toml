@@ -1,0 +1,9 @@
+id = "roo-code"
+binary = "roo"
+fallback_binaries = ["roo-cline", "roo-code"]
+version_args = ["--version"]
+headless = true
+native_skills = true
+explicit_skill_invocation = true
+docs_checked = "2026-08-31"
+notes = "Roo Code supports multi-mode workflows (.roomodes), custom system prompts, .clinerules inheritance, and full MCP tool calling."

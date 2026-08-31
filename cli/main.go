@@ -85,6 +85,21 @@ Always apply Vibe Audit principles:
 3. Minimal diffs preserving architectural choices.
 `
 
+var gooseTemplate = `# Goose Hints: Vibe Audit
+
+1. Always run static analysis before executing project code.
+2. Preserve working code and architectural patterns.
+3. Confirm before modifying database, auth, or destructive operations.
+`
+
+var amazonqTemplate = `# Amazon Q Developer Rules: Vibe Audit
+
+Adhere to Vibe Audit invariants:
+1. Evidence-first security and correctness verification.
+2. Minimal diff remediation preserving working architecture.
+3. Gate destructive operations behind explicit user confirmation.
+`
+
 var formats = map[string]struct {
 	path    string
 	content string
@@ -95,6 +110,8 @@ var formats = map[string]struct {
 	"cline":    {".clinerules", clineTemplate},
 	"aider":    {"CONVENTIONS.md", aiderTemplate},
 	"continue": {".continue/rules/vibe-audit.md", continueTemplate},
+	"goose":    {".goosehints", gooseTemplate},
+	"amazonq":  {".amazonq/rules/vibe-audit.md", amazonqTemplate},
 }
 
 func cmdExport(args []string) {
@@ -183,7 +200,7 @@ func handleMCP(req JSONRPCRequest) *JSONRPCResponse {
 			Result: map[string]interface{}{
 				"protocolVersion": "2024-11-05",
 				"capabilities":    map[string]interface{}{"tools": map[string]interface{}{}},
-				"serverInfo":      map[string]interface{}{"name": "vibe-audit-mcp-go", "version": "0.1.0"},
+				"serverInfo":      map[string]interface{}{"name": "vibe-audit-mcp-go", "version": "0.2.0"},
 			},
 		}
 	}
@@ -355,7 +372,7 @@ func cmdInstall(args []string) {
 	}
 
 	fmt.Println(strings.Repeat("=", 60))
-	fmt.Println(" Vibe Audit Universal Installer v0.1.0 (Go Edition)")
+	fmt.Println(" Vibe Audit Universal Installer v0.2.0 (Go Edition)")
 	fmt.Println(strings.Repeat("=", 60))
 	fmt.Printf("Target Workspace: %s\n\n", targetDir)
 
@@ -369,6 +386,8 @@ func cmdInstall(args []string) {
 		"copilot":       exists(filepath.Join(targetDir, ".github")),
 		"continue":      exists(filepath.Join(homeDir, ".continue")) || exists(filepath.Join(targetDir, ".continue")),
 		"cline_roo":     exists(filepath.Join(targetDir, ".clinerules")),
+		"goose":         exists(filepath.Join(homeDir, ".config", "goose")) || exists(filepath.Join(targetDir, ".goosehints")),
+		"amazonq":       exists(filepath.Join(targetDir, ".amazonq")),
 	}
 
 	fmt.Println("Environment Discovery:")

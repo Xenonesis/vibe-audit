@@ -1,0 +1,9 @@
+id = "cline"
+binary = "cline"
+fallback_binaries = ["cline-cli"]
+version_args = ["--version"]
+headless = true
+native_skills = true
+explicit_skill_invocation = true
+docs_checked = "2026-08-31"
+notes = "Cline supports custom rules via .clinerules, Plan/Act mode separation, and external tool integration via Model Context Protocol (MCP)."

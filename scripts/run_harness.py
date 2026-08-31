@@ -68,6 +68,84 @@ INVOKE = {
         "auth_check": None,
         "skill_flag": None,
     },
+    "opencode": {
+        "cmd": ["{binary}", "run", "{prompt}"],
+        "confidence": "medium",
+        "auth_check": None,
+        "skill_flag": None,
+    },
+    "trae": {
+        "cmd": ["{binary}", "-p", "{prompt}"],
+        "confidence": "medium",
+        "auth_check": None,
+        "skill_flag": None,
+    },
+    "windsurf": {
+        "cmd": ["{binary}", "-p", "{prompt}"],
+        "confidence": "medium",
+        "auth_check": None,
+        "skill_flag": None,
+    },
+    "aider": {
+        "cmd": ["{binary}", "--message", "{prompt}", "--yes", "--no-auto-commits"],
+        "confidence": "high",
+        "auth_check": None,
+        "skill_flag": None,
+    },
+    "cline": {
+        "cmd": ["{binary}", "-p", "{prompt}"],
+        "confidence": "medium",
+        "auth_check": None,
+        "skill_flag": None,
+    },
+    "roo-code": {
+        "cmd": ["{binary}", "-p", "{prompt}"],
+        "confidence": "medium",
+        "auth_check": None,
+        "skill_flag": None,
+    },
+    "openhands": {
+        "cmd": ["{binary}", "-t", "{prompt}"],
+        "confidence": "medium",
+        "auth_check": None,
+        "skill_flag": None,
+    },
+    "goose": {
+        "cmd": ["{binary}", "run", "--text", "{prompt}"],
+        "confidence": "medium",
+        "auth_check": None,
+        "skill_flag": None,
+    },
+    "continue": {
+        "cmd": ["{binary}", "-p", "{prompt}"],
+        "confidence": "medium",
+        "auth_check": None,
+        "skill_flag": None,
+    },
+    "zed": {
+        "cmd": ["{binary}", "-p", "{prompt}"],
+        "confidence": "low",
+        "auth_check": None,
+        "skill_flag": None,
+    },
+    "q": {
+        "cmd": ["{binary}", "chat", "{prompt}"],
+        "confidence": "medium",
+        "auth_check": None,
+        "skill_flag": None,
+    },
+    "devin": {
+        "cmd": ["{binary}", "run", "--prompt", "{prompt}"],
+        "confidence": "medium",
+        "auth_check": None,
+        "skill_flag": None,
+    },
+    "kilo": {
+        "cmd": ["{binary}", "-p", "{prompt}"],
+        "confidence": "medium",
+        "auth_check": None,
+        "skill_flag": None,
+    },
 }
 
 HARNESS_TOML = {p.stem: p for p in (ROOT / "harnesses").glob("*.toml")}

@@ -77,12 +77,12 @@ export default function EvalsTabs() {
       id: 'cmd-1',
     },
     {
-      title: 'Live harness driver for all 11 supported agent hosts',
+      title: 'Live harness driver for all 21 supported agent hosts',
       cmd: 'python scripts/run_harness.py . --eval 1 --harness pi --condition with-skill --timeout 300',
       id: 'cmd-2',
     },
     {
-      title: 'Validate skill integrity and 126/126 release rules',
+      title: 'Validate skill integrity and 149/149 release rules',
       cmd: 'python scripts/validate_skill.py .',
       id: 'cmd-3',
     },

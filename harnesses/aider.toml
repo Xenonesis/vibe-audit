@@ -1,0 +1,9 @@
+id = "aider"
+binary = "aider"
+fallback_binaries = ["aider-chat"]
+version_args = ["--version"]
+headless = true
+native_skills = false
+explicit_skill_invocation = true
+docs_checked = "2026-08-31"
+notes = "Aider supports repo-level instructions via CONVENTIONS.md and .aider.conf.yml. Operates in terminal with git integration and lint verification."

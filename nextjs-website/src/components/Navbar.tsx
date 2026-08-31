@@ -136,7 +136,7 @@ export default function Navbar() {
               <path d="M10 16l4 4 8-9" strokeWidth={2.5} />
             </svg>
             <span>vibe-audit</span>
-            <span className="badge badge-blue">v0.1.0</span>
+            <span className="badge badge-blue">v0.2.0</span>
           </a>
         </div>
       </nav>
@@ -154,7 +154,7 @@ export default function Navbar() {
               <path d="M10 16l4 4 8-9" strokeWidth={2.5} />
             </svg>
             <span>vibe-audit</span>
-            <span className="badge badge-blue">v0.1.0</span>
+            <span className="badge badge-blue">v0.2.0</span>
           </a>
 
           {/* Desktop Streamlined Navigation Links */}

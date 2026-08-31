@@ -1,0 +1,9 @@
+id = "continue"
+binary = "continue"
+fallback_binaries = ["continue-cli"]
+version_args = ["--version"]
+headless = true
+native_skills = true
+explicit_skill_invocation = true
+docs_checked = "2026-08-31"
+notes = "Continue supports custom slash commands, project rules under .continue/rules/, and MCP context providers in config.json."

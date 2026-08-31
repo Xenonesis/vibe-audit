@@ -1,4 +1,4 @@
-# Compatibility Matrix — v0.1.0
+# Compatibility Matrix — v0.2.0
 
 This file describes **intended/documented integration**, not a guarantee that every current host version has been behaviorally tested.
 
@@ -16,6 +16,16 @@ This file describes **intended/documented integration**, not a guarantee that ev
 | Windsurf/Cascade | Host-specific | `.agents/skills/` / native location | explicit mention | Not run here |
 | OMP | Yes/host-specific | see `adapters/omp.md` | explicit skill invocation | Not run here |
 | Pi | Yes | `.pi/skills/`, `.agents/skills/`, global paths | `/skill:vibe-audit` / `--skill` | Not run here |
+| Aider | Conventions / Config | `CONVENTIONS.md`, `.aider.conf.yml` | `aider --message ...` | Not run here |
+| Cline | Rules / MCP | `.clinerules`, `.agents/skills/` | Plan Mode / MCP tools | Not run here |
+| Roo Code | Modes / Rules / MCP | `.roomodes`, `.clinerules` | `@vibe-audit` / MCP tools | Not run here |
+| OpenHands | Agents / Sandbox | `AGENTS.md`, `.openhands/microagents/` | headless eval / prompt | Not run here |
+| Goose (Block) | Hints / MCP | `.goosehints`, `.agents/skills/` | `goose run` / MCP tools | Not run here |
+| Continue | Rules / Slash Commands | `.continue/rules/vibe-audit.md` | `/audit` / config.json | Not run here |
+| Zed AI | Settings / Prompts | `.zed/settings.json`, `.zed/prompts/` | `/file SKILL.md` / assistant | Not run here |
+| Amazon Q Developer | Rules / CLI | `.amazonq/rules/vibe-audit.md` | `q chat` / inline | Not run here |
+| Devin (Cognition) | AGENTS.md / Playbooks | `AGENTS.md`, `docs/playbooks/` | web session / API | Not run here |
+| Kilo Code | Open Skills / CLI | `.agents/skills/`, `.kilo/skills/` | `kilo --skill` / prompt | Not run here |
 
 See `metadata/compatibility.json` for machine-readable confidence and `scripts/probe_harnesses.py` for local version detection.
 

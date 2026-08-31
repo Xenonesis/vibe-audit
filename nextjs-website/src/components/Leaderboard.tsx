@@ -137,7 +137,7 @@ export default function Leaderboard() {
       }}>
         <div>
           <div style={{ fontSize: '0.8125rem', fontFamily: 'var(--font-mono)', fontWeight: 600, color: 'var(--text-main)' }}>
-            Corpus: Vibe Audit Release Candidate v0.1.0
+            Corpus: Vibe Audit Release Candidate v0.2.0
           </div>
           <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
             22 Machine-Readable Test Fixtures · Evaluated Against 3 Core Metrics

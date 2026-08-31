@@ -1,0 +1,9 @@
+id = "zed"
+binary = "zed"
+fallback_binaries = ["zed-editor", "cli"]
+version_args = ["--version"]
+headless = false
+native_skills = true
+explicit_skill_invocation = true
+docs_checked = "2026-08-31"
+notes = "Zed AI provides high-performance agentic editing with inline transformations, slash commands (/file, /tab), and custom assistant system prompts."

@@ -25,8 +25,8 @@ required=[
 ]
 for rel in required: c('required '+rel,(root/rel).is_file())
 for rel in ['default.md','safe-audit.md','frontend.md','fullstack.md','api-backend.md','ai-rag.md','payments.md','database-multitenant.md','cicd.md','performance.md']: c('profile '+rel,(root/'profiles'/rel).is_file())
-for rel in ['generic.md','codex.md','claude-code.md','antigravity.md','copilot-cli.md','cursor.md','trae.md','gemini-cli.md','opencode.md','windsurf.md','omp.md','pi.md']: c('adapter '+rel,(root/'adapters'/rel).is_file())
-for rel in ['codex.toml','claude-code.toml','pi.toml','omp.toml','copilot-cli.toml','cursor.toml','antigravity.toml','gemini-cli.toml']: c('harness '+rel,(root/'harnesses'/rel).is_file())
+for rel in ['generic.md','codex.md','claude-code.md','antigravity.md','copilot-cli.md','cursor.md','trae.md','gemini-cli.md','opencode.md','windsurf.md','omp.md','pi.md','aider.md','cline.md','roo-code.md','openhands.md','goose.md','continue.md','zed.md','q.md','devin.md','kilo.md']: c('adapter '+rel,(root/'adapters'/rel).is_file())
+for rel in ['codex.toml','claude-code.toml','pi.toml','omp.toml','copilot-cli.toml','cursor.toml','antigravity.toml','gemini-cli.toml','opencode.toml','trae.toml','windsurf.toml','aider.toml','cline.toml','roo-code.toml','openhands.toml','goose.toml','continue.toml','zed.toml','q.toml','devin.toml','kilo.toml']: c('harness '+rel,(root/'harnesses'/rel).is_file())
 for target in re.findall(r'\[[^\]]+\]\(([^)]+\.md)\)',text): c('SKILL link '+target,(root/target).is_file())
 # Parse machine-readable metadata
 for rel in ['evals/evals.json','evals/policy.json','metadata/compatibility.json','metadata/freshness.json','metadata/deprecations.json','metadata/release-gates.json','harnesses/capabilities.json']:

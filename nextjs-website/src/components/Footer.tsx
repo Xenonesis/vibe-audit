@@ -23,7 +23,7 @@ export default function Footer() {
             <div className="brand" style={{ marginBottom: '14px' }}>
               <ShieldIcon width={22} height={22} className="icon-logo" />
               <span>vibe-audit</span>
-              <span className="badge badge-blue">v0.1.0</span>
+              <span className="badge badge-blue">v0.2.0</span>
             </div>
             <p className="footer-bio">
               The evidence-first agent skill & deterministic validation toolkit.
@@ -31,7 +31,7 @@ export default function Footer() {
             </p>
             <div className="footer-status-pill">
               <span className="status-dot-pulse" />
-              <span>126/126 Release Rules Passing · Go Scanner Ready</span>
+              <span>149/149 Release Rules Passing · Go Scanner Ready</span>
             </div>
           </div>
 

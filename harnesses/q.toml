@@ -1,0 +1,9 @@
+id = "q"
+binary = "q"
+fallback_binaries = ["amazon-q", "cw"]
+version_args = ["--version"]
+headless = true
+native_skills = false
+explicit_skill_invocation = true
+docs_checked = "2026-08-31"
+notes = "Amazon Q Developer CLI supports workspace context indexing, inline CLI generation, and custom rules via .amazonq/rules/."

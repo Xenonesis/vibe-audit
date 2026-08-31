@@ -1,0 +1,9 @@
+id = "kilo"
+binary = "kilo"
+fallback_binaries = ["kilo-cli", "kc"]
+version_args = ["--version"]
+headless = true
+native_skills = true
+explicit_skill_invocation = true
+docs_checked = "2026-08-31"
+notes = "Kilo Code is a fast, lightweight agentic terminal coding assistant supporting open standards, BYOK model routing, and .agents/skills/ discovery."

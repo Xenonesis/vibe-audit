@@ -1,7 +1,7 @@
-# Validation Report — Vibe Audit 0.1.0
+# Validation Report — Vibe Audit 0.2.0
 
-**Validation date:** 2026-08-11  
-**Artifact version:** 0.1.0
+**Validation date:** 2026-08-31  
+**Artifact version:** 0.2.0
 
 This report records checks executed in the artifact build environment. It deliberately separates deterministic package validation from behavioral qualification on external coding-agent harnesses.
 

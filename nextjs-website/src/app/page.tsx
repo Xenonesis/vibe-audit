@@ -42,7 +42,7 @@ export default function Home() {
           <div className="hero-grid">
             <div className="reveal" style={{ opacity: 1, transform: 'translateY(0)' }}>
               <div className="badge badge-blue" style={{ marginBottom: '20px' }}>
-                v0.1 · Agent Skill & Validation Toolkit
+                v0.2 · Agent Skill & Validation Toolkit
               </div>
               <h1 className="serif-title hero-heading">
                 Turn vibe-coded applications into production-ready software.
@@ -80,7 +80,7 @@ export default function Home() {
                       <span className="dot"></span>
                     </div>
                     <span className="terminal-title">bash — installation & static pre-scan</span>
-                    <span className="badge badge-green">PASS 126/126</span>
+                    <span className="badge badge-green">PASS 149/149</span>
                   </div>
                   <div className="terminal-body">
                     <div className="terminal-line">
@@ -93,7 +93,7 @@ export default function Home() {
                       </button>
                     </div>
                     <p className="output-muted">Fetching skill package from GitHub (Xenonesis/vibe-audit)...</p>
-                    <p className="output-highlight">Found 1 skill: vibe-audit (v0.1.0)</p>
+                    <p className="output-highlight">Found 1 skill: vibe-audit (v0.2.0)</p>
                     <p className="output-success">Installed globally for 60+ open-standard agent hosts.</p>
                     <br />
                     <div className="terminal-line">
@@ -117,7 +117,7 @@ export default function Home() {
                         <span>{copiedKey === 'term-3' ? 'Copied!' : 'Copy'}</span>
                       </button>
                     </div>
-                    <p className="output-success">Passed: 126/126 skill validation rules satisfied.</p>
+                    <p className="output-success">Passed: 149/149 skill validation rules satisfied.</p>
                   </div>
                 </div>
               </GlitchWave>
@@ -280,7 +280,7 @@ export default function Home() {
             <h2 className="serif-title section-heading">Multi-Harness Live Model Driver</h2>
             <p className="lead-text">
               <code>scripts/run_harness.py</code> probes binary PATHs, checks authentication status, installs the skill bundle, 
-              headlessly executes models, and mechanically grades assertions across all 11 supported agent hosts.
+              headlessly executes models, and mechanically grades assertions across all 21 supported agent hosts.
             </p>
           </div>
           <HarnessGrid />
@@ -297,7 +297,7 @@ export default function Home() {
             <h2 className="serif-title section-heading">Toolkit Inventory & CLI Utilities</h2>
             <p className="lead-text">
               Vibe Audit is fully self-contained. It contains 13 reference playbooks, 10 specialist profiles, 
-              22 machine-readable evals, 11 capability TOMLs, and deterministic CLI validation engines.
+              22 machine-readable evals, 21 capability TOMLs, 22 host adapters, and deterministic Go/Python validation engines.
             </p>
           </div>
           <EvalsTabs />

@@ -30,7 +30,7 @@ export default function FAQAccordion() {
     {
       question: 'What is the Go Static Scanner & Native MCP Server?',
       answer:
-        'Vibe Audit includes a fast, zero-dependency compiled Go binary (cli/main.go & cli/scanner.go). It deterministically pre-scans workspaces for exposed secrets and supply-chain hooks before the AI runs, provides a native stdio JSON-RPC MCP server (vibe-audit mcp), and exports native rules for Cursor, Windsurf, Copilot, and Cline.',
+        'Vibe Audit includes a fast, zero-dependency compiled Go binary (cli/main.go). It deterministically pre-scans workspaces for exposed secrets, supply-chain hooks, and environment parity (`vibe-audit scan`, `vibe-audit deps`, `vibe-audit env`), calculates 0–100 production readiness scores (`vibe-audit score`), provides a native stdio MCP server (`vibe-audit mcp`), and exports native rules for Cursor, Windsurf, Copilot, Cline, Aider, Continue, Goose, and Amazon Q.',
     },
     {
       question: 'How does PLAN mode work?',
@@ -40,7 +40,7 @@ export default function FAQAccordion() {
     {
       question: 'Which AI agent harnesses are supported?',
       answer:
-        'Vibe Audit includes capability definitions and driver hooks for 11 major harnesses: Pi Agent, Oh My Pi (OMP), Claude Code, Cursor IDE, Windsurf / Cascade, TRAE / TraeCode, OpenCode, OpenAI Codex, Gemini CLI, GitHub Copilot CLI, and Antigravity.',
+        'Vibe Audit includes capability definitions and driver hooks for 21 major harnesses: Pi Agent, Oh My Pi (OMP), Claude Code, Cursor IDE, Windsurf / Cascade, Aider, Cline, Roo Code, OpenHands, Goose, Continue, Codex, Gemini CLI, Copilot CLI, TRAE, Zed AI, Amazon Q Developer, Devin, Kilo Code, OpenCode, and Antigravity.',
     },
     {
       question: 'How do I install Vibe Audit in my workspace?',

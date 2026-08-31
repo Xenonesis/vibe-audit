@@ -6,7 +6,7 @@ const path = require('path');
 const https = require('https');
 const { spawnSync } = require('child_process');
 
-const VERSION = 'v0.1.0'; // Aligns with GitHub Release tag
+const VERSION = 'v0.2.0'; // Aligns with GitHub Release tag
 const REPO = 'Xenonesis/vibe-audit';
 
 const platformMap = {

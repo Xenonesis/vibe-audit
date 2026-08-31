@@ -1,8 +1,8 @@
 class VibeAudit < Formula
   desc "Evidence-first Agent Skill & Deterministic Validation Toolkit"
   homepage "https://github.com/Xenonesis/vibe-audit"
-  url "https://github.com/Xenonesis/vibe-audit/archive/refs/tags/v0.1.0.tar.gz"
-  version "0.1.0"
+  url "https://github.com/Xenonesis/vibe-audit/archive/refs/tags/v0.2.0.tar.gz"
+  version "0.2.0"
   sha256 "0000000000000000000000000000000000000000000000000000000000000000" # Dummy hash, replace when releasing
   license "MIT"
 
