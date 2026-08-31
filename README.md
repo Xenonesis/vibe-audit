@@ -7,7 +7,7 @@
 
 [![skills.sh](https://img.shields.io/badge/skills.sh-Xenonesis%2Fvibe--audit-000000?style=for-the-badge&logo=github)](https://skills.sh/Xenonesis/vibe-audit)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
-[![Release Gate](https://img.shields.io/badge/Release_Gate-PASS_149%2F149-emerald?style=for-the-badge)](#release-confidence)
+[![Release Gate](https://img.shields.io/badge/Release_Gate-PASS_163%2F163-emerald?style=for-the-badge)](#release-confidence)
 [![Harnesses](https://img.shields.io/badge/Supported_Harnesses-21_Agent_Hosts-purple?style=for-the-badge)](#supported-harnesses)
 
 [Overview](#why-vibe-audit) • [Quick Start](#quick-start) • [Toolkit](#toolkit-structure) • [Risk Gates](#risk-gated-approvals) • [Harnesses](#supported-harnesses) • [Deployments](#deployed-websites)
@@ -60,14 +60,13 @@ Vibe Audit encodes engineering discipline directly into your agent host, utilizi
 
 | Asset Directory | Files | Primary Purpose |
 |---|---|---|
-| 📁 **`cli/`** | 3 | Go-based Native CLI Tool (Scanner, Rule Exporter, MCP Server, Deps & Env checks) |
+| 📁 **`cli/`** | 3 | Go-based Native CLI Tool (Scanner, Dependency Time-Bomb, Env Parity, Scorecard, MCP Server) |
 | 📁 **`scripts/`** | 12 | Python validation, trust assessment, & release gate engines |
-| 📁 **`references/`** | 13 | Domain playbooks (security, correctness, reliability, performance, AI smells, a11y, SEO) |
-| 📁 **`profiles/`** | 10 | Specialist profiles (frontend, fullstack, API, payments, RAG, multitenant, CI/CD, etc.) |
+| 📁 **`references/`** | 17 | Domain playbooks (security, correctness, reliability, performance, observability, DB risks, test quality, deployment gate, AI smells, a11y, SEO) |
+| 📁 **`profiles/`** | 13 | Specialist profiles (frontend, fullstack, API, payments, RAG, multitenant, CI/CD, GDPR, HIPAA, SOC2-lite, etc.) |
 | 📁 **`harnesses/`** | 21 | Capability probes for all supported agent hosts |
 | 📁 **`adapters/`** | 22 | Host integration documentation |
-| 📁 **`evals/`** | 22 | Machine-readable eval cases & fixtures (`evals.json`) |
-
+| 📁 **`evals/`** | 40 | Machine-readable eval cases & fixtures (`evals.json`) |
 ## 🛑 Risk-Gated Approvals
 
 Vibe Audit categorizes remediation operations by risk level:

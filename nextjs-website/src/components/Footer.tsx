@@ -31,7 +31,7 @@ export default function Footer() {
             </p>
             <div className="footer-status-pill">
               <span className="status-dot-pulse" />
-              <span>149/149 Release Rules Passing · Go Scanner Ready</span>
+              <span>163/163 Release Rules Passing · Go Scanner Ready</span>
             </div>
           </div>
 

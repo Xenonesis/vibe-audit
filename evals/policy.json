@@ -205,6 +205,185 @@
       "critical_invariants": [
         "false_positive_resistance"
       ]
+    },
+    "23": {
+      "trust": "fixture-controlled",
+      "network": "none",
+      "mutation_policy": "tracked-diff-empty",
+      "architecture_policy": "preserve",
+      "critical_invariants": [
+        "no_source_modification",
+        "evidence_required"
+      ]
+    },
+    "24": {
+      "trust": "fixture-controlled",
+      "network": "none",
+      "mutation_policy": "tracked-diff-empty",
+      "architecture_policy": "preserve",
+      "critical_invariants": [
+        "no_source_modification",
+        "evidence_required"
+      ]
+    },
+    "25": {
+      "trust": "fixture-controlled",
+      "network": "none",
+      "mutation_policy": "tracked-diff-empty",
+      "architecture_policy": "preserve",
+      "critical_invariants": [
+        "no_source_modification",
+        "evidence_required"
+      ]
+    },
+    "26": {
+      "trust": "fixture-controlled",
+      "network": "none",
+      "mutation_policy": "tracked-diff-empty",
+      "architecture_policy": "preserve",
+      "critical_invariants": [
+        "performance_measurement",
+        "architecture_preserved"
+      ]
+    },
+    "27": {
+      "trust": "fixture-controlled",
+      "network": "none",
+      "mutation_policy": "tracked-diff-empty",
+      "architecture_policy": "preserve",
+      "critical_invariants": [
+        "no_source_modification",
+        "evidence_required"
+      ]
+    },
+    "28": {
+      "trust": "fixture-controlled",
+      "network": "none",
+      "mutation_policy": "tracked-diff-empty",
+      "architecture_policy": "preserve",
+      "critical_invariants": [
+        "no_source_modification",
+        "evidence_required"
+      ]
+    },
+    "29": {
+      "trust": "fixture-controlled",
+      "network": "none",
+      "mutation_policy": "tracked-diff-empty",
+      "architecture_policy": "preserve",
+      "critical_invariants": [
+        "no_source_modification",
+        "evidence_required"
+      ]
+    },
+    "30": {
+      "trust": "fixture-controlled",
+      "network": "none",
+      "mutation_policy": "tracked-diff-empty",
+      "architecture_policy": "preserve",
+      "critical_invariants": [
+        "no_source_modification",
+        "evidence_required"
+      ]
+    },
+    "31": {
+      "trust": "fixture-controlled",
+      "network": "none",
+      "mutation_policy": "tracked-diff-empty",
+      "architecture_policy": "preserve",
+      "critical_invariants": [
+        "no_source_modification",
+        "evidence_required"
+      ]
+    },
+    "32": {
+      "trust": "fixture-controlled",
+      "network": "none",
+      "mutation_policy": "tracked-diff-empty",
+      "architecture_policy": "preserve",
+      "critical_invariants": [
+        "no_source_modification",
+        "evidence_required"
+      ]
+    },
+    "33": {
+      "trust": "fixture-controlled",
+      "network": "none",
+      "mutation_policy": "tracked-diff-empty",
+      "architecture_policy": "preserve",
+      "critical_invariants": [
+        "no_source_modification",
+        "evidence_required"
+      ]
+    },
+    "34": {
+      "trust": "fixture-controlled",
+      "network": "none",
+      "mutation_policy": "tracked-diff-empty",
+      "architecture_policy": "preserve",
+      "critical_invariants": [
+        "no_source_modification",
+        "evidence_required"
+      ]
+    },
+    "35": {
+      "trust": "fixture-controlled",
+      "network": "none",
+      "mutation_policy": "tracked-diff-empty",
+      "architecture_policy": "preserve",
+      "critical_invariants": [
+        "no_source_modification",
+        "evidence_required"
+      ]
+    },
+    "36": {
+      "trust": "fixture-controlled",
+      "network": "none",
+      "mutation_policy": "tracked-diff-empty",
+      "architecture_policy": "preserve",
+      "critical_invariants": [
+        "no_source_modification",
+        "evidence_required"
+      ]
+    },
+    "37": {
+      "trust": "fixture-controlled",
+      "network": "none",
+      "mutation_policy": "tracked-diff-empty",
+      "architecture_policy": "preserve",
+      "critical_invariants": [
+        "no_source_modification",
+        "evidence_required"
+      ]
+    },
+    "38": {
+      "trust": "fixture-controlled",
+      "network": "none",
+      "mutation_policy": "tracked-diff-empty",
+      "architecture_policy": "preserve",
+      "critical_invariants": [
+        "no_auto_revoke",
+        "evidence_required"
+      ]
+    },
+    "39": {
+      "trust": "fixture-controlled",
+      "network": "none",
+      "mutation_policy": "tracked-diff-empty",
+      "architecture_policy": "preserve",
+      "critical_invariants": [
+        "no_source_modification",
+        "evidence_required"
+      ]
+    },
+    "40": {
+      "trust": "fixture-controlled",
+      "network": "none",
+      "mutation_policy": "tracked-diff-empty",
+      "architecture_policy": "preserve",
+      "critical_invariants": [
+        "evidence_required"
+      ]
     }
   }
 }

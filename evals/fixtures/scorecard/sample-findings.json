@@ -1,0 +1,44 @@
+[
+  {
+    "id": "SEC-001",
+    "category": "security",
+    "severity": "CRITICAL",
+    "evidence": "IDOR on /api/users/:id",
+    "approval_required": true
+  },
+  {
+    "id": "COR-001",
+    "category": "correctness",
+    "severity": "HIGH",
+    "evidence": "Client-authoritative price check",
+    "approval_required": false
+  },
+  {
+    "id": "REL-001",
+    "category": "reliability",
+    "severity": "MEDIUM",
+    "evidence": "Missing retry backoff on third-party webhook",
+    "approval_required": false
+  },
+  {
+    "id": "OBS-001",
+    "category": "observability",
+    "severity": "HIGH",
+    "evidence": "Silent error swallowing in payment handler",
+    "approval_required": false
+  },
+  {
+    "id": "TST-001",
+    "category": "test-quality",
+    "severity": "MEDIUM",
+    "evidence": "Happy-path-only unit tests",
+    "approval_required": false
+  },
+  {
+    "id": "DEP-001",
+    "category": "deployment",
+    "severity": "LOW",
+    "evidence": "Missing HSTS preload flag",
+    "approval_required": false
+  }
+]

@@ -57,6 +57,9 @@ Profiles only select relevant specialist guidance; they do not change mode safet
 - Database/multi-tenant app: [profiles/database-multitenant.md](profiles/database-multitenant.md)
 - CI/CD/deployment review: [profiles/cicd.md](profiles/cicd.md)
 - Performance-focused task: [profiles/performance.md](profiles/performance.md)
+- General compliance / SOC2-lite: [profiles/compliance-lite.md](profiles/compliance-lite.md)
+- GDPR personal data handling: [profiles/gdpr.md](profiles/gdpr.md)
+- HIPAA health data handling: [profiles/hipaa.md](profiles/hipaa.md)
 - Otherwise: [profiles/default.md](profiles/default.md)
 
 ## Progressive disclosure
@@ -75,6 +78,10 @@ Before **any dynamic execution of an unknown or untrusted repository**, load [re
 Optional extension references — load only when relevant:
 - Runtime/browser/UI verification: [references/runtime-ui.md](references/runtime-ui.md)
 - Deployment/infrastructure/CI/CD: [references/deployment-infra.md](references/deployment-infra.md)
+- Observability & telemetry gap: [references/observability.md](references/observability.md)
+- Database risk deep-dive: [references/database-risks.md](references/database-risks.md)
+- AI test quality & mock evaluator: [references/test-quality.md](references/test-quality.md)
+- Pre-launch deployment safety gate: [references/deployment-gate.md](references/deployment-gate.md)
 - LLM/RAG/agent features: [references/ai-app-security.md](references/ai-app-security.md)
 - Accessibility: [references/accessibility.md](references/accessibility.md)
 - SEO/discoverability: [references/seo.md](references/seo.md)
@@ -110,8 +117,7 @@ Before stack-specific advice or edits, identify what exists rather than guessing
 - logging/monitoring/analytics
 - existing rate limiting and security middleware
 
-Inspect manifests/configuration such as package.json/lockfiles, pyproject/requirements, go.mod, Cargo.toml, composer.json, Gemfile, Docker files, framework configs, auth/middleware, source roots, schemas/migrations, and `.env.example`. Do not expose real secret values in reports.
-
+Inspect manifests/configuration such as package.json/lockfiles, pyproject/requirements, go.mod, Cargo.toml, composer.json, Gemfile, Docker files, framework configs, auth/middleware, source roots, schemas/migrations, and `.env.example`. When deterministic tooling is available, run `vibe-audit deps .` and `vibe-audit env .` for static pre-scan before execution. Do not expose real secret values in reports.
 ## Phase 1 — Baseline
 
 Before modification, run the safest applicable checks **after the repository trust decision permits them**.

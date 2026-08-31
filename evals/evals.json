@@ -272,6 +272,239 @@
       "assertions": [
         "false_positive_resistance"
       ]
+    },
+    {
+      "id": 23,
+      "name": "observability-logging",
+      "prompt": "Audit this service for logging and observability hygiene without modifying source.",
+      "expected_output": "Identify raw console.log and missing structured logging library with evidence",
+      "files": [
+        "evals/fixtures/observability/missing-logging.ts"
+      ],
+      "assertions": [
+        "no_source_modification",
+        "evidence_required"
+      ]
+    },
+    {
+      "id": 24,
+      "name": "observability-health",
+      "prompt": "Audit this API server configuration for missing health check endpoints.",
+      "expected_output": "Identify absence of /health or /readyz endpoints with evidence",
+      "files": [
+        "evals/fixtures/observability/no-health-check.ts"
+      ],
+      "assertions": [
+        "no_source_modification",
+        "evidence_required"
+      ]
+    },
+    {
+      "id": 25,
+      "name": "observability-silent-catch",
+      "prompt": "Review this data sync service for silent error swallowing.",
+      "expected_output": "Identify empty catch block returning fake success with evidence",
+      "files": [
+        "evals/fixtures/observability/silent-catch.ts"
+      ],
+      "assertions": [
+        "no_source_modification",
+        "evidence_required"
+      ]
+    },
+    {
+      "id": 26,
+      "name": "database-n-plus-one",
+      "prompt": "Audit this database feed query for performance bottlenecks.",
+      "expected_output": "Identify N+1 query loop and recommend eager loading / preloading",
+      "files": [
+        "evals/fixtures/database-risks/n-plus-one-loop.ts"
+      ],
+      "assertions": [
+        "performance_measurement",
+        "architecture_preserved"
+      ]
+    },
+    {
+      "id": 27,
+      "name": "database-raw-sql",
+      "prompt": "Audit database search query construction for SQL injection.",
+      "expected_output": "Identify unsafe raw SQL string template interpolation with evidence",
+      "files": [
+        "evals/fixtures/database-risks/raw-sql-concat.ts"
+      ],
+      "assertions": [
+        "no_source_modification",
+        "evidence_required"
+      ]
+    },
+    {
+      "id": 28,
+      "name": "database-missing-rls",
+      "prompt": "Audit multi-tenant document lookup for tenant isolation risks.",
+      "expected_output": "Identify missing tenant_id filtering / RLS gap with evidence",
+      "files": [
+        "evals/fixtures/database-risks/missing-rls.ts"
+      ],
+      "assertions": [
+        "no_source_modification",
+        "evidence_required"
+      ]
+    },
+    {
+      "id": 29,
+      "name": "dependency-cve",
+      "prompt": "Audit this application dependencies for known security CVEs.",
+      "expected_output": "Identify lodash@4.17.20 CVE-2021-23337 prototype pollution with evidence",
+      "files": [
+        "evals/fixtures/dependencies/package-with-cve.json"
+      ],
+      "assertions": [
+        "no_source_modification",
+        "evidence_required"
+      ]
+    },
+    {
+      "id": 30,
+      "name": "dependency-abandoned",
+      "prompt": "Scan dependencies for unmaintained or deprecated packages.",
+      "expected_output": "Identify unmaintained left-pad and deprecated request packages with evidence",
+      "files": [
+        "evals/fixtures/dependencies/abandoned-pkg.json"
+      ],
+      "assertions": [
+        "no_source_modification",
+        "evidence_required"
+      ]
+    },
+    {
+      "id": 31,
+      "name": "dependency-gpl",
+      "prompt": "Audit package dependencies for license compliance risks in an MIT project.",
+      "expected_output": "Identify GPL dependency copyleft incompatibility with evidence",
+      "files": [
+        "evals/fixtures/dependencies/gpl-conflict.json"
+      ],
+      "assertions": [
+        "no_source_modification",
+        "evidence_required"
+      ]
+    },
+    {
+      "id": 32,
+      "name": "env-parity-localhost",
+      "prompt": "Audit API client configuration for environment parity issues.",
+      "expected_output": "Identify hardcoded localhost URL in production client with evidence",
+      "files": [
+        "evals/fixtures/env-parity/hardcoded-localhost.ts"
+      ],
+      "assertions": [
+        "no_source_modification",
+        "evidence_required"
+      ]
+    },
+    {
+      "id": 33,
+      "name": "env-parity-example-gap",
+      "prompt": "Check environment variable usage against deployment documentation.",
+      "expected_output": "Identify undocumented environment variables missing from .env.example",
+      "files": [
+        "evals/fixtures/env-parity/missing-env-example.ts"
+      ],
+      "assertions": [
+        "no_source_modification",
+        "evidence_required"
+      ]
+    },
+    {
+      "id": 34,
+      "name": "test-quality-happy-path",
+      "prompt": "Evaluate unit test suite for coverage anti-patterns.",
+      "expected_output": "Identify happy-path-only testing lacking error / zero-division assertions",
+      "files": [
+        "evals/fixtures/test-quality/happy-path-only.test.ts"
+      ],
+      "assertions": [
+        "no_source_modification",
+        "evidence_required"
+      ]
+    },
+    {
+      "id": 35,
+      "name": "test-quality-mock-all",
+      "prompt": "Evaluate test quality and integration confidence.",
+      "expected_output": "Identify 100% mocked database providing zero behavioral confidence",
+      "files": [
+        "evals/fixtures/test-quality/mock-everything.test.ts"
+      ],
+      "assertions": [
+        "no_source_modification",
+        "evidence_required"
+      ]
+    },
+    {
+      "id": 36,
+      "name": "test-quality-no-boundary",
+      "prompt": "Audit discount calculator tests for boundary coverage.",
+      "expected_output": "Identify missing negative, zero, and out-of-bounds parameter test cases",
+      "files": [
+        "evals/fixtures/test-quality/no-boundary.test.ts"
+      ],
+      "assertions": [
+        "no_source_modification",
+        "evidence_required"
+      ]
+    },
+    {
+      "id": 37,
+      "name": "deployment-gate-https",
+      "prompt": "Audit server deployment configuration for pre-launch checklist gates.",
+      "expected_output": "Identify missing HTTPS enforcement and unencrypted port 80 listener",
+      "files": [
+        "evals/fixtures/deployment-gate/missing-https.ts"
+      ],
+      "assertions": [
+        "no_source_modification",
+        "evidence_required"
+      ]
+    },
+    {
+      "id": 38,
+      "name": "deployment-gate-secret",
+      "prompt": "Review pre-launch deployment artifacts for committed credentials.",
+      "expected_output": "Identify hardcoded AWS access key and secret in source code; do not auto-revoke",
+      "files": [
+        "evals/fixtures/deployment-gate/secret-in-source.ts"
+      ],
+      "assertions": [
+        "no_auto_revoke",
+        "evidence_required"
+      ]
+    },
+    {
+      "id": 39,
+      "name": "compliance-gdpr-pii",
+      "prompt": "Audit user database schema for GDPR personal data compliance risks.",
+      "expected_output": "Identify unencrypted PII columns with technical disclaimer",
+      "files": [
+        "evals/fixtures/compliance/unencrypted-pii.ts"
+      ],
+      "assertions": [
+        "no_source_modification",
+        "evidence_required"
+      ]
+    },
+    {
+      "id": 40,
+      "name": "scorecard-calculation",
+      "prompt": "Calculate production readiness scorecard from findings JSON.",
+      "expected_output": "Emit 0-100 overall score and 6-dimension breakdown matching formula",
+      "files": [
+        "evals/fixtures/scorecard/sample-findings.json"
+      ],
+      "assertions": [
+        "evidence_required"
+      ]
     }
   ]
 }

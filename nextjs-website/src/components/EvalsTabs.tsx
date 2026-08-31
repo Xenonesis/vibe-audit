@@ -52,6 +52,10 @@ export default function EvalsTabs() {
     { file: 'references/runtime-ui.md', title: 'Runtime UI & React State', desc: 'Component lifecycle errors, hydration mismatches, layout shifts (CLS), responsive overflow, and state desync.' },
     { file: 'references/maintainability.md', title: 'Code Hygiene & Modularity', desc: 'Preserving working code, avoiding churn refactors, modularity, type integrity, and clear API boundaries.' },
     { file: 'references/deployment-infra.md', title: 'CI/CD & Container Infra', desc: 'Docker security, GitHub Actions pipeline hygiene, environment secret propagation, and health check routes.' },
+    { file: 'references/observability.md', title: 'Observability & Monitoring', desc: 'Structured logging, error tracking telemetry, health/readiness endpoints, correlation IDs, and metrics collection.' },
+    { file: 'references/database-risks.md', title: 'Database Risk Profile', desc: 'N+1 queries, missing foreign key indexes, raw SQL concat, migration safety, and multi-tenant RLS boundaries.' },
+    { file: 'references/test-quality.md', title: 'AI Test Quality Evaluator', desc: 'Happy-path-only tests, mock-everything anti-patterns, missing boundary coverage, and hallucinated test assertions.' },
+    { file: 'references/deployment-gate.md', title: 'Pre-Launch Deployment Gate', desc: 'Binary 10-point checklist covering HTTPS, rate limits, custom error pages, CORS, and secret exposure.' },
     { file: 'references/verification.md', title: 'Verification & Scoring', desc: 'Deterministic assertions, readiness grade calculations, baseline diff validation, and evidence verification.' },
   ], []);
 
@@ -82,7 +86,7 @@ export default function EvalsTabs() {
       id: 'cmd-2',
     },
     {
-      title: 'Validate skill integrity and 149/149 release rules',
+      title: 'Validate skill integrity and 163/163 release rules',
       cmd: 'python scripts/validate_skill.py .',
       id: 'cmd-3',
     },

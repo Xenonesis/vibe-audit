@@ -1,0 +1,8 @@
+{
+  "name": "commercial-saas",
+  "version": "1.0.0",
+  "license": "MIT",
+  "dependencies": {
+    "gpl-compiler-plugin": "3.0.0"
+  }
+}

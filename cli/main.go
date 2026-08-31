@@ -8,6 +8,7 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+	"time"
 )
 
 func getRootDir() string {
@@ -483,16 +484,85 @@ func cmdInstall(args []string) {
 }
 
 // ---------------------------------------------------------------------
-// 4. MAIN ENTRYPOINT
+// 4. SCAN & SUBCOMMANDS
+// ---------------------------------------------------------------------
+
+func cmdScan(args []string) {
+	jsonOutput := false
+	targetDir := getRootDir()
+
+	for _, arg := range args {
+		if arg == "--report" || arg == "--json" {
+			jsonOutput = true
+		} else if arg == "json" && len(args) > 1 {
+			jsonOutput = true
+		} else if !strings.HasPrefix(arg, "--") {
+			targetDir = arg
+		}
+	}
+
+	findings := ScanWorkspace(targetDir)
+
+	if jsonOutput {
+		var stdFindings []StandardFinding
+		for i, f := range findings {
+			stdFindings = append(stdFindings, StandardFinding{
+				ID:               fmt.Sprintf("SEC-%03d", i+1),
+				Category:         "security",
+				Severity:         f.Severity,
+				Confidence:       "HIGH",
+				Status:           "CONFIRMED",
+				Evidence:         fmt.Sprintf("%s:%d — %s", f.File, f.Line, f.Message),
+				Impact:           f.Message,
+				RecommendedFix:   "Remove secret or review lifecycle hook",
+				ChangeRisk:       "LOW",
+				ApprovalRequired: false,
+				File:             f.File,
+				Line:             f.Line,
+			})
+		}
+		scoreReport := CalculateScore(stdFindings)
+		fullReport := StandardReport{
+			Tool:       "vibe-audit",
+			Version:    "0.2.0",
+			Subcommand: "scan",
+			Timestamp:  time.Now().UTC().Format(time.RFC3339),
+			Findings:   stdFindings,
+			Score:      &scoreReport,
+		}
+		outBytes, _ := json.MarshalIndent(fullReport, "", "  ")
+		fmt.Println(string(outBytes))
+		return
+	}
+
+	fmt.Printf("vibe-audit scan %s\n\n", targetDir)
+	if len(findings) == 0 {
+		fmt.Println("Clean: 0 hardcoded secrets · 0 untrusted lifecycle hooks. ✓")
+		return
+	}
+
+	for _, f := range findings {
+		fmt.Printf("%-9s %s:%d — %s (%s)\n", f.Severity, f.File, f.Line, f.Message, f.Rule)
+	}
+	fmt.Printf("\n%d finding(s) detected.\n", len(findings))
+}
+
+// ---------------------------------------------------------------------
+// 5. MAIN ENTRYPOINT
 // ---------------------------------------------------------------------
 
 func main() {
 	if len(os.Args) < 2 {
-		fmt.Println("Usage: vibe-audit <command> [args]")
-		fmt.Println("Commands:")
-		fmt.Println("  init/install  - Run the universal installer")
-		fmt.Println("  export        - Export native rules for IDEs")
-		fmt.Println("  mcp           - Start the JSON-RPC stdio MCP server")
+		fmt.Println("Vibe Audit CLI v0.2.0 — Deterministic Validation & AI Agent Toolkit")
+		fmt.Println("\nUsage: vibe-audit <command> [args]")
+		fmt.Println("\nCommands:")
+		fmt.Println("  scan [path]   - Static security & lifecycle hook pre-scan")
+		fmt.Println("  deps [path]   - Dependency CVE & license time-bomb scanner")
+		fmt.Println("  env  [path]   - Environment parity & dev-mode logic checker")
+		fmt.Println("  score [file]  - Production readiness scorecard aggregator (0-100)")
+		fmt.Println("  export [path] - Export native rules for IDEs (.cursor, .windsurf, etc.)")
+		fmt.Println("  install [path]- Run universal installer & configure MCP server")
+		fmt.Println("  mcp           - Start stdio JSON-RPC MCP server")
 		os.Exit(1)
 	}
 
@@ -500,6 +570,14 @@ func main() {
 	args := os.Args[2:]
 
 	switch cmd {
+	case "scan":
+		cmdScan(args)
+	case "deps":
+		cmdDeps(args)
+	case "env":
+		cmdEnv(args)
+	case "score":
+		cmdScore(args)
 	case "export":
 		cmdExport(args)
 	case "mcp":
@@ -507,7 +585,7 @@ func main() {
 	case "init", "install":
 		cmdInstall(args)
 	default:
-		fmt.Printf("Unknown command: %s\n", cmd)
+		fmt.Printf("Unknown command: %s\nRun 'vibe-audit' without arguments to see available commands.\n", cmd)
 		os.Exit(1)
 	}
 }

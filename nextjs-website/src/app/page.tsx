@@ -80,7 +80,7 @@ export default function Home() {
                       <span className="dot"></span>
                     </div>
                     <span className="terminal-title">bash — installation & static pre-scan</span>
-                    <span className="badge badge-green">PASS 149/149</span>
+                    <span className="badge badge-green">PASS 163/163</span>
                   </div>
                   <div className="terminal-body">
                     <div className="terminal-line">
@@ -117,7 +117,7 @@ export default function Home() {
                         <span>{copiedKey === 'term-3' ? 'Copied!' : 'Copy'}</span>
                       </button>
                     </div>
-                    <p className="output-success">Passed: 149/149 skill validation rules satisfied.</p>
+                    <p className="output-success">Passed: 163/163 skill validation rules satisfied.</p>
                   </div>
                 </div>
               </GlitchWave>
@@ -153,7 +153,7 @@ export default function Home() {
         <div className="container">
           <div className="reveal" style={{ opacity: 1, transform: 'translateY(0)' }}>
             <div className="mono-sub" style={{ marginBottom: '12px' }}>Pillar 02 — Modes & Profiles</div>
-            <h2 className="serif-title section-heading">6 Operating Modes & 10 Specialist Profiles</h2>
+            <h2 className="serif-title section-heading">6 Operating Modes & 13 Specialist Profiles</h2>
             <p className="lead-text">
               Vibe Audit infers the narrowest requested mode. If ambiguous, it defaults to read-only AUDIT. 
               Profiles select domain-specific playbooks without overriding safety rules.
@@ -202,7 +202,7 @@ export default function Home() {
           />
 
           <div className="reveal" style={{ marginTop: '48px', opacity: 1, transform: 'translateY(0)' }}>
-            <h3 style={{ fontSize: '1.125rem', fontWeight: 600, marginBottom: '16px' }}>10 Domain-Specific Profiles</h3>
+            <h3 style={{ fontSize: '1.125rem', fontWeight: 600, marginBottom: '16px' }}>13 Specialist Profiles</h3>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
               <span className="badge badge-neutral">safe-audit (Untrusted Repos)</span>
               <span className="badge badge-neutral">frontend (UI/Client Heavy)</span>
@@ -213,6 +213,9 @@ export default function Home() {
               <span className="badge badge-neutral">database-multitenant (ORM/BOLA)</span>
               <span className="badge badge-neutral">cicd (GitHub Actions/Deploy)</span>
               <span className="badge badge-neutral">performance (Bottlenecks)</span>
+              <span className="badge badge-neutral">compliance-lite (SOC2 Baseline)</span>
+              <span className="badge badge-neutral">gdpr (EU Personal Data)</span>
+              <span className="badge badge-neutral">hipaa (Health & PHI)</span>
               <span className="badge badge-neutral">default (General Web)</span>
             </div>
           </div>
@@ -296,8 +299,8 @@ export default function Home() {
             <div className="mono-sub" style={{ marginBottom: '12px' }}>Pillar 07 — Toolkit & Evals</div>
             <h2 className="serif-title section-heading">Toolkit Inventory & CLI Utilities</h2>
             <p className="lead-text">
-              Vibe Audit is fully self-contained. It contains 13 reference playbooks, 10 specialist profiles, 
-              22 machine-readable evals, 21 capability TOMLs, 22 host adapters, and deterministic Go/Python validation engines.
+              Vibe Audit is fully self-contained. It contains 17 reference playbooks, 13 specialist profiles, 
+              40 machine-readable evals, 21 capability TOMLs, 22 host adapters, and deterministic Go/Python validation engines.
             </p>
           </div>
           <EvalsTabs />
