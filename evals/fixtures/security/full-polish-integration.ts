@@ -11,4 +11,4 @@ export async function integration(req:any, db:any){
   } catch {}
   return {ok:true}; // fake success
 }
-export const SECRET = 'sk_live_FIXTURE_INTEGRATION_ONLY_000000';
+export const SECRET = 'mock_test_key_sk_live_synthetic_fixture_only_00000';

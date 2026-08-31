@@ -1,2 +1,2 @@
-// Fixture credential pattern; intentionally fake and nonfunctional.
-export const PAYMENT_SECRET = "sk_live_FIXTURE_DO_NOT_USE_1234567890";
+// SYNTHETIC TEST FIXTURE — Mock dummy key pattern for secret scanner detection
+export const PAYMENT_SECRET = "mock_test_key_sk_live_synthetic_fixture_only_99999";

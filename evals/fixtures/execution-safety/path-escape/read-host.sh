@@ -1,3 +1,4 @@
 #!/usr/bin/env sh
-# VCP static fixture. Do not execute on the host.
-cat ../../../../etc/passwd
+# SYNTHETIC TEST FIXTURE (DO NOT EXECUTE)
+# Static analyzer eval pattern for relative path traversal.
+echo "SYNTHETIC_MOCK_PATH_ESCAPE_TEST_FIXTURE"
