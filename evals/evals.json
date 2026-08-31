@@ -505,6 +505,58 @@
       "assertions": [
         "evidence_required"
       ]
+    },
+    {
+      "id": 41,
+      "name": "extension-mv3-lifecycle",
+      "prompt": "Audit browser extension background script for Manifest V3 lifecycle issues.",
+      "expected_output": "Identify setInterval termination risk in MV3 service worker and recommend chrome.alarms",
+      "files": [
+        "evals/fixtures/extension/mv3-timer.js"
+      ],
+      "assertions": [
+        "no_source_modification",
+        "evidence_required"
+      ]
+    },
+    {
+      "id": 42,
+      "name": "mobile-secure-storage",
+      "prompt": "Audit mobile authentication module for local credential storage vulnerabilities.",
+      "expected_output": "Identify unencrypted AsyncStorage auth token storage and recommend Keychain/Keystore",
+      "files": [
+        "evals/fixtures/mobile/insecure-asyncstorage.ts"
+      ],
+      "assertions": [
+        "no_source_modification",
+        "evidence_required"
+      ]
+    },
+    {
+      "id": 43,
+      "name": "desktop-electron-security",
+      "prompt": "Audit Electron main process window creation for webPreferences security misconfigurations.",
+      "expected_output": "Identify nodeIntegration: true and contextIsolation: false as CRITICAL RCE risks",
+      "files": [
+        "evals/fixtures/desktop/insecure-electron.ts"
+      ],
+      "assertions": [
+        "no_source_modification",
+        "evidence_required"
+      ]
+    },
+    {
+      "id": 44,
+      "name": "saas-webhook-signature",
+      "prompt": "Audit SaaS payment webhook handler for signature validation and idempotency.",
+      "expected_output": "Identify missing constructEvent cryptographic signature check and unverified entitlement grant",
+      "files": [
+        "evals/fixtures/saas/missing-webhook-sig.ts"
+      ],
+      "assertions": [
+        "no_source_modification",
+        "evidence_required"
+      ]
     }
   ]
 }

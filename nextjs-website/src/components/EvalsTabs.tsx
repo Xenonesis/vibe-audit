@@ -56,6 +56,10 @@ export default function EvalsTabs() {
     { file: 'references/database-risks.md', title: 'Database Risk Profile', desc: 'N+1 queries, missing foreign key indexes, raw SQL concat, migration safety, and multi-tenant RLS boundaries.' },
     { file: 'references/test-quality.md', title: 'AI Test Quality Evaluator', desc: 'Happy-path-only tests, mock-everything anti-patterns, missing boundary coverage, and hallucinated test assertions.' },
     { file: 'references/deployment-gate.md', title: 'Pre-Launch Deployment Gate', desc: 'Binary 10-point checklist covering HTTPS, rate limits, custom error pages, CORS, and secret exposure.' },
+    { file: 'references/extension-mv3.md', title: 'Extension Manifest V3', desc: 'Service worker lifecycle, chrome.alarms, Chrome Web Store rejection traps, and content script DOM isolation.' },
+    { file: 'references/mobile-security.md', title: 'Mobile Security & Stores', desc: 'Keychain/Keystore token storage, Apple 5.1.1(v) account deletion gate, deep link validation, and privacy manifests.' },
+    { file: 'references/desktop-security.md', title: 'Desktop & IPC Security', desc: 'Electron nodeIntegration/contextIsolation matrix, safe IPC channels, and Tauri allowlist permissions.' },
+    { file: 'references/saas-webhooks.md', title: 'SaaS Billing & Webhooks', desc: 'Stripe/LemonSqueezy raw body signature checks, webhook idempotency ledger, and checkout race resolution.' },
     { file: 'references/verification.md', title: 'Verification & Scoring', desc: 'Deterministic assertions, readiness grade calculations, baseline diff validation, and evidence verification.' },
   ], []);
 
@@ -86,7 +90,7 @@ export default function EvalsTabs() {
       id: 'cmd-2',
     },
     {
-      title: 'Validate skill integrity and 163/163 release rules',
+      title: 'Validate skill integrity and 179/179 release rules',
       cmd: 'python scripts/validate_skill.py .',
       id: 'cmd-3',
     },

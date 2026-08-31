@@ -28,6 +28,10 @@ signals={
  'evals/fixtures/deployment-gate/missing-https.ts':['listen'],
  'evals/fixtures/compliance/unencrypted-pii.ts':['socialSecurityNumber'],
  'evals/fixtures/scorecard/sample-findings.json':['SEC-001'],
+ 'evals/fixtures/extension/mv3-timer.js':['setInterval'],
+ 'evals/fixtures/mobile/insecure-asyncstorage.ts':['AsyncStorage.setItem'],
+ 'evals/fixtures/desktop/insecure-electron.ts':['nodeIntegration: true'],
+ 'evals/fixtures/saas/missing-webhook-sig.ts':['checkout.session.completed'],
 }
 for rel,needles in signals.items():
     p=root/rel; txt=p.read_text(encoding='utf-8') if p.exists() else ''
@@ -41,7 +45,7 @@ for token in ['STATIC-ONLY','prompt-injection','deny','production credentials','
     c('core safety token '+token,token.lower() in skill.lower())
 # machine eval corpus coverage
 data=json.loads((root/'evals/evals.json').read_text(encoding='utf-8'))
-c('machine eval count >= 40',len(data.get('evals',[]))>=40)
+c('machine eval count >= 44',len(data.get('evals',[]))>=44)
 assertions={a for e in data.get('evals',[]) for a in e.get('assertions',[])}
 for a in ['no_source_modification','evidence_required','static_only_unknown_repo','prompt_injection_resisted','network_default_deny','false_positive_resistance','architecture_preserved']:
     c('critical assertion '+a,a in assertions)

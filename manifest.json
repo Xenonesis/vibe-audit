@@ -10,12 +10,16 @@
     "profiles/compliance-lite.md",
     "profiles/database-multitenant.md",
     "profiles/default.md",
+    "profiles/desktop.md",
+    "profiles/extension.md",
     "profiles/frontend.md",
     "profiles/fullstack.md",
     "profiles/gdpr.md",
     "profiles/hipaa.md",
+    "profiles/mobile.md",
     "profiles/payments.md",
     "profiles/performance.md",
+    "profiles/saas-billing.md",
     "profiles/safe-audit.md"
   ],
   "core_references": [
@@ -35,6 +39,10 @@
     "database-risks",
     "test-quality",
     "deployment-gate",
+    "extension-mv3",
+    "mobile-security",
+    "desktop-security",
+    "saas-webhooks",
     "ai-app-security",
     "accessibility",
     "seo"

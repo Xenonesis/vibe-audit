@@ -19,12 +19,23 @@ type SecurityFinding struct {
 }
 
 var (
-	// Regex for detecting potential secrets (Basic heuristic)
+	// Regex for detecting potential secrets
 	secretRegexes = map[string]*regexp.Regexp{
-		"AWS Access Key":  regexp.MustCompile(`(?i)\b(?:AKIA|ABIA|ACCA|ASIA)[0-9A-Z]{16}\b`),
-		"Generic API Key": regexp.MustCompile(`(?i)(?:api[_-]?key|secret|token|password)[\s]*[=:]\s*["'][a-zA-Z0-9\-_]{16,}["']`),
-		"RSA Private Key": regexp.MustCompile(`-----BEGIN (?:RSA )?PRIVATE KEY-----`),
+		"AWS Access Key":          regexp.MustCompile(`(?i)\b(?:AKIA|ABIA|ACCA|ASIA)[0-9A-Z]{16}\b`),
+		"Generic API Key":         regexp.MustCompile(`(?i)(?:api[_-]?key|secret|token|password)[\s]*[=:]\s*["'][a-zA-Z0-9\-_]{16,}["']`),
+		"RSA Private Key":         regexp.MustCompile(`-----BEGIN (?:RSA )?PRIVATE KEY-----`),
+		"Exposed Frontend Secret": regexp.MustCompile(`(?i)\bNEXT_PUBLIC_[A-Z0-9_]*(?:SECRET|PRIVATE|SERVICE_ROLE|ADMIN_KEY)\b`),
 	}
+
+	// Mobile insecure storage
+	asyncStorageTokenRegex = regexp.MustCompile(`(?i)AsyncStorage\.setItem\s*\(\s*["'](?:auth|token|jwt|password|secret|session|access_token|refresh_token)`)
+
+	// Desktop Electron insecurity
+	electronNodeIntegrationRegex = regexp.MustCompile(`(?i)\bnodeIntegration\s*:\s*true\b`)
+	electronContextIsolationRegex = regexp.MustCompile(`(?i)\bcontextIsolation\s*:\s*false\b`)
+
+	// Extension MV3 background timers
+	mv3TimerRegex = regexp.MustCompile(`(?i)\b(?:setInterval|setTimeout)\s*\(`)
 )
 
 // ScanWorkspace performs a lightweight static analysis of the workspace
@@ -78,12 +89,61 @@ func scanFileForSecrets(path string, root string, findings *[]SecurityFinding) {
 		// Check against secret regexes
 		for ruleName, regex := range secretRegexes {
 			if regex.MatchString(line) {
+				sev := "HIGH"
+				if ruleName == "Exposed Frontend Secret" {
+					sev = "CRITICAL"
+				}
 				*findings = append(*findings, SecurityFinding{
 					File:     relPath,
 					Line:     lineNum,
-					Severity: "HIGH",
+					Severity: sev,
 					Rule:     "Hardcoded Secret",
 					Message:  fmt.Sprintf("Potential %s detected", ruleName),
+				})
+			}
+		}
+
+		// Check for mobile unencrypted AsyncStorage auth token usage
+		if asyncStorageTokenRegex.MatchString(line) {
+			*findings = append(*findings, SecurityFinding{
+				File:     relPath,
+				Line:     lineNum,
+				Severity: "HIGH",
+				Rule:     "Insecure Mobile Storage",
+				Message:  "Sensitive auth credential written to unencrypted AsyncStorage (use Keychain/Keystore)",
+			})
+		}
+
+		// Check for desktop Electron webPreferences misconfiguration
+		if electronNodeIntegrationRegex.MatchString(line) {
+			*findings = append(*findings, SecurityFinding{
+				File:     relPath,
+				Line:     lineNum,
+				Severity: "CRITICAL",
+				Rule:     "Electron Node Integration",
+				Message:  "Dangerous nodeIntegration: true detected in Electron webPreferences (allows RCE)",
+			})
+		}
+		if electronContextIsolationRegex.MatchString(line) {
+			*findings = append(*findings, SecurityFinding{
+				File:     relPath,
+				Line:     lineNum,
+				Severity: "CRITICAL",
+				Rule:     "Electron Context Isolation Disabled",
+				Message:  "Dangerous contextIsolation: false detected in Electron webPreferences",
+			})
+		}
+
+		// Check for Extension MV3 background timers
+		baseName := strings.ToLower(filepath.Base(path))
+		if baseName == "background.js" || baseName == "background.ts" || baseName == "service-worker.js" || baseName == "sw.js" {
+			if mv3TimerRegex.MatchString(line) {
+				*findings = append(*findings, SecurityFinding{
+					File:     relPath,
+					Line:     lineNum,
+					Severity: "MEDIUM",
+					Rule:     "MV3 Timer Killed on Idle",
+					Message:  "setInterval/setTimeout in MV3 service worker will be terminated on sleep (use chrome.alarms)",
 				})
 			}
 		}
@@ -100,7 +160,5 @@ func scanFileForSecrets(path string, root string, findings *[]SecurityFinding) {
 				})
 			}
 		}
-
-		lineNum++
 	}
 }

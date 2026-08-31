@@ -62,11 +62,11 @@ Vibe Audit encodes engineering discipline directly into your agent host, utilizi
 |---|---|---|
 | 📁 **`cli/`** | 3 | Go-based Native CLI Tool (Scanner, Dependency Time-Bomb, Env Parity, Scorecard, MCP Server) |
 | 📁 **`scripts/`** | 12 | Python validation, trust assessment, & release gate engines |
-| 📁 **`references/`** | 17 | Domain playbooks (security, correctness, reliability, performance, observability, DB risks, test quality, deployment gate, AI smells, a11y, SEO) |
-| 📁 **`profiles/`** | 13 | Specialist profiles (frontend, fullstack, API, payments, RAG, multitenant, CI/CD, GDPR, HIPAA, SOC2-lite, etc.) |
+| 📁 **`references/`** | 21 | Domain playbooks (security, correctness, reliability, performance, observability, DB risks, test quality, deployment gate, extension MV3, mobile, desktop, SaaS webhooks, AI smells, a11y, SEO) |
+| 📁 **`profiles/`** | 17 | Specialist profiles (frontend, fullstack, API, payments, extension, mobile, desktop, saas-billing, RAG, multitenant, CI/CD, GDPR, HIPAA, SOC2-lite, etc.) |
 | 📁 **`harnesses/`** | 21 | Capability probes for all supported agent hosts |
 | 📁 **`adapters/`** | 22 | Host integration documentation |
-| 📁 **`evals/`** | 40 | Machine-readable eval cases & fixtures (`evals.json`) |
+| 📁 **`evals/`** | 44 | Machine-readable eval cases & fixtures (`evals.json`) |
 ## 🛑 Risk-Gated Approvals
 
 Vibe Audit categorizes remediation operations by risk level:

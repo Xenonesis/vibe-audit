@@ -18,13 +18,13 @@ for token in ['CRITICAL','HIGH','MEDIUM','LOW','INFO','CONFIRMED','LIKELY','POTE
 required=[
  'LICENSE','SECURITY.md','SUPPORT.md','THREAT-MODEL.md','COMPATIBILITY.md','CHANGELOG.md',
  'references/security.md','references/correctness.md','references/reliability.md','references/performance.md','references/ai-code-smells.md','references/maintainability.md','references/verification.md','references/execution-safety.md',
- 'references/runtime-ui.md','references/deployment-infra.md','references/ai-app-security.md','references/accessibility.md','references/seo.md','references/observability.md','references/database-risks.md','references/test-quality.md','references/deployment-gate.md',
+ 'references/runtime-ui.md','references/deployment-infra.md','references/ai-app-security.md','references/accessibility.md','references/seo.md','references/observability.md','references/database-risks.md','references/test-quality.md','references/deployment-gate.md','references/extension-mv3.md','references/mobile-security.md','references/desktop-security.md','references/saas-webhooks.md',
  'evals/evals.json','evals/evals.schema.json','evals/policy.json','evals/expected-behavior.md','evals/execution-safety-cases.md','evals/accessibility-cases.md','evals/seo-cases.md',
  'metadata/compatibility.json','metadata/freshness.json','metadata/deprecations.json','metadata/release-gates.json','harnesses/capabilities.json',
  'scripts/validate_evals.py','scripts/assess_repo_trust.py','scripts/sandbox_command.py','scripts/probe_harnesses.py','scripts/secret_scan.py','scripts/release_gate.py','scripts/package_release.py','scripts/run_eval.py','scripts/grade_run.py','scripts/benchmark.py'
 ]
 for rel in required: c('required '+rel,(root/rel).is_file())
-for rel in ['default.md','safe-audit.md','frontend.md','fullstack.md','api-backend.md','ai-rag.md','payments.md','database-multitenant.md','cicd.md','performance.md','compliance-lite.md','gdpr.md','hipaa.md']: c('profile '+rel,(root/'profiles'/rel).is_file())
+for rel in ['default.md','safe-audit.md','frontend.md','fullstack.md','api-backend.md','ai-rag.md','payments.md','database-multitenant.md','cicd.md','performance.md','compliance-lite.md','gdpr.md','hipaa.md','extension.md','mobile.md','desktop.md','saas-billing.md']: c('profile '+rel,(root/'profiles'/rel).is_file())
 for rel in ['generic.md','codex.md','claude-code.md','antigravity.md','copilot-cli.md','cursor.md','trae.md','gemini-cli.md','opencode.md','windsurf.md','omp.md','pi.md','aider.md','cline.md','roo-code.md','openhands.md','goose.md','continue.md','zed.md','q.md','devin.md','kilo.md']: c('adapter '+rel,(root/'adapters'/rel).is_file())
 for rel in ['codex.toml','claude-code.toml','pi.toml','omp.toml','copilot-cli.toml','cursor.toml','antigravity.toml','gemini-cli.toml','opencode.toml','trae.toml','windsurf.toml','aider.toml','cline.toml','roo-code.toml','openhands.toml','goose.toml','continue.toml','zed.toml','q.toml','devin.toml','kilo.toml']: c('harness '+rel,(root/'harnesses'/rel).is_file())
 for target in re.findall(r'\[[^\]]+\]\(([^)]+\.md)\)',text): c('SKILL link '+target,(root/target).is_file())

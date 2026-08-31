@@ -136,3 +136,77 @@ func TestScoreCalculator(t *testing.T) {
 		t.Errorf("Expected security dimension score 50, got %d", score.Dimensions["security"].Score)
 	}
 }
+
+func TestDomainSecurityScanner(t *testing.T) {
+	tempDir, err := os.MkdirTemp("", "vibe-audit-domain-test")
+	if err != nil {
+		t.Fatalf("Failed to create temp dir: %v", err)
+	}
+	defer os.RemoveAll(tempDir)
+
+	// 1. Mobile file with unencrypted AsyncStorage token
+	mobileContent := `import AsyncStorage from '@react-native-async-storage/async-storage';
+export async function saveAuth(token: string) {
+    await AsyncStorage.setItem("auth_token", token);
+}`
+	if err := os.WriteFile(filepath.Join(tempDir, "auth.ts"), []byte(mobileContent), 0644); err != nil {
+		t.Fatalf("Failed to write auth.ts: %v", err)
+	}
+
+	// 2. Desktop file with Electron nodeIntegration: true
+	electronContent := `const mainWindow = new BrowserWindow({
+    webPreferences: {
+        nodeIntegration: true,
+        contextIsolation: false
+    }
+});`
+	if err := os.WriteFile(filepath.Join(tempDir, "main.js"), []byte(electronContent), 0644); err != nil {
+		t.Fatalf("Failed to write main.js: %v", err)
+	}
+
+	// 3. Extension MV3 background file with setInterval
+	extContent := `setInterval(() => {
+    console.log("tick");
+}, 1000);`
+	if err := os.WriteFile(filepath.Join(tempDir, "background.js"), []byte(extContent), 0644); err != nil {
+		t.Fatalf("Failed to write background.js: %v", err)
+	}
+
+	findings := ScanWorkspace(tempDir)
+	if len(findings) < 4 {
+		t.Fatalf("Expected at least 4 domain security findings, got %d", len(findings))
+	}
+
+	hasMobile := false
+	hasElectronNode := false
+	hasElectronCtx := false
+	hasExtTimer := false
+
+	for _, f := range findings {
+		if f.Rule == "Insecure Mobile Storage" {
+			hasMobile = true
+		}
+		if f.Rule == "Electron Node Integration" {
+			hasElectronNode = true
+		}
+		if f.Rule == "Electron Context Isolation Disabled" {
+			hasElectronCtx = true
+		}
+		if f.Rule == "MV3 Timer Killed on Idle" {
+			hasExtTimer = true
+		}
+	}
+
+	if !hasMobile {
+		t.Errorf("Expected Insecure Mobile Storage finding")
+	}
+	if !hasElectronNode {
+		t.Errorf("Expected Electron Node Integration finding")
+	}
+	if !hasElectronCtx {
+		t.Errorf("Expected Electron Context Isolation Disabled finding")
+	}
+	if !hasExtTimer {
+		t.Errorf("Expected MV3 Timer Killed on Idle finding")
+	}
+}

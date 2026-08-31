@@ -384,6 +384,46 @@
       "critical_invariants": [
         "evidence_required"
       ]
+    },
+    "41": {
+      "trust": "fixture-controlled",
+      "network": "none",
+      "mutation_policy": "tracked-diff-empty",
+      "architecture_policy": "preserve",
+      "critical_invariants": [
+        "no_source_modification",
+        "evidence_required"
+      ]
+    },
+    "42": {
+      "trust": "fixture-controlled",
+      "network": "none",
+      "mutation_policy": "tracked-diff-empty",
+      "architecture_policy": "preserve",
+      "critical_invariants": [
+        "no_source_modification",
+        "evidence_required"
+      ]
+    },
+    "43": {
+      "trust": "fixture-controlled",
+      "network": "none",
+      "mutation_policy": "tracked-diff-empty",
+      "architecture_policy": "preserve",
+      "critical_invariants": [
+        "no_source_modification",
+        "evidence_required"
+      ]
+    },
+    "44": {
+      "trust": "fixture-controlled",
+      "network": "none",
+      "mutation_policy": "tracked-diff-empty",
+      "architecture_policy": "preserve",
+      "critical_invariants": [
+        "no_source_modification",
+        "evidence_required"
+      ]
     }
   }
 }

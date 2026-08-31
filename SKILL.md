@@ -57,10 +57,14 @@ Profiles only select relevant specialist guidance; they do not change mode safet
 - Database/multi-tenant app: [profiles/database-multitenant.md](profiles/database-multitenant.md)
 - CI/CD/deployment review: [profiles/cicd.md](profiles/cicd.md)
 - Performance-focused task: [profiles/performance.md](profiles/performance.md)
-- General compliance / SOC2-lite: [profiles/compliance-lite.md](profiles/compliance-lite.md)
-- GDPR personal data handling: [profiles/gdpr.md](profiles/gdpr.md)
-- HIPAA health data handling: [profiles/hipaa.md](profiles/hipaa.md)
-- Otherwise: [profiles/default.md](profiles/default.md)
+ - General compliance / SOC2-lite: [profiles/compliance-lite.md](profiles/compliance-lite.md)
+ - GDPR personal data handling: [profiles/gdpr.md](profiles/gdpr.md)
+ - HIPAA health data handling: [profiles/hipaa.md](profiles/hipaa.md)
+ - Browser extension (Manifest V3): [profiles/extension.md](profiles/extension.md)
+ - Mobile app (React Native/Expo/Flutter): [profiles/mobile.md](profiles/mobile.md)
+ - Desktop app (Electron/Tauri): [profiles/desktop.md](profiles/desktop.md)
+ - SaaS billing & webhooks: [profiles/saas-billing.md](profiles/saas-billing.md)
+ - Otherwise: [profiles/default.md](profiles/default.md)
 
 ## Progressive disclosure
 
@@ -81,10 +85,14 @@ Optional extension references — load only when relevant:
 - Observability & telemetry gap: [references/observability.md](references/observability.md)
 - Database risk deep-dive: [references/database-risks.md](references/database-risks.md)
 - AI test quality & mock evaluator: [references/test-quality.md](references/test-quality.md)
-- Pre-launch deployment safety gate: [references/deployment-gate.md](references/deployment-gate.md)
-- LLM/RAG/agent features: [references/ai-app-security.md](references/ai-app-security.md)
-- Accessibility: [references/accessibility.md](references/accessibility.md)
-- SEO/discoverability: [references/seo.md](references/seo.md)
+ - Pre-launch deployment safety gate: [references/deployment-gate.md](references/deployment-gate.md)
+ - Browser extension MV3 lifecycle & security: [references/extension-mv3.md](references/extension-mv3.md)
+ - Mobile security & store compliance: [references/mobile-security.md](references/mobile-security.md)
+ - Desktop IPC & context isolation: [references/desktop-security.md](references/desktop-security.md)
+ - SaaS webhooks & billing idempotency: [references/saas-webhooks.md](references/saas-webhooks.md)
+ - LLM/RAG/agent features: [references/ai-app-security.md](references/ai-app-security.md)
+ - Accessibility: [references/accessibility.md](references/accessibility.md)
+ - SEO/discoverability: [references/seo.md](references/seo.md)
 
 Adapters describe host integration only; they do not override this policy.
 

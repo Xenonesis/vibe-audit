@@ -140,7 +140,7 @@ export default function Leaderboard() {
             Corpus: Vibe Audit Release Candidate v0.2.0
           </div>
           <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
-            40 Machine-Readable Test Fixtures · Evaluated Against 3 Core Metrics
+            44 Machine-Readable Test Fixtures · Evaluated Against 3 Core Metrics
           </div>
         </div>
         <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', alignItems: 'center' }}>
