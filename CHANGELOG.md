@@ -12,7 +12,10 @@
 - AI Test Generation Evaluator (`references/test-quality.md`).
 - Pre-launch Deployment Safety Checklist (`references/deployment-gate.md`).
 - Compliance Profiles: GDPR Lite, HIPAA Lite, SOC2-lite (`profiles/gdpr.md`, `profiles/hipaa.md`, `profiles/compliance-lite.md`).
-
+- Multi-Domain Specialist Profiles: Browser Extensions, Mobile Apps, Desktop Apps, SaaS Billing (`profiles/extension.md`, `profiles/mobile.md`, `profiles/desktop.md`, `profiles/saas-billing.md`).
+- Multi-Domain Reference Playbooks: Manifest V3 Lifecycle, Mobile Security & Store Compliance, Desktop IPC & Context Isolation, SaaS Billing & Payment Webhooks (`references/extension-mv3.md`, `references/mobile-security.md`, `references/desktop-security.md`, `references/saas-webhooks.md`).
+- Expanded machine-readable eval corpus from 22 to 44 test fixtures and assertions (`evals/evals.json`, `evals/policy.json`).
+- Enhanced Go CLI static scanner with mobile, desktop, extension, and frontend secret detection rules.
 ### Changed
 - Version bump across package, CLI, manifests, and extension to v0.2.0.
 
