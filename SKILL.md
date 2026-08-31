@@ -31,6 +31,8 @@ Governing rules:
 - Explicit approval over destructive or high-risk change.
 - Honest uncertainty over false certainty.
 - Fail closed when execution trust is unknown.
+- Target validation over speculative auditing: empty or non-auditable targets fail fast.
+- Root-cause deduplication: absence caused by the same root condition must not be emitted as multiple independent findings.
 
 ## Operating modes
 
@@ -97,6 +99,26 @@ Optional extension references — load only when relevant:
  - Token efficiency & LLM cost optimization: [references/token-efficiency.md](references/token-efficiency.md)
 
 Adapters describe host integration only; they do not override this policy.
+
+## Phase -2 — Preflight target validation & auditability gate
+
+Before running deep domain checks or loading references, verify that an auditable project exists:
+
+1. Inspect workspace for:
+   - Source files (JS/TS, Python, Go, Rust, Java, C/C++, Ruby, PHP, Swift, Kotlin, Vue, Svelte, HTML, etc.)
+   - Package manifests (`package.json`, `Cargo.toml`, `pyproject.toml`, `go.mod`, `pom.xml`, etc.)
+   - Recognized framework markers and executable surfaces
+   - Meaningful configuration files
+
+2. If 0 source files, 0 manifests, 0 framework markers, 0 executable surfaces, and 0 configuration files:
+   - Declare **`AUDITABILITY = NONE`**.
+   - Mark the audit **`BLOCKED / NOT APPLICABLE`**.
+   - **Do NOT generate normal security, performance, correctness, reliability, or deployment findings.**
+   - Return a concise target-validation report and stop.
+
+3. **Cascading Absence Rule**:
+   - Absence caused by the same root condition must **never** be emitted as multiple independent findings.
+   - If an entire subsystem (e.g. database, authentication, backend) is absent, report a single architectural notice rather than cascading individual missing-feature findings.
 
 ## Phase -1 — Repository trust boundary
 

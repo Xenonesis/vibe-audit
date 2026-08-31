@@ -547,6 +547,33 @@ func cmdScan(args []string) {
 	fmt.Printf("\n%d finding(s) detected.\n", len(findings))
 }
 
+func cmdPreflight(args []string) {
+	targetDir := "."
+	jsonOutput := false
+	for _, arg := range args {
+		if arg == "--json" || arg == "--report" {
+			jsonOutput = true
+		} else if !strings.HasPrefix(arg, "--") {
+			targetDir = arg
+		}
+	}
+
+	status := ValidateTargetAuditability(targetDir)
+
+	if jsonOutput {
+		outBytes, _ := json.MarshalIndent(status, "", "  ")
+		fmt.Println(string(outBytes))
+		return
+	}
+
+	fmt.Printf("vibe-audit preflight %s\n\n", targetDir)
+	if status.IsAuditable {
+		fmt.Printf("✓ Target is auditable:\n  - Source files: %d\n  - Manifests:    %d\n  - Configs:      %d\n\nResult: AUDIT PROCEED\n", status.SourceFiles, status.Manifests, status.Configs)
+	} else {
+		fmt.Printf("✗ AUDIT BLOCKED:\n  %s\n\nResult: AUDITABILITY = NONE (Not Applicable)\n", status.Reason)
+	}
+}
+
 // ---------------------------------------------------------------------
 // 5. MAIN ENTRYPOINT
 // ---------------------------------------------------------------------
@@ -556,6 +583,7 @@ func main() {
 		fmt.Println("Vibe Audit CLI v0.2.0 — Deterministic Validation & AI Agent Toolkit")
 		fmt.Println("\nUsage: vibe-audit <command> [args]")
 		fmt.Println("\nCommands:")
+		fmt.Println("  preflight [path] - Preflight target validation & auditability gate")
 		fmt.Println("  scan [path]   - Static security & lifecycle hook pre-scan")
 		fmt.Println("  deps [path]   - Dependency CVE & license time-bomb scanner")
 		fmt.Println("  env  [path]   - Environment parity & dev-mode logic checker")
@@ -563,7 +591,6 @@ func main() {
 		fmt.Println("  export [path] - Export native rules for IDEs (.cursor, .windsurf, etc.)")
 		fmt.Println("  install [path]- Run universal installer & configure MCP server")
 		fmt.Println("  mcp           - Start stdio JSON-RPC MCP server")
-		os.Exit(1)
 	}
 
 	cmd := os.Args[1]
@@ -582,9 +609,10 @@ func main() {
 		cmdExport(args)
 	case "mcp":
 		cmdMCP()
+	case "preflight":
+		cmdPreflight(args)
 	case "init", "install":
 		cmdInstall(args)
-	default:
 		fmt.Printf("Unknown command: %s\nRun 'vibe-audit' without arguments to see available commands.\n", cmd)
 		os.Exit(1)
 	}

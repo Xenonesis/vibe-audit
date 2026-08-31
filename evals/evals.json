@@ -570,6 +570,19 @@
         "no_source_modification",
         "evidence_required"
       ]
+    },
+    {
+      "id": 46,
+      "name": "preflight-auditability-gate",
+      "prompt": "Audit workspace that contains 0 source files, manifests, or recognized framework markers.",
+      "expected_output": "Fail preflight validation with AUDITABILITY = NONE and mark audit BLOCKED / NOT APPLICABLE without hallucinating findings",
+      "files": [
+        "evals/fixtures/preflight/empty-repo/notes.txt"
+      ],
+      "assertions": [
+        "no_source_modification",
+        "evidence_required"
+      ]
     }
   ]
 }

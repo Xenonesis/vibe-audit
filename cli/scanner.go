@@ -41,10 +41,100 @@ var (
 	llmUnboundedChatRegex = regexp.MustCompile(`(?i)\bmessages\s*:\s*\[\s*\.\.\.(?:chatHistory|allMessages|conversationHistory|history|messages)\s*\]`)
 )
 
+// AuditabilityStatus represents the result of the Preflight / Auditability Gate
+type AuditabilityStatus struct {
+	IsAuditable bool   `json:"is_auditable"`
+	SourceFiles int    `json:"source_files"`
+	Manifests   int    `json:"manifests"`
+	Configs     int    `json:"configs"`
+	Reason      string `json:"reason"`
+}
+
+// ValidateTargetAuditability checks if there is an auditable codebase
+func ValidateTargetAuditability(root string) AuditabilityStatus {
+	var sourceFiles, manifests, configs int
+
+	skipDirs := map[string]bool{
+		".git": true, "node_modules": true, "venv": true, ".venv": true,
+		"__pycache__": true, "build": true, "dist": true, ".next": true,
+	}
+
+	knownManifests := map[string]bool{
+		"package.json": true, "cargo.toml": true, "pyproject.toml": true,
+		"requirements.txt": true, "go.mod": true, "composer.json": true,
+		"gemfile": true, "pom.xml": true, "build.gradle": true, "mix.exs": true,
+	}
+
+	knownSourceExts := map[string]bool{
+		".js": true, ".ts": true, ".tsx": true, ".jsx": true, ".py": true,
+		".go": true, ".rs": true, ".java": true, ".c": true, ".cpp": true,
+		".cs": true, ".rb": true, ".php": true, ".swift": true, ".kt": true,
+		".vue": true, ".svelte": true, ".html": true, ".css": true, ".sql": true,
+	}
+
+	knownConfigExts := map[string]bool{
+		".yaml": true, ".yml": true, ".toml": true, ".json": true, ".env.example": true,
+	}
+
+	filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
+		if err != nil {
+			return nil
+		}
+		if info.IsDir() {
+			if skipDirs[info.Name()] {
+				return filepath.SkipDir
+			}
+			return nil
+		}
+
+		base := strings.ToLower(filepath.Base(path))
+		ext := strings.ToLower(filepath.Ext(path))
+
+		if knownManifests[base] {
+			manifests++
+		} else if knownSourceExts[ext] {
+			sourceFiles++
+		} else if knownConfigExts[ext] {
+			configs++
+		}
+		return nil
+	})
+
+	if sourceFiles == 0 && manifests == 0 && configs == 0 {
+		return AuditabilityStatus{
+			IsAuditable: false,
+			SourceFiles: 0,
+			Manifests:   0,
+			Configs:     0,
+			Reason:      "AUDITABILITY = NONE: 0 source files, 0 manifests, 0 recognized framework markers, and 0 configs. Audit blocked / not applicable.",
+		}
+	}
+
+	return AuditabilityStatus{
+		IsAuditable: true,
+		SourceFiles: sourceFiles,
+		Manifests:   manifests,
+		Configs:     configs,
+		Reason:      "Auditable target verified.",
+	}
+}
+
 // ScanWorkspace performs a lightweight static analysis of the workspace
 func ScanWorkspace(root string) []SecurityFinding {
-	var findings []SecurityFinding
+	auditability := ValidateTargetAuditability(root)
+	if !auditability.IsAuditable {
+		return []SecurityFinding{
+			{
+				File:     root,
+				Line:     0,
+				Severity: "INFO",
+				Rule:     "Preflight Auditability Gate",
+				Message:  auditability.Reason,
+			},
+		}
+	}
 
+	var findings []SecurityFinding
 	// Skip common heavy directories
 	skipDirs := map[string]bool{
 		".git": true, "node_modules": true, "venv": true, ".venv": true,

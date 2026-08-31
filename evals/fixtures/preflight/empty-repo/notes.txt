@@ -1,0 +1,1 @@
+This directory contains random scratchpad notes but no source files, manifests, or runnable code.

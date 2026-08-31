@@ -1,5 +1,15 @@
 # Verification and Reporting Reference
 
+
+## Preflight & Auditability Gate
+Before executing deep phase analyses, confirm workspace auditability. If 0 source files, 0 manifests, 0 framework markers, and 0 configs exist:
+- Set `AUDITABILITY = NONE`.
+- Mark status as `BLOCKED / NOT APPLICABLE`.
+- Do NOT emit cascading speculative findings (e.g. missing auth, missing HTTPS, missing RLS). Emit a concise target-validation report only.
+
+## Root-Cause Deduplication (Cascading Absence Rule)
+Absence caused by the same root condition must not be emitted as multiple independent findings. If a subsystem (e.g. database or backend) is entirely absent, record ONE single architectural notice instead of emitting 10 fragmented missing-feature findings.
+
 ## Baseline
 Before modification capture applicable lint, typecheck, tests, build, smoke test, dependency audit, and requested performance metrics. Record PRE-EXISTING failures.
 
@@ -78,5 +88,5 @@ Allowed readiness statuses:
 - PARTIALLY READY
 - READY WITH WARNINGS
 - READY
-
+- BLOCKED / NOT APPLICABLE
 Never state "100% secure", "perfectly secure", or guaranteed production safety. Readiness is scoped to evidence and checks actually performed.

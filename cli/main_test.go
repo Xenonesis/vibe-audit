@@ -225,3 +225,38 @@ export async function saveAuth(token: string) {
 		t.Errorf("Expected LLM Token Waste / Unbounded History finding")
 	}
 }
+
+func TestPreflightAuditabilityGate(t *testing.T) {
+	// 1. Empty target directory should return IsAuditable = false
+	emptyDir, err := os.MkdirTemp("", "vibe-audit-empty")
+	if err != nil {
+		t.Fatalf("Failed to create empty temp dir: %v", err)
+	}
+	defer os.RemoveAll(emptyDir)
+
+	emptyStatus := ValidateTargetAuditability(emptyDir)
+	if emptyStatus.IsAuditable {
+		t.Errorf("Expected empty dir to be non-auditable (IsAuditable = false), got true")
+	}
+
+	findings := ScanWorkspace(emptyDir)
+	if len(findings) != 1 || findings[0].Rule != "Preflight Auditability Gate" {
+		t.Errorf("Expected 1 Preflight Auditability Gate finding on empty dir, got: %+v", findings)
+	}
+
+	// 2. Target directory with source code should return IsAuditable = true
+	validDir, err := os.MkdirTemp("", "vibe-audit-valid")
+	if err != nil {
+		t.Fatalf("Failed to create valid temp dir: %v", err)
+	}
+	defer os.RemoveAll(validDir)
+
+	if err := os.WriteFile(filepath.Join(validDir, "index.ts"), []byte("console.log('hello');"), 0644); err != nil {
+		t.Fatalf("Failed to write index.ts: %v", err)
+	}
+
+	validStatus := ValidateTargetAuditability(validDir)
+	if !validStatus.IsAuditable {
+		t.Errorf("Expected dir with index.ts to be auditable (IsAuditable = true), got false")
+	}
+}
