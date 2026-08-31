@@ -172,9 +172,18 @@ export async function saveAuth(token: string) {
 		t.Fatalf("Failed to write background.js: %v", err)
 	}
 
+	// 4. LLM file with unbounded chat message history
+	llmContent := `const response = await openai.chat.completions.create({
+    model: "gpt-4o",
+    messages: [...chatHistory]
+});`
+	if err := os.WriteFile(filepath.Join(tempDir, "agent.ts"), []byte(llmContent), 0644); err != nil {
+		t.Fatalf("Failed to write agent.ts: %v", err)
+	}
+
 	findings := ScanWorkspace(tempDir)
-	if len(findings) < 4 {
-		t.Fatalf("Expected at least 4 domain security findings, got %d", len(findings))
+	if len(findings) < 5 {
+		t.Fatalf("Expected at least 5 domain security findings, got %d", len(findings))
 	}
 
 	hasMobile := false
@@ -182,6 +191,7 @@ export async function saveAuth(token: string) {
 	hasElectronCtx := false
 	hasExtTimer := false
 
+	hasLLMUnbounded := false
 	for _, f := range findings {
 		if f.Rule == "Insecure Mobile Storage" {
 			hasMobile = true
@@ -195,8 +205,10 @@ export async function saveAuth(token: string) {
 		if f.Rule == "MV3 Timer Killed on Idle" {
 			hasExtTimer = true
 		}
+		if f.Rule == "LLM Token Waste / Unbounded History" {
+			hasLLMUnbounded = true
+		}
 	}
-
 	if !hasMobile {
 		t.Errorf("Expected Insecure Mobile Storage finding")
 	}
@@ -208,5 +220,8 @@ export async function saveAuth(token: string) {
 	}
 	if !hasExtTimer {
 		t.Errorf("Expected MV3 Timer Killed on Idle finding")
+	}
+	if !hasLLMUnbounded {
+		t.Errorf("Expected LLM Token Waste / Unbounded History finding")
 	}
 }

@@ -20,7 +20,8 @@
     "profiles/payments.md",
     "profiles/performance.md",
     "profiles/saas-billing.md",
-    "profiles/safe-audit.md"
+    "profiles/safe-audit.md",
+    "profiles/token-saver.md"
   ],
   "core_references": [
     "security",
@@ -45,7 +46,8 @@
     "saas-webhooks",
     "ai-app-security",
     "accessibility",
-    "seo"
+    "seo",
+    "token-efficiency"
   ],
   "adapters": [
     "aider.md",

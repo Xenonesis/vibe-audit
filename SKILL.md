@@ -64,6 +64,7 @@ Profiles only select relevant specialist guidance; they do not change mode safet
  - Mobile app (React Native/Expo/Flutter): [profiles/mobile.md](profiles/mobile.md)
  - Desktop app (Electron/Tauri): [profiles/desktop.md](profiles/desktop.md)
  - SaaS billing & webhooks: [profiles/saas-billing.md](profiles/saas-billing.md)
+ - Ultra-low token / lean audit: [profiles/token-saver.md](profiles/token-saver.md)
  - Otherwise: [profiles/default.md](profiles/default.md)
 
 ## Progressive disclosure
@@ -93,6 +94,7 @@ Optional extension references — load only when relevant:
  - LLM/RAG/agent features: [references/ai-app-security.md](references/ai-app-security.md)
  - Accessibility: [references/accessibility.md](references/accessibility.md)
  - SEO/discoverability: [references/seo.md](references/seo.md)
+ - Token efficiency & LLM cost optimization: [references/token-efficiency.md](references/token-efficiency.md)
 
 Adapters describe host integration only; they do not override this policy.
 

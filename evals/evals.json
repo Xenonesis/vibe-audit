@@ -557,6 +557,19 @@
         "no_source_modification",
         "evidence_required"
       ]
+    },
+    {
+      "id": 45,
+      "name": "token-efficiency-unbounded-chat",
+      "prompt": "Audit LLM chat handler for token waste, context explosion, and missing completion bounds.",
+      "expected_output": "Identify unbounded chatHistory array passed to completion without sliding window or max_tokens",
+      "files": [
+        "evals/fixtures/token-efficiency/unbounded-chat.ts"
+      ],
+      "assertions": [
+        "no_source_modification",
+        "evidence_required"
+      ]
     }
   ]
 }

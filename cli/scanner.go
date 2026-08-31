@@ -36,6 +36,9 @@ var (
 
 	// Extension MV3 background timers
 	mv3TimerRegex = regexp.MustCompile(`(?i)\b(?:setInterval|setTimeout)\s*\(`)
+
+	// AI / LLM token waste & unbounded chat
+	llmUnboundedChatRegex = regexp.MustCompile(`(?i)\bmessages\s*:\s*\[\s*\.\.\.(?:chatHistory|allMessages|conversationHistory|history|messages)\s*\]`)
 )
 
 // ScanWorkspace performs a lightweight static analysis of the workspace
@@ -148,6 +151,17 @@ func scanFileForSecrets(path string, root string, findings *[]SecurityFinding) {
 			}
 		}
 		
+
+		// Check for AI / LLM unbounded chat history
+		if llmUnboundedChatRegex.MatchString(line) {
+			*findings = append(*findings, SecurityFinding{
+				File:     relPath,
+				Line:     lineNum,
+				Severity: "MEDIUM",
+				Rule:     "LLM Token Waste / Unbounded History",
+				Message:  "Unbounded chat message history passed directly to LLM (risk of context explosion and runaway token spend)",
+			})
+		}
 		// Check for malicious / risky execution patterns in package.json
 		if filepath.Base(path) == "package.json" {
 			if strings.Contains(line, "\"postinstall\"") || strings.Contains(line, "\"preinstall\"") {
