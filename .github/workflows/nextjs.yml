@@ -42,11 +42,11 @@ jobs:
           cache-dependency-path: nextjs-website/package-lock.json
 
       - name: Setup Pages
+        id: pages
         uses: actions/configure-pages@v5
         with:
           static_site_generator: next
           generator_config_file: nextjs-website/next.config.ts
-
       - name: Restore cache
         uses: actions/cache@v4
         with:
@@ -60,7 +60,9 @@ jobs:
 
       - name: Build with Next.js
         run: npm run build
-
+        env:
+          NEXT_PUBLIC_BASE_PATH: ${{ steps.pages.outputs.base_path }}
+          GITHUB_PAGES: "true"
       - name: Add .nojekyll
         run: touch out/.nojekyll
 

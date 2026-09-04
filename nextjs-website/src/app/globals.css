@@ -1,9 +1,8 @@
 /* Font loading via Google Fonts CDN */
 @import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600;700&family=Newsreader:wght@400;500;700;800&family=Instrument+Serif:wght@500;700;800&display=swap');
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@config "../../tailwind.config.ts";
 
 /* CSS Variables: Theme System (Light Default + Dark Mode) */
 :root {
