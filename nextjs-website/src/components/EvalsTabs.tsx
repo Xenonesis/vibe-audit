@@ -33,10 +33,11 @@ export default function EvalsTabs() {
     { id: 20, name: 'seo', category: 'SEO', badge: 'badge-blue', prompt: 'Review this page metadata for SEO issues only.', assertion: 'scope_respected' },
     { id: 21, name: 'mode-plan', category: 'Plan Mode', badge: 'badge-blue', prompt: 'Plan a remediation for this app but do not modify anything.', assertion: 'no_source_modification' },
     { id: 22, name: 'safe-controls', category: 'Security', badge: 'badge-green', prompt: 'Audit this security implementation for vulnerabilities.', assertion: 'false_positive_resistance' },
+    { id: 47, name: 'ux-heuristics-laws', category: 'UX & Heuristics', badge: 'badge-blue', prompt: 'Audit frontend component for UX laws, cognitive overload, and interaction defects.', assertion: 'evidence_required + fitts_law + doherty_threshold' },
   ], []);
 
   const categories = useMemo(() => {
-    return ['All', 'Security', 'Execution Safety', 'Correctness', 'Reliability', 'Performance', 'Audit Mode', 'Full Polish'];
+    return ['All', 'Security', 'Execution Safety', 'Correctness', 'Reliability', 'Performance', 'Audit Mode', 'Full Polish', 'UX & Heuristics'];
   }, []);
 
   const referencesList = useMemo(() => [
@@ -61,6 +62,7 @@ export default function EvalsTabs() {
     { file: 'references/desktop-security.md', title: 'Desktop & IPC Security', desc: 'Electron nodeIntegration/contextIsolation matrix, safe IPC channels, and Tauri allowlist permissions.' },
     { file: 'references/saas-webhooks.md', title: 'SaaS Billing & Webhooks', desc: 'Stripe/LemonSqueezy raw body signature checks, webhook idempotency ledger, and checkout race resolution.' },
     { file: 'references/verification.md', title: 'Verification & Scoring', desc: 'Deterministic assertions, readiness grade calculations, baseline diff validation, and evidence verification.' },
+    { file: 'references/ux-heuristics.md', title: 'UX Laws & Cognitive Heuristics', desc: 'Fitts\'s Law, Doherty Threshold, Hick\'s Law, Jakob\'s Law, Gestalt principles, and Peak-End confirmation rules for frontend polish.' },
   ], []);
 
   const filteredEvals = useMemo(() => {
@@ -90,7 +92,7 @@ export default function EvalsTabs() {
       id: 'cmd-2',
     },
     {
-      title: 'Validate skill integrity and 179/179 release rules',
+      title: 'Validate skill integrity and 182/182 release rules',
       cmd: 'python scripts/validate_skill.py .',
       id: 'cmd-3',
     },

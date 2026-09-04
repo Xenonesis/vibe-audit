@@ -2,11 +2,11 @@ export default function StatsBar() {
   return (
     <div className="stats-bar reveal">
       <div className="stat-card">
-        <div className="stat-num">179/179</div>
+        <div className="stat-num">182/182</div>
         <div className="stat-label">Skill Validation Rules</div>
       </div>
       <div className="stat-card">
-        <div className="stat-num">44</div>
+        <div className="stat-num">47</div>
         <div className="stat-label">Machine-Readable Evals</div>
       </div>
       <div className="stat-card">
@@ -18,7 +18,7 @@ export default function StatsBar() {
         <div className="stat-label">Adaptive Harnesses (Live)</div>
       </div>
       <div className="stat-card">
-        <div className="stat-num">21</div>
+        <div className="stat-num">22</div>
         <div className="stat-label">Domain Playbooks</div>
       </div>
     </div>

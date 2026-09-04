@@ -583,6 +583,19 @@
         "no_source_modification",
         "evidence_required"
       ]
+    },
+    {
+      "id": 47,
+      "name": "ux-heuristics-laws",
+      "prompt": "Audit frontend component for UX laws, cognitive overload, and interaction defects.",
+      "expected_output": "Identify Fitts's Law touch target flaw, Doherty Threshold missing loading state, and Peak-End unconfirmed destructive action",
+      "files": [
+        "evals/fixtures/ux/unpolished-card.tsx"
+      ],
+      "assertions": [
+        "no_source_modification",
+        "evidence_required"
+      ]
     }
   ]
 }

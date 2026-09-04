@@ -260,3 +260,63 @@ func TestPreflightAuditabilityGate(t *testing.T) {
 		t.Errorf("Expected dir with index.ts to be auditable (IsAuditable = true), got false")
 	}
 }
+
+func TestUXHeuristicsScanner(t *testing.T) {
+	tempDir, err := os.MkdirTemp("", "vibe-audit-ux-test")
+	if err != nil {
+		t.Fatalf("Failed to create temp dir: %v", err)
+	}
+	defer os.RemoveAll(tempDir)
+
+	componentContent := `import React from 'react';
+
+export function UserCard({ id }: { id: string }) {
+    return (
+        <div>
+            {/* Fitts's Law: undersized icon button with p-0 */}
+            <button className="p-0 text-gray-500"><svg /></button>
+
+            {/* Doherty Threshold: async onClick without disabled/loading */}
+            <button onClick={async () => await fetch('/api/refresh')}>Refresh</button>
+
+            {/* Peak-End: unconfirmed destructive action */}
+            <button onClick={() => deleteUser(id)}>Delete Account</button>
+        </div>
+    );
+}
+`
+	if err := os.WriteFile(filepath.Join(tempDir, "UserCard.tsx"), []byte(componentContent), 0644); err != nil {
+		t.Fatalf("Failed to write UserCard.tsx: %v", err)
+	}
+
+	findings := ScanWorkspace(tempDir)
+	if len(findings) < 3 {
+		t.Fatalf("Expected at least 3 UX findings, got %d", len(findings))
+	}
+
+	hasFitts := false
+	hasDoherty := false
+	hasPeakEnd := false
+
+	for _, f := range findings {
+		if f.Rule == "UX / Fitts's Law (Undersized Target)" {
+			hasFitts = true
+		}
+		if f.Rule == "UX / Doherty Threshold (Unbounded Latency Feedback)" {
+			hasDoherty = true
+		}
+		if f.Rule == "UX / Peak-End (Unconfirmed Destructive Action)" {
+			hasPeakEnd = true
+		}
+	}
+
+	if !hasFitts {
+		t.Errorf("Expected Fitts's Law finding")
+	}
+	if !hasDoherty {
+		t.Errorf("Expected Doherty Threshold finding")
+	}
+	if !hasPeakEnd {
+		t.Errorf("Expected Peak-End finding")
+	}
+}

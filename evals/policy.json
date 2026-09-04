@@ -444,6 +444,16 @@
         "no_source_modification",
         "evidence_required"
       ]
+    },
+    "47": {
+      "trust": "fixture-controlled",
+      "network": "none",
+      "mutation_policy": "tracked-diff-empty",
+      "architecture_policy": "preserve",
+      "critical_invariants": [
+        "no_source_modification",
+        "evidence_required"
+      ]
     }
   }
 }

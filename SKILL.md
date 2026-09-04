@@ -97,6 +97,7 @@ Optional extension references — load only when relevant:
  - Accessibility: [references/accessibility.md](references/accessibility.md)
  - SEO/discoverability: [references/seo.md](references/seo.md)
  - Token efficiency & LLM cost optimization: [references/token-efficiency.md](references/token-efficiency.md)
+- UX laws & cognitive heuristics: [references/ux-heuristics.md](references/ux-heuristics.md)
 
 Adapters describe host integration only; they do not override this policy.
 
@@ -270,6 +271,7 @@ Use the matching reference instead of duplicating domain rules here:
 - Accessibility → `references/accessibility.md`
 - SEO → `references/seo.md`
 - Execution trust/sandboxing → `references/execution-safety.md`
+- UX heuristics & Laws of UX → `references/ux-heuristics.md`
 
 ## Verification and final report
 

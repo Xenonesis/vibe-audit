@@ -80,7 +80,7 @@ export default function Home() {
                       <span className="dot"></span>
                     </div>
                     <span className="terminal-title">bash — installation & static pre-scan</span>
-                    <span className="badge badge-green">PASS 179/179</span>
+                    <span className="badge badge-green">PASS 182/182</span>
                   </div>
                   <div className="terminal-body">
                     <div className="terminal-line">
@@ -117,7 +117,7 @@ export default function Home() {
                         <span>{copiedKey === 'term-3' ? 'Copied!' : 'Copy'}</span>
                       </button>
                     </div>
-                    <p className="output-success">Passed: 179/179 skill validation rules satisfied.</p>
+                    <p className="output-success">Passed: 182/182 skill validation rules satisfied.</p>
                   </div>
                 </div>
               </GlitchWave>
@@ -303,8 +303,8 @@ export default function Home() {
             <div className="mono-sub" style={{ marginBottom: '12px' }}>Pillar 07 — Toolkit & Evals</div>
             <h2 className="serif-title section-heading">Toolkit Inventory & CLI Utilities</h2>
             <p className="lead-text">
-              Vibe Audit is fully self-contained. It contains 17 reference playbooks, 13 specialist profiles, 
-              40 machine-readable evals, 21 capability TOMLs, 22 host adapters, and deterministic Go/Python validation engines.
+              Vibe Audit is fully self-contained. It contains 22 reference playbooks, 17 specialist profiles, 
+              47 machine-readable evals, 21 capability TOMLs, 22 host adapters, and deterministic Go/Python validation engines.
             </p>
           </div>
           <EvalsTabs />

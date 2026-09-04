@@ -39,6 +39,13 @@ var (
 
 	// AI / LLM token waste & unbounded chat
 	llmUnboundedChatRegex = regexp.MustCompile(`(?i)\bmessages\s*:\s*\[\s*\.\.\.(?:chatHistory|allMessages|conversationHistory|history|messages)\s*\]`)
+
+	// UX Heuristics & Laws
+	uxFittsTouchTargetRegex    = regexp.MustCompile(`(?i)<(?:button|a)\b[^>]*(?:className|class)\s*=\s*["'][^"']*\b(?:p-0|p-0\.5|h-[1-6]\b|w-[1-6]\b)[^"']*["']`)
+	uxDohertyAsyncButtonRegex  = regexp.MustCompile(`(?i)<button\b[^>]*onClick\s*=\s*\{\s*async\b`)
+	uxPeakEndDeleteButtonRegex = regexp.MustCompile(`(?i)<button\b[^>]*onClick\s*=\s*\{[^}]*\b(?:delete|destroy|drop|remove)\w*\(`)
+	uxLoadingIndicatorRegex    = regexp.MustCompile(`(?i)\b(?:disabled|loading|isPending|pending|busy)\b`)
+	uxConfirmIndicatorRegex    = regexp.MustCompile(`(?i)\b(?:confirm|dialog|popover|modal)\b`)
 )
 
 // AuditabilityStatus represents the result of the Preflight / Auditability Gate
@@ -252,6 +259,38 @@ func scanFileForSecrets(path string, root string, findings *[]SecurityFinding) {
 				Message:  "Unbounded chat message history passed directly to LLM (risk of context explosion and runaway token spend)",
 			})
 		}
+
+		// Check for UX Heuristics in UI components
+		ext := strings.ToLower(filepath.Ext(path))
+		if ext == ".tsx" || ext == ".jsx" || ext == ".vue" || ext == ".svelte" || ext == ".html" {
+			if uxFittsTouchTargetRegex.MatchString(line) {
+				*findings = append(*findings, SecurityFinding{
+					File:     relPath,
+					Line:     lineNum,
+					Severity: "MEDIUM",
+					Rule:     "UX / Fitts's Law (Undersized Target)",
+					Message:  "Interactive element has undersized touch target (<32px or p-0). Increases tap error rate.",
+				})
+			}
+			if uxDohertyAsyncButtonRegex.MatchString(line) && !uxLoadingIndicatorRegex.MatchString(line) {
+				*findings = append(*findings, SecurityFinding{
+					File:     relPath,
+					Line:     lineNum,
+					Severity: "HIGH",
+					Rule:     "UX / Doherty Threshold (Unbounded Latency Feedback)",
+					Message:  "Async button onClick missing loading or disabled state. Violates Doherty Threshold (<400ms feedback).",
+				})
+			}
+			if uxPeakEndDeleteButtonRegex.MatchString(line) && !uxConfirmIndicatorRegex.MatchString(line) {
+				*findings = append(*findings, SecurityFinding{
+					File:     relPath,
+					Line:     lineNum,
+					Severity: "HIGH",
+					Rule:     "UX / Peak-End (Unconfirmed Destructive Action)",
+					Message:  "Destructive delete action invoked directly on click without confirmation modal or prompt.",
+				})
+			}
+		}
 		// Check for malicious / risky execution patterns in package.json
 		if filepath.Base(path) == "package.json" {
 			if strings.Contains(line, "\"postinstall\"") || strings.Contains(line, "\"preinstall\"") {
@@ -264,5 +303,6 @@ func scanFileForSecrets(path string, root string, findings *[]SecurityFinding) {
 				})
 			}
 		}
+		lineNum++
 	}
 }
