@@ -31,7 +31,7 @@ export default function Footer() {
             </p>
             <div className="footer-status-pill">
               <span className="status-dot-pulse" />
-              <span>179/179 Release Rules Passing · Go Scanner Ready</span>
+              <span>182/182 Release Rules Passing · Go Scanner Ready</span>
             </div>
           </div>
 
@@ -82,10 +82,10 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a href="#evals">13 Domain Playbooks</a>
+                <a href="#evals">22 Domain Playbooks</a>
               </li>
               <li>
-                <a href="#evals">22 Machine Evals</a>
+                <a href="#evals">47 Machine Evals</a>
               </li>
               <li>
                 <a href="https://github.com/Xenonesis" target="_blank" rel="noopener noreferrer">

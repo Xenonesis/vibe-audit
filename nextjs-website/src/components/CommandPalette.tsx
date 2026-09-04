@@ -27,9 +27,9 @@ export default function CommandPalette({ isOpen, onClose, onThemeCycle }: Comman
     { id: 'sec-modes', title: '6 Operating Modes', subtitle: 'Pillar 02 — AUDIT, PLAN, HARDEN, OPTIMIZE, VERIFY, POLISH', category: 'Section', href: '#modes' },
     { id: 'sec-pipe', title: 'The 6-Phase Pipeline', subtitle: 'Pillar 03 — Trust boundary, baseline, review & cutover', category: 'Section', href: '#pipeline' },
     { id: 'sec-risk', title: 'Risk Gates & Approvals', subtitle: 'Pillar 04 — LOW auto-fix, MEDIUM plan, HIGH consent', category: 'Section', href: '#risk-gates' },
-    { id: 'sec-lb', title: 'Agent Safety Leaderboard', subtitle: 'Pillar 05 — 22-fixture evaluation results across 21 harnesses', category: 'Section', href: '#leaderboard' },
+    { id: 'sec-lb', title: 'Agent Safety Leaderboard', subtitle: 'Pillar 05 — 47-fixture evaluation results across 21 harnesses', category: 'Section', href: '#leaderboard' },
     { id: 'sec-harness', title: 'Harness Matrix', subtitle: 'Pillar 06 — 21 agent hosts: Cursor, Claude Code, Windsurf, Aider, Cline, Roo Code, Goose...', category: 'Section', href: '#harnesses' },
-    { id: 'sec-evals', title: 'Toolkit & Evals', subtitle: 'Pillar 07 — Go CLI scanner, 13 playbooks & 22 machine test cases', category: 'Section', href: '#evals' },
+    { id: 'sec-evals', title: 'Toolkit & Evals', subtitle: 'Pillar 07 — Go CLI scanner, 22 playbooks & 47 machine test cases', category: 'Section', href: '#evals' },
     { id: 'sec-install', title: 'Install & Setup', subtitle: 'Pillar 08 — VS Code extension, NPM wrapper, Homebrew, skills.sh', category: 'Section', href: '#install' },
     { id: 'sec-dev', title: 'Developer Info', subtitle: 'Pillar 09 — Xenonesis creator profile and links', category: 'Section', href: '#developer' },
     { id: 'sec-faq', title: 'Frequently Asked Questions', subtitle: 'Pillar 10 — Trust boundaries, MCP servers, and architecture preservation', category: 'Section', href: '#faq' },
@@ -39,7 +39,7 @@ export default function CommandPalette({ isOpen, onClose, onThemeCycle }: Comman
     { id: 'pb-perf', title: 'Performance Playbook', subtitle: 'N+1 queries, hydration mismatch, memory leak isolation', category: 'Playbook', href: '#evals' },
     { id: 'pb-correct', title: 'Business Logic Correctness', subtitle: 'Float money precision, race conditions, inventory bounds', category: 'Playbook', href: '#evals' },
     { id: 'pb-exec', title: 'Adversarial Code & Execution', subtitle: 'Untrusted repository sandbox & network default deny', category: 'Playbook', href: '#evals' },
-
+    { id: 'pb-ux', title: 'UX Laws & Cognitive Heuristics', subtitle: 'Fitts\'s Law, Doherty Threshold, Hick\'s Law, Peak-End Rule & cognitive load', category: 'Playbook', href: '#evals' },
     // Install Quick Jumps
     { id: 'inst-npm', title: 'Install via NPM', subtitle: 'npx vibe-audit install .', category: 'Install', href: '#install' },
     { id: 'inst-skills', title: 'Install via skills.sh', subtitle: 'npx skills add Xenonesis/vibe-audit', category: 'Install', href: '#install' },
@@ -111,7 +111,7 @@ export default function CommandPalette({ isOpen, onClose, onThemeCycle }: Comman
   if (!isOpen) return null;
 
   return (
-    <div className="palette-backdrop" onClick={onClose}>
+    <div className="palette-backdrop show" onClick={onClose}>
       <div className="palette-modal" onClick={e => e.stopPropagation()}>
         <div className="palette-search-header">
           <svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} style={{ color: 'var(--text-muted)' }}>

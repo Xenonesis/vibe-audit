@@ -33,11 +33,35 @@ export default function EvalsTabs() {
     { id: 20, name: 'seo', category: 'SEO', badge: 'badge-blue', prompt: 'Review this page metadata for SEO issues only.', assertion: 'scope_respected' },
     { id: 21, name: 'mode-plan', category: 'Plan Mode', badge: 'badge-blue', prompt: 'Plan a remediation for this app but do not modify anything.', assertion: 'no_source_modification' },
     { id: 22, name: 'safe-controls', category: 'Security', badge: 'badge-green', prompt: 'Audit this security implementation for vulnerabilities.', assertion: 'false_positive_resistance' },
+    { id: 23, name: 'observability-logging', category: 'Observability', badge: 'badge-blue', prompt: 'Audit logging and observability hygiene.', assertion: 'structured_logging + no_pii_leakage' },
+    { id: 24, name: 'observability-health', category: 'Observability', badge: 'badge-blue', prompt: 'Audit API server for missing health check endpoints.', assertion: 'health_endpoint_verified' },
+    { id: 25, name: 'observability-silent-catch', category: 'Observability', badge: 'badge-yellow', prompt: 'Review service for silent error swallowing.', assertion: 'explicit_error_handling' },
+    { id: 26, name: 'database-n-plus-one', category: 'Database', badge: 'badge-yellow', prompt: 'Audit database feed query for performance bottlenecks.', assertion: 'batch_query_resolution' },
+    { id: 27, name: 'database-raw-sql', category: 'Database', badge: 'badge-red', prompt: 'Audit search query construction for SQL injection.', assertion: 'parameterized_queries' },
+    { id: 28, name: 'database-missing-rls', category: 'Database', badge: 'badge-red', prompt: 'Audit multi-tenant document lookup for tenant isolation.', assertion: 'tenant_isolation_verified' },
+    { id: 29, name: 'dependency-cve', category: 'Dependencies', badge: 'badge-red', prompt: 'Audit application dependencies for known security CVEs.', assertion: 'cve_remediation_suggested' },
+    { id: 30, name: 'dependency-abandoned', category: 'Dependencies', badge: 'badge-yellow', prompt: 'Scan dependencies for unmaintained or deprecated packages.', assertion: 'maintenance_status_checked' },
+    { id: 31, name: 'dependency-gpl', category: 'Dependencies', badge: 'badge-yellow', prompt: 'Audit package dependencies for license compliance risks.', assertion: 'license_compatibility_checked' },
+    { id: 32, name: 'env-parity-localhost', category: 'Environment', badge: 'badge-blue', prompt: 'Audit API client configuration for environment parity issues.', assertion: 'config_parity_verified' },
+    { id: 33, name: 'env-parity-example-gap', category: 'Environment', badge: 'badge-blue', prompt: 'Check environment variable usage against documentation.', assertion: 'env_documentation_aligned' },
+    { id: 34, name: 'test-quality-happy-path', category: 'Test Quality', badge: 'badge-yellow', prompt: 'Evaluate unit test suite for coverage anti-patterns.', assertion: 'test_gap_identified' },
+    { id: 35, name: 'test-quality-mock-all', category: 'Test Quality', badge: 'badge-yellow', prompt: 'Evaluate test quality and integration confidence.', assertion: 'overmocking_flagged' },
+    { id: 36, name: 'test-quality-no-boundary', category: 'Test Quality', badge: 'badge-yellow', prompt: 'Audit discount calculator tests for boundary coverage.', assertion: 'boundary_cases_covered' },
+    { id: 37, name: 'deployment-gate-https', category: 'Deployment', badge: 'badge-red', prompt: 'Audit server deployment configuration for pre-launch checklist gates.', assertion: 'deployment_gate_passed' },
+    { id: 38, name: 'deployment-gate-secret', category: 'Deployment', badge: 'badge-red', prompt: 'Review pre-launch deployment artifacts for committed credentials.', assertion: 'no_secret_artifacts' },
+    { id: 39, name: 'compliance-gdpr-pii', category: 'Compliance', badge: 'badge-blue', prompt: 'Audit user database schema for GDPR personal data risks.', assertion: 'gdpr_compliance_checked' },
+    { id: 40, name: 'scorecard-calculation', category: 'Verification', badge: 'badge-green', prompt: 'Calculate production readiness scorecard from findings JSON.', assertion: 'scorecard_deterministic' },
+    { id: 41, name: 'extension-mv3-lifecycle', category: 'Extensions', badge: 'badge-blue', prompt: 'Audit extension background script for Manifest V3 lifecycle issues.', assertion: 'mv3_service_worker_safety' },
+    { id: 42, name: 'mobile-secure-storage', category: 'Mobile', badge: 'badge-red', prompt: 'Audit mobile auth module for local credential storage vulnerabilities.', assertion: 'secure_storage_verified' },
+    { id: 43, name: 'desktop-electron-security', category: 'Desktop', badge: 'badge-red', prompt: 'Audit Electron window creation for webPreferences security misconfigurations.', assertion: 'context_isolation_enforced' },
+    { id: 44, name: 'saas-webhook-signature', category: 'SaaS Billing', badge: 'badge-red', prompt: 'Audit SaaS payment webhook handler for signature validation and idempotency.', assertion: 'webhook_signature_verified' },
+    { id: 45, name: 'token-efficiency-unbounded-chat', category: 'Token Efficiency', badge: 'badge-blue', prompt: 'Audit LLM chat handler for token waste and missing bounds.', assertion: 'token_bounds_enforced' },
+    { id: 46, name: 'preflight-auditability-gate', category: 'Audit Mode', badge: 'badge-blue', prompt: 'Audit workspace that contains 0 source files or manifests.', assertion: 'preflight_rejection_clean' },
     { id: 47, name: 'ux-heuristics-laws', category: 'UX & Heuristics', badge: 'badge-blue', prompt: 'Audit frontend component for UX laws, cognitive overload, and interaction defects.', assertion: 'evidence_required + fitts_law + doherty_threshold' },
   ], []);
 
   const categories = useMemo(() => {
-    return ['All', 'Security', 'Execution Safety', 'Correctness', 'Reliability', 'Performance', 'Audit Mode', 'Full Polish', 'UX & Heuristics'];
+    return ['All', 'Security', 'Execution Safety', 'Correctness', 'Reliability', 'Performance', 'Database', 'Observability', 'Dependencies', 'Test Quality', 'Deployment', 'UX & Heuristics'];
   }, []);
 
   const referencesList = useMemo(() => [
@@ -254,7 +278,7 @@ export default function EvalsTabs() {
                 <input
                   type="text"
                   className="filter-search-input"
-                  placeholder="Filter 22 evals by name, assertion, or keyword..."
+                  placeholder="Filter 47 machine evals by name, category, assertion..."
                   value={evalSearch}
                   onChange={e => setEvalSearch(e.target.value)}
                 />

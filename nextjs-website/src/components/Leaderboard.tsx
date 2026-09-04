@@ -174,6 +174,15 @@ export default function Leaderboard() {
             key={row.rank}
             className={`leaderboard-row-interactive ${row.rank === 1 ? 'top-rank' : ''}`}
             onClick={() => setExpandedId(isExpanded ? null : row.rank)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                setExpandedId(isExpanded ? null : row.rank);
+              }
+            }}
+            role="button"
+            tabIndex={0}
+            aria-expanded={isExpanded}
             style={{ cursor: 'pointer' }}
           >
             <div className="leaderboard-row" style={{ border: 'none', background: 'transparent' }}>

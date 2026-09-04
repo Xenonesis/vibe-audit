@@ -253,6 +253,23 @@ export default function Navbar() {
                   </svg>
                 </a>
               ))}
+
+              <div style={{ marginTop: '12px', paddingTop: '16px', borderTop: '1px solid var(--border-color)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <span style={{ fontSize: '0.8125rem', color: 'var(--text-muted)' }}>Appearance</span>
+                <div className="theme-switch" role="radiogroup" aria-label="Color Theme" style={{ display: 'inline-flex' }}>
+                  {themeBtns.map(btn => (
+                    <button
+                      key={btn.id}
+                      className={`theme-btn ${theme === btn.id ? 'active' : ''}`}
+                      onClick={() => setTheme(btn.id as 'light' | 'dark' | 'system')}
+                      title={btn.title}
+                      aria-pressed={theme === btn.id}
+                    >
+                      {renderThemeIcon(btn.id)}
+                    </button>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         )}
