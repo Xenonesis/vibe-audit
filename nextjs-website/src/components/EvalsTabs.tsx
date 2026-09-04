@@ -305,7 +305,7 @@ export default function EvalsTabs() {
             </div>
           </div>
 
-          <div style={{ overflowX: 'auto', border: '1px solid var(--border-color)', borderRadius: '8px' }}>
+          <div style={{ overflowX: 'auto', border: '2px solid var(--border-color)', borderRadius: '0px', boxShadow: 'var(--shadow-hard)' }}>
             <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.875rem' }}>
               <thead>
                 <tr style={{ background: 'var(--bg-subtle)', borderBottom: '1px solid var(--border-color)', textAlign: 'left' }}>

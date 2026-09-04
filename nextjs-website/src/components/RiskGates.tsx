@@ -47,13 +47,13 @@ export default function RiskGates() {
         >
           <div style={{
             padding: '28px 24px',
-            border: '1px solid rgba(239, 68, 68, 0.45)',
-            borderRadius: '8px',
-            background: 'rgba(20, 8, 8, 0.75)',
-            backdropFilter: 'blur(8px)',
+            border: '2px solid rgba(239, 68, 68, 0.8)',
+            borderRadius: '0px',
+            boxShadow: '4px 4px 0px #000000',
+            background: 'rgba(20, 8, 8, 0.88)',
           }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px', flexWrap: 'wrap' }}>
-              <span className="badge" style={{ background: '#DC2626', color: '#FFFFFF', border: 'none', fontWeight: 600 }}>
+              <span className="badge" style={{ background: '#DC2626', color: '#FFFFFF', border: '1.5px solid #FFFFFF', borderRadius: '0px', fontWeight: 700 }}>
                 STRICTLY FORBIDDEN
               </span>
               <h4 style={{
@@ -69,7 +69,7 @@ export default function RiskGates() {
               </h4>
             </div>
             <p style={{ fontSize: '0.9375rem', color: '#FECACA', lineHeight: 1.6, margin: 0 }}>
-              Vibe Audit <strong style={{ color: '#FFFFFF' }}>NEVER</strong> automatically executes: <code style={{ background: 'rgba(0,0,0,0.6)', color: '#FCA5A5', padding: '2px 6px', borderRadius: '4px', border: '1px solid rgba(239,68,68,0.3)' }}>DROP DATABASE/TABLE</code>, database reset, unsafe mass deletion, forced migrations, git history rewrites, production secret revocation, deployment publish/destroy commands, or package publication.
+              Vibe Audit <strong style={{ color: '#FFFFFF' }}>NEVER</strong> automatically executes: <code style={{ background: 'rgba(0,0,0,0.75)', color: '#FCA5A5', padding: '2px 6px', borderRadius: '0px', border: '1px solid rgba(239,68,68,0.5)' }}>DROP DATABASE/TABLE</code>, database reset, unsafe mass deletion, forced migrations, git history rewrites, production secret revocation, deployment publish/destroy commands, or package publication.
             </p>
           </div>
         </GlitchWave>

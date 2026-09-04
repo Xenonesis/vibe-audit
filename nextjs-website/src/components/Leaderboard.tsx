@@ -126,8 +126,9 @@ export default function Leaderboard() {
       <div style={{
         padding: '16px 20px',
         background: 'var(--bg-subtle)',
-        border: '1px solid var(--border-color)',
-        borderRadius: '8px',
+        border: '2px solid var(--border-color)',
+        borderRadius: '0px',
+        boxShadow: 'var(--shadow-hard)',
         marginBottom: '20px',
         display: 'flex',
         flexWrap: 'wrap',
@@ -197,9 +198,9 @@ export default function Leaderboard() {
                 <div style={{
                   width: '32px',
                   height: '32px',
-                  borderRadius: '6px',
+                  borderRadius: '0px',
                   background: 'var(--bg-subtle)',
-                  border: '1px solid var(--border-color)',
+                  border: '1.5px solid var(--border-color)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -273,9 +274,9 @@ export default function Leaderboard() {
           <div style={{
             width: '32px',
             height: '32px',
-            borderRadius: '6px',
+            borderRadius: '0px',
             background: 'var(--pastel-red-bg)',
-            display: 'flex',
+            border: '1.5px solid var(--border-color)',
             alignItems: 'center',
             justifyContent: 'center',
             flexShrink: 0

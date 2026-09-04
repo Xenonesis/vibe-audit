@@ -42,7 +42,7 @@ export default function InstallTabs() {
           <p style={{ fontSize: '0.875rem', color: 'var(--text-muted)', marginBottom: '16px' }}>
             The fastest way to install Vibe Audit. Install the extension in VS Code, Cursor, or Windsurf. When you open any workspace, click &ldquo;Install&rdquo; on the prompt. It automatically runs the Go static scanner, configures native rules, and binds the stdio MCP server.
           </p>
-          <div style={{ padding: '20px', background: 'var(--bg-subtle)', border: '1px solid var(--border-color)', borderRadius: '8px', display: 'flex', alignItems: 'center', gap: '16px' }}>
+          <div style={{ padding: '20px', background: 'var(--bg-subtle)', border: '2px solid var(--border-color)', borderRadius: '0px', boxShadow: 'var(--shadow-hard)', display: 'flex', alignItems: 'center', gap: '16px' }}>
             <svg width={32} height={32} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} style={{ color: 'var(--pastel-blue-text)', flexShrink: 0 }}>
               <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
             </svg>

@@ -332,9 +332,9 @@ export default function HarnessGrid() {
                     <div style={{
                       width: '36px',
                       height: '36px',
-                      borderRadius: '8px',
+                      borderRadius: '0px',
                       background: 'var(--bg-subtle)',
-                      border: '1px solid var(--border-color)',
+                      border: '1.5px solid var(--border-color)',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
