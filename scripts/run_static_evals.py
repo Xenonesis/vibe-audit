@@ -32,6 +32,8 @@ signals={
  'evals/fixtures/mobile/insecure-asyncstorage.ts':['AsyncStorage.setItem'],
  'evals/fixtures/desktop/insecure-electron.ts':['nodeIntegration: true'],
  'evals/fixtures/saas/missing-webhook-sig.ts':['checkout.session.completed'],
+ 'evals/fixtures/ux/slop-component.tsx':['blur-3xl', '🚀'],
+ 'evals/fixtures/security/vibe-pitfalls.tsx':['tenant_id', 'filter'],
 }
 for rel,needles in signals.items():
     p=root/rel; txt=p.read_text(encoding='utf-8') if p.exists() else ''

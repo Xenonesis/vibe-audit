@@ -596,6 +596,32 @@
         "no_source_modification",
         "evidence_required"
       ]
+    },
+    {
+      "id": 48,
+      "name": "anti-slop-cartoon-emoji",
+      "prompt": "Audit frontend component for decorative cartoon emojis, blurry glow backdrop orbs, and AI marketing copy slop.",
+      "expected_output": "Identify decorative cartoon emojis (🚀, ⚡, 🔥), fuzzy glow backdrop (blur-3xl), and cliché marketing copy tropes, recommending semantic SVG and technical copy replacements",
+      "files": [
+        "evals/fixtures/ux/slop-component.tsx"
+      ],
+      "assertions": [
+        "no_source_modification",
+        "evidence_required"
+      ]
+    },
+    {
+      "id": 49,
+      "name": "client-side-tenant-filter",
+      "prompt": "Audit frontend component for client-side multi-tenant filtering and missing backend database scoping.",
+      "expected_output": "Identify client-side .filter() by tenant_id on unfiltered dataset, exposing cross-tenant records",
+      "files": [
+        "evals/fixtures/security/vibe-pitfalls.tsx"
+      ],
+      "assertions": [
+        "no_source_modification",
+        "evidence_required"
+      ]
     }
   ]
 }

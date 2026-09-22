@@ -77,6 +77,7 @@ Load only the references required for the active phase:
 - Reliability: [references/reliability.md](references/reliability.md) then verification
 - Performance: [references/performance.md](references/performance.md) then verification
 - AI-code smell review: [references/ai-code-smells.md](references/ai-code-smells.md)
+- Anti-slop & visual integrity: [references/anti-slop.md](references/anti-slop.md)
 - Maintainability: [references/maintainability.md](references/maintainability.md)
 - Full Polish: load each reference sequentially, not all at once when context is constrained.
 
@@ -96,9 +97,12 @@ Optional extension references — load only when relevant:
  - LLM/RAG/agent features: [references/ai-app-security.md](references/ai-app-security.md)
  - Accessibility: [references/accessibility.md](references/accessibility.md)
  - SEO/discoverability: [references/seo.md](references/seo.md)
- - Token efficiency & LLM cost optimization: [references/token-efficiency.md](references/token-efficiency.md)
+- Token efficiency & LLM cost optimization: [references/token-efficiency.md](references/token-efficiency.md)
 - UX laws & cognitive heuristics: [references/ux-heuristics.md](references/ux-heuristics.md)
-
+- Anti-slop & cartoon emoji prohibition: [references/anti-slop.md](references/anti-slop.md)
+- Next.js Server Actions & SSR security: [references/nextjs-security.md](references/nextjs-security.md)
+- Denial of Wallet & LLM API cost protection: [references/denial-of-wallet.md](references/denial-of-wallet.md)
+- Multi-tenant isolation & database scoping: [references/multi-tenant-isolation.md](references/multi-tenant-isolation.md)
 Adapters describe host integration only; they do not override this policy.
 
 ## Phase -2 — Preflight target validation & auditability gate
@@ -272,7 +276,10 @@ Use the matching reference instead of duplicating domain rules here:
 - SEO → `references/seo.md`
 - Execution trust/sandboxing → `references/execution-safety.md`
 - UX heuristics & Laws of UX → `references/ux-heuristics.md`
-
+- Anti-slop & visual integrity → `references/anti-slop.md`
+- Next.js & Server Actions → `references/nextjs-security.md`
+- Denial of Wallet → `references/denial-of-wallet.md`
+- Multi-tenant isolation → `references/multi-tenant-isolation.md`
 ## Verification and final report
 
 Use [references/verification.md](references/verification.md).

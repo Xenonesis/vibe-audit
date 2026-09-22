@@ -320,3 +320,120 @@ export function UserCard({ id }: { id: string }) {
 		t.Errorf("Expected Peak-End finding")
 	}
 }
+
+func TestAntiSlopScanner(t *testing.T) {
+	tempDir, err := os.MkdirTemp("", "vibe-audit-slop-test")
+	if err != nil {
+		t.Fatalf("Failed to create temp dir: %v", err)
+	}
+	defer os.RemoveAll(tempDir)
+
+	componentContent := `import React from 'react';
+
+export function SlopHero() {
+    return (
+        <div className="relative">
+            {/* Blurry glow orb */}
+            <div className="absolute rounded-full blur-3xl bg-purple-600/30" />
+
+            {/* Cartoon emoji in header */}
+            <h1>🚀 Launch Your AI App Faster 🔥</h1>
+
+            {/* AI slop marketing copy */}
+            <p>Unlock the power of automated intelligence in today's fast-paced world.</p>
+        </div>
+    );
+}
+`
+	if err := os.WriteFile(filepath.Join(tempDir, "SlopHero.tsx"), []byte(componentContent), 0644); err != nil {
+		t.Fatalf("Failed to write SlopHero.tsx: %v", err)
+	}
+
+	findings := ScanWorkspace(tempDir)
+	if len(findings) < 3 {
+		t.Fatalf("Expected at least 3 anti-slop findings, got %d", len(findings))
+	}
+
+	hasCartoonEmoji := false
+	hasBlurGlow := false
+	hasSlopCopy := false
+
+	for _, f := range findings {
+		if f.Rule == "AI Slop / Cartoon Emoji Anti-Pattern" {
+			hasCartoonEmoji = true
+		}
+		if f.Rule == "AI Slop / Blurry Glow Trope" {
+			hasBlurGlow = true
+		}
+		if f.Rule == "AI Slop / Cliché Marketing Copy" {
+			hasSlopCopy = true
+		}
+	}
+
+	if !hasCartoonEmoji {
+		t.Errorf("Expected Cartoon Emoji finding")
+	}
+	if !hasBlurGlow {
+		t.Errorf("Expected Blurry Glow Trope finding")
+	}
+	if !hasSlopCopy {
+		t.Errorf("Expected Cliché Marketing Copy finding")
+	}
+}
+
+func TestVibeCodingPitfallsScanner(t *testing.T) {
+	tempDir, err := os.MkdirTemp("", "vibe-audit-pitfalls-test")
+	if err != nil {
+		t.Fatalf("Failed to create temp dir: %v", err)
+	}
+	defer os.RemoveAll(tempDir)
+
+	nextConfig := `module.exports = {
+		productionBrowserSourceMaps: true,
+	};`
+	sqlMigration := `ALTER TABLE users ENABLE ROW LEVEL SECURITY;
+	CREATE POLICY "Allow public read" ON users FOR SELECT USING (true);`
+	componentContent := `import React from 'react';
+	export function Invoices({ allInvoices, me }) {
+		const myInvoices = allInvoices.filter(inv => inv.tenant_id === me.tenantId);
+		return <div>{myInvoices.length}</div>;
+	}`
+
+	if err := os.WriteFile(filepath.Join(tempDir, "next.config.js"), []byte(nextConfig), 0644); err != nil {
+		t.Fatalf("Failed to write next.config.js: %v", err)
+	}
+	if err := os.WriteFile(filepath.Join(tempDir, "001_init.sql"), []byte(sqlMigration), 0644); err != nil {
+		t.Fatalf("Failed to write 001_init.sql: %v", err)
+	}
+	if err := os.WriteFile(filepath.Join(tempDir, "invoices.tsx"), []byte(componentContent), 0644); err != nil {
+		t.Fatalf("Failed to write invoices.tsx: %v", err)
+	}
+
+	findings := ScanWorkspace(tempDir)
+
+	hasSourceMaps := false
+	hasPermissiveRls := false
+	hasMultiTenantFilter := false
+
+	for _, f := range findings {
+		if f.Rule == "Config / Leaked Production Source Maps" {
+			hasSourceMaps = true
+		}
+		if f.Rule == "Database / Permissive RLS Policy (USING true)" {
+			hasPermissiveRls = true
+		}
+		if f.Rule == "Multi-Tenant / Client-Side Multi-Tenant Filter" {
+			hasMultiTenantFilter = true
+		}
+	}
+
+	if !hasSourceMaps {
+		t.Errorf("Expected Leaked Production Source Maps finding")
+	}
+	if !hasPermissiveRls {
+		t.Errorf("Expected Permissive RLS Policy finding")
+	}
+	if !hasMultiTenantFilter {
+		t.Errorf("Expected Client-Side Multi-Tenant Filter finding")
+	}
+}

@@ -83,3 +83,6 @@ A locked design system for Vibe Audit. All page components and stylesheets read 
 4. **NO Delicate Pastels in High-Impact Zones:** Semantic accents are bold hazard colors with high WCAG contrast.
 5. **NO Italic Headers:** Headings are always upright roman.
 6. **NO Re-drawn Fake UI Chrome:** Authentic terminal emulator with genuine CLI output.
+7. **NO Decorative Cartoon Emojis (`🚀`, `🔥`, `✨`, `🤖`, `⚡`, `🎉`):** Prohibited in buttons, headers, and badges. Replace with Lucide SVG icons or uppercase monospace tags (`[FAST]`, `[CLI]`, `[NEW]`). See `references/anti-slop.md`.
+8. **NO AI Slop Copy Tropes:** Prohibited clichés ("Unlock the power of", "In today's fast-paced world", "Seamlessly integrate", "Elevate your"). Replace with direct technical specifications and facts.
+9. **NO Blurry Glow Backdrop Blobs (`blur-3xl`, `blur-[100px]`):** Replace with stark high-contrast canvas or architectural blueprint grid lines.

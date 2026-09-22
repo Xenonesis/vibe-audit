@@ -46,6 +46,16 @@ var (
 	uxPeakEndDeleteButtonRegex = regexp.MustCompile(`(?i)<button\b[^>]*onClick\s*=\s*\{[^}]*\b(?:delete|destroy|drop|remove)\w*\(`)
 	uxLoadingIndicatorRegex    = regexp.MustCompile(`(?i)\b(?:disabled|loading|isPending|pending|busy)\b`)
 	uxConfirmIndicatorRegex    = regexp.MustCompile(`(?i)\b(?:confirm|dialog|popover|modal)\b`)
+
+	// Anti-Slop: Cartoon Emojis and Visual/Copy Tropes
+	cartoonEmojiRegex = regexp.MustCompile(`[🚀🔥🤖✨🧠💡🦄⚡🎉🥳🤯💥🔮🪄🌟⭐🙌💪🎯]`)
+	aiSlopUiGlowRegex = regexp.MustCompile(`(?i)\b(?:blur-3xl|blur-2xl|blur-\[\d+px\]|shadow-purple-500|bg-purple-600/30)\b`)
+	aiSlopCopyRegex   = regexp.MustCompile(`(?i)\b(?:in today's fast-paced world|unlock the power of|harness the potential of|seamlessly integrate|game-changer for|elevate your workflow|a testament to)\b`)
+
+	// Vibe-Coding Pitfalls: Source Maps, Client-Side Multi-Tenant Filter, Permissive RLS
+	productionSourceMapsRegex    = regexp.MustCompile(`(?i)\bproductionBrowserSourceMaps\s*:\s*true\b`)
+	clientMultiTenantFilterRegex = regexp.MustCompile(`(?i)\.filter\s*\(\s*\(?\w+\)?\s*=>\s*\w+\.(?:tenant_?id|org_?id|user_?id)\s*===`)
+	permissiveRlsRegex           = regexp.MustCompile(`(?i)\bCREATE\s+POLICY\b[^(]+(?:\bUSING\s*\(\s*true\s*\)|\bWITH\s+CHECK\s*\(\s*true\s*\))`)
 )
 
 // AuditabilityStatus represents the result of the Preflight / Auditability Gate
@@ -290,6 +300,61 @@ func scanFileForSecrets(path string, root string, findings *[]SecurityFinding) {
 					Message:  "Destructive delete action invoked directly on click without confirmation modal or prompt.",
 				})
 			}
+			if cartoonEmojiRegex.MatchString(line) {
+				*findings = append(*findings, SecurityFinding{
+					File:     relPath,
+					Line:     lineNum,
+					Severity: "MEDIUM",
+					Rule:     "AI Slop / Cartoon Emoji Anti-Pattern",
+					Message:  "Decorative cartoon emoji detected in UI component. Prohibited or replace with semantic Lucide icon / text tag.",
+				})
+			}
+			if aiSlopUiGlowRegex.MatchString(line) {
+				*findings = append(*findings, SecurityFinding{
+					File:     relPath,
+					Line:     lineNum,
+					Severity: "MEDIUM",
+					Rule:     "AI Slop / Blurry Glow Trope",
+					Message:  "AI-generated fuzzy glow orb or gradient shadow detected. Replace with clean architectural border or solid shadow.",
+				})
+			}
+			if aiSlopCopyRegex.MatchString(line) {
+				*findings = append(*findings, SecurityFinding{
+					File:     relPath,
+					Line:     lineNum,
+					Severity: "LOW",
+					Rule:     "AI Slop / Cliché Marketing Copy",
+					Message:  "Generic AI marketing copy trope detected. Replace with concrete technical specification or direct description.",
+				})
+			}
+		}
+
+		if productionSourceMapsRegex.MatchString(line) {
+			*findings = append(*findings, SecurityFinding{
+				File:     relPath,
+				Line:     lineNum,
+				Severity: "HIGH",
+				Rule:     "Config / Leaked Production Source Maps",
+				Message:  "productionBrowserSourceMaps enabled in production config. Leaks proprietary source code, comments, and internal endpoints to public clients.",
+			})
+		}
+		if permissiveRlsRegex.MatchString(line) {
+			*findings = append(*findings, SecurityFinding{
+				File:     relPath,
+				Line:     lineNum,
+				Severity: "CRITICAL",
+				Rule:     "Database / Permissive RLS Policy (USING true)",
+				Message:  "Supabase RLS policy configured with USING (true) or WITH CHECK (true). Grants public anonymous callers full access to read or mutate rows.",
+			})
+		}
+		if clientMultiTenantFilterRegex.MatchString(line) {
+			*findings = append(*findings, SecurityFinding{
+				File:     relPath,
+				Line:     lineNum,
+				Severity: "CRITICAL",
+				Rule:     "Multi-Tenant / Client-Side Multi-Tenant Filter",
+				Message:  "Multi-tenant data filtered on client-side array instead of database query. Exposes all tenant records via network inspection.",
+			})
 		}
 		// Check for malicious / risky execution patterns in package.json
 		if filepath.Base(path) == "package.json" {
