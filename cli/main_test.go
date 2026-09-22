@@ -1,8 +1,10 @@
 package main
 
 import (
+	"encoding/json"
 	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 )
 
@@ -435,5 +437,78 @@ func TestVibeCodingPitfallsScanner(t *testing.T) {
 	}
 	if !hasMultiTenantFilter {
 		t.Errorf("Expected Client-Side Multi-Tenant Filter finding")
+	}
+}
+func TestAdvancedVibeCodingScannerAndFormats(t *testing.T) {
+	tempDir, err := os.MkdirTemp("", "vibe-audit-formats-test")
+	if err != nil {
+		t.Fatalf("Failed to create temp dir: %v", err)
+	}
+	defer os.RemoveAll(tempDir)
+
+	clientContent := `import { createClient } from '@supabase/supabase-js';
+	const client = createClient('https://example.supabase.co', process.env.SUPABASE_SERVICE_ROLE_KEY);`
+
+	serverlessRoute := `import { NextResponse } from 'next/server';
+	const requestCache = new Map();
+	export async function GET() { return NextResponse.json({ ok: true }); }`
+
+	if err := os.WriteFile(filepath.Join(tempDir, "client.ts"), []byte(clientContent), 0644); err != nil {
+		t.Fatalf("Failed to write client.ts: %v", err)
+	}
+	if err := os.WriteFile(filepath.Join(tempDir, "route.ts"), []byte(serverlessRoute), 0644); err != nil {
+		t.Fatalf("Failed to write route.ts: %v", err)
+	}
+
+	findings := ScanWorkspace(tempDir)
+
+	hasServiceRoleLeak := false
+	hasMemoryLeak := false
+
+	for _, f := range findings {
+		if f.Rule == "Security / Service Role Key in Client Bundle" {
+			hasServiceRoleLeak = true
+		}
+		if f.Rule == "Architecture / Serverless In-Memory State Leak" {
+			hasMemoryLeak = true
+		}
+	}
+
+	if !hasServiceRoleLeak {
+		t.Errorf("Expected finding for Service Role Key in Client Bundle")
+	}
+	if !hasMemoryLeak {
+		t.Errorf("Expected finding for Serverless In-Memory State Leak")
+	}
+
+	// Test Markdown rendering
+	mdReport := RenderMarkdownReport(findings, tempDir)
+	if !strings.Contains(mdReport, "# 🛡️ Vibe Audit Security & Quality Report") {
+		t.Errorf("Markdown report missing expected header")
+	}
+	if !strings.Contains(mdReport, "Actionable Remediation Checklist") {
+		t.Errorf("Markdown report missing checklist")
+	}
+
+	// Test SARIF rendering
+	sarifBytes, err := RenderSARIFReport(findings, tempDir)
+	if err != nil {
+		t.Fatalf("RenderSARIFReport failed: %v", err)
+	}
+	var sarifObj map[string]interface{}
+	if err := json.Unmarshal(sarifBytes, &sarifObj); err != nil {
+		t.Fatalf("SARIF report is not valid JSON: %v", err)
+	}
+	if sarifObj["version"] != "2.1.0" {
+		t.Errorf("SARIF version is not 2.1.0, got %v", sarifObj["version"])
+	}
+
+	// Test Prompt rendering
+	promptReport := RenderPromptReport(findings, tempDir)
+	if !strings.Contains(promptReport, "# 🤖 Vibe Audit AI Remediation Prompt") {
+		t.Errorf("Prompt report missing expected header")
+	}
+	if !strings.Contains(promptReport, "Remediation Instructions:") {
+		t.Errorf("Prompt report missing remediation instructions")
 	}
 }

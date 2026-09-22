@@ -56,6 +56,8 @@ var (
 	productionSourceMapsRegex    = regexp.MustCompile(`(?i)\bproductionBrowserSourceMaps\s*:\s*true\b`)
 	clientMultiTenantFilterRegex = regexp.MustCompile(`(?i)\.filter\s*\(\s*\(?\w+\)?\s*=>\s*\w+\.(?:tenant_?id|org_?id|user_?id)\s*===`)
 	permissiveRlsRegex           = regexp.MustCompile(`(?i)\bCREATE\s+POLICY\b[^(]+(?:\bUSING\s*\(\s*true\s*\)|\bWITH\s+CHECK\s*\(\s*true\s*\))`)
+	serviceRoleClientLeakRegex   = regexp.MustCompile(`(?i)\b(?:createClient|createBrowserClient)\s*\([^,]+,\s*(?:process\.env\.(?:[A-Z0-9_]*SERVICE_ROLE[A-Z0-9_]*|[A-Z0-9_]*ADMIN_KEY)\b|["'][^"']*\bservice_role\b[^"']*["'])`)
+	serverlessMemoryLeakRegex    = regexp.MustCompile(`(?i)^\s*(?:export\s+)?(?:const|let|var)\s+\w*(?:cache|store|sessionStore|memoryMap)\w*\s*=\s*new\s+(?:Map|Set)\b`)
 )
 
 // AuditabilityStatus represents the result of the Preflight / Auditability Gate
@@ -354,6 +356,24 @@ func scanFileForSecrets(path string, root string, findings *[]SecurityFinding) {
 				Severity: "CRITICAL",
 				Rule:     "Multi-Tenant / Client-Side Multi-Tenant Filter",
 				Message:  "Multi-tenant data filtered on client-side array instead of database query. Exposes all tenant records via network inspection.",
+			})
+		}
+		if serviceRoleClientLeakRegex.MatchString(line) {
+			*findings = append(*findings, SecurityFinding{
+				File:     relPath,
+				Line:     lineNum,
+				Severity: "CRITICAL",
+				Rule:     "Security / Service Role Key in Client Bundle",
+				Message:  "Supabase service_role key passed to client-side Supabase client. Service role key bypasses Row Level Security (RLS) entirely; must only be used in trusted server environments.",
+			})
+		}
+		if serverlessMemoryLeakRegex.MatchString(line) {
+			*findings = append(*findings, SecurityFinding{
+				File:     relPath,
+				Line:     lineNum,
+				Severity: "HIGH",
+				Rule:     "Architecture / Serverless In-Memory State Leak",
+				Message:  "Global in-memory Map/Set declared at module scope in serverless route/action. State accumulates across warm lambdas without eviction, leading to memory exhaustion and cross-tenant data leakage.",
 			})
 		}
 		// Check for malicious / risky execution patterns in package.json

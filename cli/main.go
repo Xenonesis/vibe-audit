@@ -488,14 +488,22 @@ func cmdInstall(args []string) {
 // ---------------------------------------------------------------------
 
 func cmdScan(args []string) {
-	jsonOutput := false
+	format := "text"
 	targetDir := getRootDir()
 
 	for _, arg := range args {
-		if arg == "--report" || arg == "--json" {
-			jsonOutput = true
+		if arg == "--report" || arg == "--json" || arg == "--format=json" {
+			format = "json"
 		} else if arg == "json" && len(args) > 1 {
-			jsonOutput = true
+			format = "json"
+		} else if arg == "--markdown" || arg == "--md" || arg == "--format=markdown" || arg == "--format=md" {
+			format = "markdown"
+		} else if arg == "--sarif" || arg == "--format=sarif" {
+			format = "sarif"
+		} else if arg == "--prompt" || arg == "--fix-prompt" || arg == "--format=prompt" {
+			format = "prompt"
+		} else if strings.HasPrefix(arg, "--format=") {
+			format = strings.TrimPrefix(arg, "--format=")
 		} else if !strings.HasPrefix(arg, "--") {
 			targetDir = arg
 		}
@@ -503,7 +511,22 @@ func cmdScan(args []string) {
 
 	findings := ScanWorkspace(targetDir)
 
-	if jsonOutput {
+	switch format {
+	case "markdown", "md":
+		fmt.Print(RenderMarkdownReport(findings, targetDir))
+		return
+	case "sarif":
+		sarifBytes, err := RenderSARIFReport(findings, targetDir)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Error generating SARIF report: %v\n", err)
+			os.Exit(1)
+		}
+		fmt.Println(string(sarifBytes))
+		return
+	case "prompt", "fix-prompt":
+		fmt.Print(RenderPromptReport(findings, targetDir))
+		return
+	case "json":
 		var stdFindings []StandardFinding
 		for i, f := range findings {
 			stdFindings = append(stdFindings, StandardFinding{
@@ -514,7 +537,7 @@ func cmdScan(args []string) {
 				Status:           "CONFIRMED",
 				Evidence:         fmt.Sprintf("%s:%d — %s", f.File, f.Line, f.Message),
 				Impact:           f.Message,
-				RecommendedFix:   "Remove secret or review lifecycle hook",
+				RecommendedFix:   FixGuidanceForRule(f.Rule),
 				ChangeRisk:       "LOW",
 				ApprovalRequired: false,
 				File:             f.File,
@@ -533,18 +556,18 @@ func cmdScan(args []string) {
 		outBytes, _ := json.MarshalIndent(fullReport, "", "  ")
 		fmt.Println(string(outBytes))
 		return
-	}
+	default:
+		fmt.Printf("vibe-audit scan %s\n\n", targetDir)
+		if len(findings) == 0 {
+			fmt.Println("Clean: 0 hardcoded secrets · 0 untrusted lifecycle hooks. ✓")
+			return
+		}
 
-	fmt.Printf("vibe-audit scan %s\n\n", targetDir)
-	if len(findings) == 0 {
-		fmt.Println("Clean: 0 hardcoded secrets · 0 untrusted lifecycle hooks. ✓")
-		return
+		for _, f := range findings {
+			fmt.Printf("%-9s %s:%d — %s (%s)\n", f.Severity, f.File, f.Line, f.Message, f.Rule)
+		}
+		fmt.Printf("\n%d finding(s) detected.\n", len(findings))
 	}
-
-	for _, f := range findings {
-		fmt.Printf("%-9s %s:%d — %s (%s)\n", f.Severity, f.File, f.Line, f.Message, f.Rule)
-	}
-	fmt.Printf("\n%d finding(s) detected.\n", len(findings))
 }
 
 func cmdPreflight(args []string) {
@@ -584,7 +607,7 @@ func main() {
 		fmt.Println("\nUsage: vibe-audit <command> [args]")
 		fmt.Println("\nCommands:")
 		fmt.Println("  preflight [path] - Preflight target validation & auditability gate")
-		fmt.Println("  scan [path]   - Static security & lifecycle hook pre-scan")
+		fmt.Println("  scan [path]   - Static security & anti-slop scanner (--json, --markdown, --sarif, --prompt)")
 		fmt.Println("  deps [path]   - Dependency CVE & license time-bomb scanner")
 		fmt.Println("  env  [path]   - Environment parity & dev-mode logic checker")
 		fmt.Println("  score [file]  - Production readiness scorecard aggregator (0-100)")
