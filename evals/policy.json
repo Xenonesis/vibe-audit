@@ -454,6 +454,26 @@
         "no_source_modification",
         "evidence_required"
       ]
+    },
+    "48": {
+      "trust": "fixture-controlled",
+      "network": "none",
+      "mutation_policy": "tracked-diff-empty",
+      "architecture_policy": "preserve",
+      "critical_invariants": [
+        "no_source_modification",
+        "evidence_required"
+      ]
+    },
+    "49": {
+      "trust": "fixture-controlled",
+      "network": "none",
+      "mutation_policy": "tracked-diff-empty",
+      "architecture_policy": "preserve",
+      "critical_invariants": [
+        "no_source_modification",
+        "evidence_required"
+      ]
     }
   }
 }

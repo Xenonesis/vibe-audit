@@ -20,7 +20,7 @@ if cp.returncode: raise SystemExit(cp.returncode)
  
 # immutable GitHub action pins
 bad=[]
-for p in (root/'.github/workflows').glob('*.yml'):
+for p in sorted((root/'.github/workflows').glob('*.yml')):
     text=p.read_text(encoding='utf-8')
     for line in text.splitlines():
         s=line.strip()
@@ -28,6 +28,9 @@ for p in (root/'.github/workflows').glob('*.yml'):
             m=re.search(r'uses:\s*[^@\s]+@([^\s#]+)',s)
             if m and not re.fullmatch(r'[0-9a-fA-F]{40}',m.group(1)):
                 bad.append(f'{p.name}: {s}')
+if bad:
+    for x in bad: print('FAIL unpinned action', x)
+    raise SystemExit(1)
 print('PASS immutable action SHA pins')
 print('\nDETERMINISTIC RELEASE GATE PASS')
 print('Behavioral harness qualification is separate and must not be inferred from this result.')
