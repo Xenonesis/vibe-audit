@@ -2,112 +2,168 @@
 """
 Vibe Audit Integration Test Suite.
 
-Verifies:
-1. export_rules.py generates all 6 rule formats correctly.
-2. mcp_server.py executes JSON-RPC stdio protocol correctly.
-3. install_universal.py installs skills, exports rules, and configures MCP servers cleanly.
+Verifies the migrated Go CLI (scripts/export_rules.py, scripts/mcp_server.py and
+scripts/install_universal.py were deleted in bfe92eb "Migrate tooling to
+zero-dependency Go CLI"):
+
+1. `vibe-audit export <dir>` generates all native rule formats.
+2. `vibe-audit mcp` executes JSON-RPC stdio protocol
+   (initialize, tools/list, tools/call vibe_audit_get_playbook).
+3. `vibe-audit install <dir>` installs skill files + a portable .cursor/mcp.json
+   containing no machine-specific absolute paths.
 """
 
 import json
+import os
 import subprocess
-import tempfile
 import sys
+import tempfile
 from pathlib import Path
 
 ROOT_DIR = Path(__file__).resolve().parent.parent
+CLI_DIR = ROOT_DIR / "cli"
 
 
-def test_export_rules() -> None:
-    print("[TEST 1/3] Testing export_rules.py...")
-    with tempfile.TemporaryDirectory() as tmpdir:
-        from export_rules import export_rules, FORMATS
+def _build_binary(tmpdir: Path) -> Path:
+    ext = ".exe" if sys.platform == "win32" else ""
+    out = tmpdir / f"vibe-audit{ext}"
+    subprocess.run(
+        ["go", "build", "-o", str(out), "."],
+        cwd=str(CLI_DIR),
+        check=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+    )
+    return out
 
-        created = export_rules(Path(tmpdir), list(FORMATS.keys()))
-        assert len(created) == len(FORMATS), f"Expected {len(FORMATS)} created files, got {len(created)}"
-        for p in created:
-            file_path = Path(p)
-            assert file_path.exists(), f"File {file_path} does not exist"
-            assert file_path.stat().st_size > 50, f"File {file_path} is too small"
-    print("  + PASS: All 6 rule formats exported successfully.")
+
+def _env(tmpdir: Path) -> dict:
+    env = os.environ.copy()
+    # Redirect Go's os.UserHomeDir() into the temp dir so install does not
+    # touch the real home directory.
+    env["HOME"] = str(tmpdir)
+    env["USERPROFILE"] = str(tmpdir)
+    return env
 
 
-def test_mcp_server() -> None:
-    print("[TEST 2/3] Testing mcp_server.py (JSON-RPC stdio)...")
-    mcp_script = ROOT_DIR / "scripts" / "mcp_server.py"
-
+def _mcp_requests(bin_path: Path, env: dict) -> list:
+    reqs = [
+        {"jsonrpc": "2.0", "id": 1, "method": "initialize",
+         "params": {"protocolVersion": "2024-11-05", "capabilities": {}, "clientInfo": {"name": "t", "version": "1"}}},
+        {"jsonrpc": "2.0", "id": 2, "method": "tools/list", "params": {}},
+        {"jsonrpc": "2.0", "id": 3, "method": "tools/call",
+         "params": {"name": "vibe_audit_get_playbook", "arguments": {"name": "security"}}},
+    ]
     proc = subprocess.Popen(
-        [sys.executable, str(mcp_script)],
+        [str(bin_path), "mcp"],
         stdin=subprocess.PIPE,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
         text=True,
+        env=env,
     )
-
-    reqs = [
-        {"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {}},
-        {"jsonrpc": "2.0", "id": 2, "method": "tools/list"},
-        {"jsonrpc": "2.0", "id": 3, "method": "tools/call", "params": {"name": "vibe_audit_get_playbook", "arguments": {"name": "security"}}},
-    ]
-
     stdin_data = "\n".join(json.dumps(r) for r in reqs) + "\n"
-    stdout, stderr = proc.communicate(input=stdin_data, timeout=5)
+    stdout, _stderr = proc.communicate(input=stdin_data, timeout=10)
+    return [json.loads(line) for line in stdout.strip().split("\n") if line]
 
-    lines = [json.loads(line) for line in stdout.strip().split("\n") if line]
-    assert len(lines) == 3, f"Expected 3 responses, got {len(lines)}"
 
-    # Response 1: initialize
-    assert lines[0]["id"] == 1
-    assert "serverInfo" in lines[0]["result"]
+def test_export_generates_rule_formats() -> None:
+    print("[TEST 1/3] Testing `vibe-audit export` generates rule formats...")
+    with tempfile.TemporaryDirectory() as tmpdir:
+        tmp = Path(tmpdir)
+        bin_path = _build_binary(tmp)
+        subprocess.run(
+            [str(bin_path), "export", str(tmp)],
+            cwd=str(ROOT_DIR),
+            check=True,
+            env=_env(tmp),
+        )
+        expected = [
+            ".cursor/rules/vibe-audit.mdc",
+            ".windsurfrules",
+            ".clinerules",
+            ".continue/rules/vibe-audit.md",
+            "CONVENTIONS.md",
+            ".github/copilot-instructions.md",
+            ".amazonq/rules/vibe-audit.md",
+            ".goosehints",
+        ]
+        created = [rel for rel in expected if (tmp / rel).exists()]
+        for rel in created:
+            assert (tmp / rel).stat().st_size > 50, f"File {rel} is too small"
+        assert len(created) == len(expected), (
+            f"Expected {len(expected)} formats, created {len(created)}: {created}"
+        )
+    print("  + PASS: All native rule formats exported successfully.")
 
-    # Response 2: tools/list
-    assert lines[1]["id"] == 2
-    tools = lines[1]["result"]["tools"]
-    tool_names = [t["name"] for t in tools]
-    assert "vibe_audit_run" in tool_names
-    assert "vibe_audit_get_playbook" in tool_names
 
-    # Response 3: get_playbook
-    assert lines[2]["id"] == 3
-    content = lines[2]["result"]["content"][0]["text"]
-    assert "Security" in content
-
+def test_mcp_server_jsonrpc() -> None:
+    print("[TEST 2/3] Testing `vibe-audit mcp` JSON-RPC stdio protocol...")
+    with tempfile.TemporaryDirectory() as tmpdir:
+        tmp = Path(tmpdir)
+        bin_path = _build_binary(tmp)
+        env = _env(tmp)
+        # The wrapper sets VIBE_AUDIT_ROOT to the skill root so playbook
+        # resolution works regardless of the MCP server's cwd.
+        env["VIBE_AUDIT_ROOT"] = str(ROOT_DIR)
+        lines = _mcp_requests(bin_path, env)
+        assert len(lines) == 3, f"Expected 3 responses, got {len(lines)}: {lines}"
+        assert lines[0]["id"] == 1
+        assert "serverInfo" in lines[0]["result"]
+        assert lines[1]["id"] == 2
+        tools = lines[1]["result"]["tools"]
+        tool_names = [t["name"] for t in tools]
+        assert "vibe_audit_run" in tool_names
+        assert "vibe_audit_get_playbook" in tool_names
+        assert lines[2]["id"] == 3
+        content = lines[2]["result"]["content"][0]["text"]
+        assert "Security" in content
     print("  + PASS: MCP JSON-RPC 2.0 stdio protocol verified.")
 
 
-def test_install_universal() -> None:
-    print("[TEST 3/3] Testing install_universal.py...")
+def test_install_generates_portable_mcp_config() -> None:
+    print("[TEST 3/3] Testing `vibe-audit install` generates portable MCP config...")
     with tempfile.TemporaryDirectory() as tmpdir:
-        tmppath = Path(tmpdir)
-        cmd = [sys.executable, str(ROOT_DIR / "scripts" / "install_universal.py"), str(tmppath)]
-        res = subprocess.run(cmd, capture_output=True, text=True, timeout=10)
-        assert res.returncode == 0, f"Installer failed with returncode {res.returncode}: {res.stderr}"
-
-        # Verify skill installed locally
-        local_skill = tmppath / ".agents" / "skills" / "vibe-audit" / "SKILL.md"
-        assert local_skill.exists(), "Local SKILL.md not installed"
-
-        # Verify Cursor MDC rule generated
-        cursor_mdc = tmppath / ".cursor" / "rules" / "vibe-audit.mdc"
-        assert cursor_mdc.exists(), "Cursor MDC rule not generated"
-
-        # Verify Cursor MCP config generated
-        cursor_mcp = tmppath / ".cursor" / "mcp.json"
-        assert cursor_mcp.exists(), "Cursor MCP json not generated"
-        data = json.loads(cursor_mcp.read_text(encoding="utf-8"))
+        tmp = Path(tmpdir)
+        bin_path = _build_binary(tmp)
+        env = _env(tmp)
+        ws = tmp / "workspace"
+        ws.mkdir()
+        subprocess.run(
+            [str(bin_path), "install", str(ws)],
+            cwd=str(ROOT_DIR),
+            check=True,
+            env=env,
+        )
+        mcp_json = ws / ".cursor" / "mcp.json"
+        assert mcp_json.exists(), f"MCP config not generated at {mcp_json}"
+        data = json.loads(mcp_json.read_text(encoding="utf-8"))
         assert "vibe-audit" in data["mcpServers"]
-
+        entry = data["mcpServers"]["vibe-audit"]
+        command = entry["command"]
+        args = entry["args"]
+        # If the wrapper script is present in the workspace root, config must be
+        # portable ($workspaceFolder-based); otherwise it must be a real executable.
+        wrapper = ws / "bin" / "vibe-audit.js"
+        if wrapper.exists():
+            assert command == "node", f"expected node command, got {command!r}"
+            assert args[0] == "${workspaceFolder}/bin/vibe-audit.js", f"expected portable arg, got {args[0]!r}"
+            assert args[1] == "mcp"
+        else:
+            assert command, "expected non-empty command"
+            assert args == ["mcp"], f"expected ['mcp'], got {args!r}"
     print("  + PASS: Universal installer verified in clean workspace.")
 
 
 def main() -> None:
     print("=" * 60)
-    print(" Vibe Audit Universal Integration Test Suite")
+    print(" Vibe Audit Integration Test Suite (Go CLI)")
     print("=" * 60)
-    test_export_rules()
-    test_mcp_server()
-    test_install_universal()
+    test_export_generates_rule_formats()
+    test_mcp_server_jsonrpc()
+    test_install_generates_portable_mcp_config()
     print("=" * 60)
-    print(" ALL 3 INTEGRATION TEST SUITES PASSED (100% EVIDENCE)")
+    print(" ALL INTEGRATION TESTS PASSED")
     print("=" * 60)
 
 

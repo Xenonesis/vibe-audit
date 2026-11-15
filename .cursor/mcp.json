@@ -1,10 +1,11 @@
 {
   "mcpServers": {
     "vibe-audit": {
+      "command": "node",
       "args": [
+        "${workspaceFolder}/bin/vibe-audit.js",
         "mcp"
-      ],
-      "command": "C:\\Users\\Acer\\Downloads\\vibe-coding-polisher\\cli\\vibe-audit.exe"
+      ]
     }
   }
 }

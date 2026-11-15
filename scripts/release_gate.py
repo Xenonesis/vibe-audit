@@ -7,6 +7,7 @@ steps=[
  ['python',str(root/'scripts/validate_skill.py'),str(root)],
  ['python',str(root/'scripts/validate_evals.py'),str(root/'evals/evals.json')],
  ['python',str(root/'scripts/run_static_evals.py'),str(root)],
+ ['python',str(root/'scripts/test_integrations.py')],
  ['python',str(root/'scripts/secret_scan.py'),str(root)],
 ]
  

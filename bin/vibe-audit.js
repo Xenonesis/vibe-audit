@@ -76,7 +76,8 @@ async function main() {
   }
 
   const args = process.argv.slice(2);
-  const result = spawnSync(binPath, args, { stdio: 'inherit' });
+  const env = Object.assign({}, process.env, { VIBE_AUDIT_ROOT: path.resolve(__dirname, '..') });
+  const result = spawnSync(binPath, args, { stdio: 'inherit', env: env });
   
   if (result.error) {
     console.error(`Failed to execute binary: ${result.error.message}`);

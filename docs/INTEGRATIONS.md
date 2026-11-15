@@ -54,6 +54,7 @@ Cursor supports both **Native MDC Rules** and **MCP Tooling**.
 ### A. Native MDC Rule File (`.cursor/rules/vibe-audit.mdc`)
 
 Create `.cursor/rules/vibe-audit.mdc`:
+
 ```markdown
 ---
 description: Vibe Audit security, correctness, and readiness rules
@@ -69,12 +70,13 @@ globs: "*"
 ### B. MCP Server (`.cursor/mcp.json`)
 
 Add to `.cursor/mcp.json`:
+
 ```json
 {
   "mcpServers": {
     "vibe-audit": {
-      "command": "python",
-      "args": ["/path/to/vibe-audit/scripts/mcp_server.py"]
+      "command": "node",
+      "args": ["${workspaceFolder}/bin/vibe-audit.js", "mcp"]
     }
   }
 }
@@ -87,11 +89,17 @@ Add to `.cursor/mcp.json`:
 ### A. Cascade Rule File (`.windsurfrules`)
 
 Create `.windsurfrules` in your project root:
+
 ```markdown
 # Vibe Audit Cascade Rules
 
-- Audit, harden, optimize, and verify codebases without treating architectural preference as a defect.
-- High-risk operations require explicit user approval before execution.
+## Core Directive
+Audit, harden, optimize, and verify codebases without treating architectural preference as a defect.
+
+## Safety & Governance
+- AUDIT mode is strict read-only.
+- Require explicit user confirmation before high-risk changes (auth, database, payment, destructive commands).
+- Static-first discovery: do not run untrusted project scripts without sandbox validation.
 ```
 
 ### B. Windsurf MCP Config (`~/.codeium/windsurf/mcp_config.json`)
@@ -100,8 +108,8 @@ Create `.windsurfrules` in your project root:
 {
   "mcpServers": {
     "vibe-audit": {
-      "command": "python",
-      "args": ["/path/to/vibe-audit/scripts/mcp_server.py"]
+      "command": "node",
+      "args": ["${workspaceFolder}/bin/vibe-audit.js", "mcp"]
     }
   }
 }
@@ -114,9 +122,11 @@ Create `.windsurfrules` in your project root:
 ### A. Roo Code / Cline (`.clinerules`)
 
 Create `.clinerules`:
+
 ```markdown
 - Mode Discipline: If user asks to audit or plan, do not edit code.
 - Smallest compatible fix: Maintain existing code conventions, UI components, and framework patterns.
+- High-risk gate: Always ask before applying database migrations, auth changes, or deleting files.
 ```
 
 ### B. Continue.dev (`.continue/config.json`)
@@ -127,8 +137,8 @@ Create `.clinerules`:
     "modelContextProtocolServers": [
       {
         "name": "vibe-audit",
-        "command": "python",
-        "args": ["/path/to/vibe-audit/scripts/mcp_server.py"]
+        "command": "node",
+        "args": ["${workspaceFolder}/bin/vibe-audit.js", "mcp"]
       }
     ]
   }
@@ -156,8 +166,8 @@ Create `.github/copilot-instructions.md` in your repository root:
 1. Open **Settings / Preferences -> Tools -> AI Assistant / MCP**.
 2. Add a new MCP Server:
    - **Name**: `vibe-audit`
-   - **Command**: `python`
-   - **Args**: `/path/to/vibe-audit/scripts/mcp_server.py`
+   - **Command**: `node`
+   - **Args**: `${workspaceFolder}/bin/vibe-audit.js`, `mcp`
 
 ---
 
@@ -166,6 +176,7 @@ Create `.github/copilot-instructions.md` in your repository root:
 ### Avante.nvim Integration
 
 In `lua/plugins/avante.lua`:
+
 ```lua
 require('avante').setup({
   system_prompt = function()
@@ -183,6 +194,7 @@ require('avante').setup({
 ### CodeCompanion.nvim Integration
 
 In `lua/plugins/codecompanion.lua`:
+
 ```lua
 require("codecompanion").setup({
   strategies = {

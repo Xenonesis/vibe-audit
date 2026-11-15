@@ -512,3 +512,115 @@ func TestAdvancedVibeCodingScannerAndFormats(t *testing.T) {
 		t.Errorf("Prompt report missing remediation instructions")
 	}
 }
+func TestWriteMCPConfigPortable(t *testing.T) {
+	tempDir, err := os.MkdirTemp("", "vibe-audit-mcp-portable-test")
+	if err != nil {
+		t.Fatalf("failed to create temp dir: %v", err)
+	}
+	defer os.RemoveAll(tempDir)
+
+	// The wrapper script ships inside the skill package, so a portable
+	// MCP config can reference it relative to the workspace.
+	os.MkdirAll(filepath.Join(tempDir, "bin"), 0755)
+	if err := os.WriteFile(filepath.Join(tempDir, "bin", "vibe-audit.js"), []byte("#!/usr/bin/env node\n"), 0755); err != nil {
+		t.Fatalf("failed to write wrapper: %v", err)
+	}
+
+	if err := writeMCPConfig(tempDir); err != nil {
+		t.Fatalf("writeMCPConfig failed: %v", err)
+	}
+
+	mcpJson := filepath.Join(tempDir, ".cursor", "mcp.json")
+	data, err := os.ReadFile(mcpJson)
+	if err != nil {
+		t.Fatalf("expected .cursor/mcp.json to be written: %v", err)
+	}
+	var mcpData map[string]interface{}
+	if err := json.Unmarshal(data, &mcpData); err != nil {
+		t.Fatalf("mcp.json is not valid JSON: %v", err)
+	}
+	servers := mcpData["mcpServers"].(map[string]interface{})
+	entry := servers["vibe-audit"].(map[string]interface{})
+	if entry["command"] != "node" {
+		t.Errorf("expected command 'node', got %q", entry["command"])
+	}
+	args := entry["args"].([]interface{})
+	if len(args) != 2 || args[0] != "${workspaceFolder}/bin/vibe-audit.js" || args[1] != "mcp" {
+		t.Errorf("expected portable wrapper args, got %v", args)
+	}
+	if !strings.HasSuffix(string(data), "\n") {
+		t.Errorf("mcp.json not newline-terminated")
+	}
+}
+
+func TestWriteMCPConfigFallsBackToExecutable(t *testing.T) {
+	tempDir, err := os.MkdirTemp("", "vibe-audit-mcp-fallback-test")
+	if err != nil {
+		t.Fatalf("failed to create temp dir: %v", err)
+	}
+	defer os.RemoveAll(tempDir)
+
+	// No wrapper script in the target directory: absolute executable path.
+	if err := writeMCPConfig(tempDir); err != nil {
+		t.Fatalf("writeMCPConfig failed: %v", err)
+	}
+
+	mcpJson := filepath.Join(tempDir, ".cursor", "mcp.json")
+	data, err := os.ReadFile(mcpJson)
+	if err != nil {
+		t.Fatalf("expected .cursor/mcp.json to be written: %v", err)
+	}
+	var mcpData map[string]interface{}
+	if err := json.Unmarshal(data, &mcpData); err != nil {
+		t.Fatalf("mcp.json is not valid JSON: %v", err)
+	}
+	servers := mcpData["mcpServers"].(map[string]interface{})
+	entry := servers["vibe-audit"].(map[string]interface{})
+	if entry["command"] == "" {
+		t.Errorf("expected non-empty command")
+	}
+	args := entry["args"].([]interface{})
+	if len(args) != 1 || args[0] != "mcp" {
+		t.Errorf("expected args ['mcp'], got %v", args)
+	}
+}
+
+func TestMCPPlaybookResolvesIndependentOfCWD(t *testing.T) {
+	skillRoot, err := os.MkdirTemp("", "vibe-audit-skill-root-test")
+	if err != nil {
+		t.Fatalf("failed to create temp dir: %v", err)
+	}
+	defer os.RemoveAll(skillRoot)
+	if err := os.MkdirAll(filepath.Join(skillRoot, "references"), 0755); err != nil {
+		t.Fatalf("failed to create references dir: %v", err)
+	}
+	if err := os.WriteFile(filepath.Join(skillRoot, "references", "security.md"), []byte("# Security Playbook\n"), 0644); err != nil {
+		t.Fatalf("failed to write playbook: %v", err)
+	}
+
+	// cwd must NOT affect playbook resolution.
+	otherDir, err := os.MkdirTemp("", "vibe-audit-other-dir-test")
+	if err != nil {
+		t.Fatalf("failed to create other dir: %v", err)
+	}
+	defer os.RemoveAll(otherDir)
+	origCwd, err := os.Getwd()
+	if err != nil {
+		t.Fatalf("failed to get cwd: %v", err)
+	}
+	if err := os.Chdir(otherDir); err != nil {
+		t.Fatalf("failed to chdir: %v", err)
+	}
+	defer os.Chdir(origCwd)
+
+	os.Setenv("VIBE_AUDIT_ROOT", skillRoot)
+	defer os.Unsetenv("VIBE_AUDIT_ROOT")
+
+	res, err := readPlaybook("security")
+	if err != nil {
+		t.Fatalf("expected playbook to resolve via VIBE_AUDIT_ROOT: %v", err)
+	}
+	if !strings.Contains(res, "Security Playbook") {
+		t.Errorf("expected playbook content, got: %q", res)
+	}
+}
