@@ -19,7 +19,76 @@ func getRootDir() string {
 	}
 	return cwd
 }
+// resolveSkillRoot returns the directory containing the skill's references/
+// directory, independent of the current working directory (Cursor launches
+// the MCP server with cwd = audited workspace, not the skill install root).
+func resolveSkillRoot() string {
+	if root := os.Getenv("VIBE_AUDIT_ROOT"); root != "" {
+		return root
+	}
+	if exe, err := os.Executable(); err == nil {
+		dir := filepath.Dir(exe)
+		for _, cand := range []string{dir, filepath.Join(dir, "..")} {
+			if _, err := os.Stat(filepath.Join(cand, "references")); err == nil {
+				return cand
+			}
+		}
+	}
+	return getRootDir()
+}
 
+// readPlaybook reads a reference playbook by name. Resolution order:
+// VIBE_AUDIT_ROOT env var, directory next to the executable, then cwd.
+func readPlaybook(name string) (string, error) {
+	root := resolveSkillRoot()
+	refPath := filepath.Join(root, "references", name+".md")
+	contentBytes, err := os.ReadFile(refPath)
+	if err != nil {
+		return "", fmt.Errorf("playbook '%s' not found in skill root %s: %w", name, root, err)
+	}
+	return string(contentBytes), nil
+}
+
+// writeMCPConfig writes the Cursor MCP server config into targetDir/.cursor.
+// If the wrapper script is present in the workspace it writes a portable
+// config referencing ${workspaceFolder} (works for every clone); otherwise
+// it records the absolute path of the running binary (local installs).
+func writeMCPConfig(targetDir string) error {
+	mcpJson := filepath.Join(targetDir, ".cursor", "mcp.json")
+	os.MkdirAll(filepath.Dir(mcpJson), 0755)
+
+	var mcpData map[string]interface{}
+	if data, err := os.ReadFile(mcpJson); err == nil {
+		json.Unmarshal(data, &mcpData)
+	}
+	if mcpData == nil {
+		mcpData = make(map[string]interface{})
+	}
+	if mcpData["mcpServers"] == nil {
+		mcpData["mcpServers"] = make(map[string]interface{})
+	}
+	servers := mcpData["mcpServers"].(map[string]interface{})
+
+	wrapper := filepath.Join(targetDir, "bin", "vibe-audit.js")
+	if _, err := os.Stat(wrapper); err == nil {
+		servers["vibe-audit"] = map[string]interface{}{
+			"command": "node",
+			"args":    []string{"${workspaceFolder}/bin/vibe-audit.js", "mcp"},
+		}
+	} else {
+		exePath, _ := os.Executable()
+		if filepath.Base(exePath) == "main.exe" || filepath.Base(exePath) == "main" {
+			exePath = "vibe-audit" // Fallback if running via 'go run'
+		}
+		servers["vibe-audit"] = map[string]interface{}{
+			"command": exePath,
+			"args":    []string{"mcp"},
+		}
+	}
+
+	outBytes, _ := json.MarshalIndent(mcpData, "", "  ")
+	return os.WriteFile(mcpJson, append(outBytes, '\n'), 0644)
+}
 // ---------------------------------------------------------------------
 // 1. EXPORT RULES
 // ---------------------------------------------------------------------
@@ -223,11 +292,10 @@ func handleMCP(req JSONRPCRequest) *JSONRPCResponse {
 
 		if toolName == "vibe_audit_get_playbook" {
 			refName, _ := args["name"].(string)
-			// Assuming running from root or skill dir
-			refPath := filepath.Join(getRootDir(), "references", refName+".md")
-			contentBytes, err := os.ReadFile(refPath)
+			root := resolveSkillRoot()
+			contentBytes, err := os.ReadFile(filepath.Join(root, "references", refName+".md"))
 			if err != nil {
-				return &JSONRPCResponse{JSONRPC: "2.0", ID: req.ID, Error: map[string]interface{}{"code": -32602, "message": fmt.Sprintf("Playbook '%s' not found.", refName)}}
+				return &JSONRPCResponse{JSONRPC: "2.0", ID: req.ID, Error: map[string]interface{}{"code": -32602, "message": fmt.Sprintf("Playbook '%s' not found in skill root %s.", refName, root)}}
 			}
 			return &JSONRPCResponse{
 				JSONRPC: "2.0",
@@ -462,8 +530,7 @@ func cmdInstall(args []string) {
 		mcpData["mcpServers"] = make(map[string]interface{})
 	}
 	servers := mcpData["mcpServers"].(map[string]interface{})
-	
-	// Assume we compiled the go binary as 'vibe-audit' (or vibe-audit.exe on Windows)
+	// Absolute path to the running binary is correct for a local install.
 	exePath, _ := os.Executable()
 	if filepath.Base(exePath) == "main.exe" || filepath.Base(exePath) == "main" {
 		exePath = "vibe-audit" // Fallback if running via 'go run'
@@ -472,12 +539,18 @@ func cmdInstall(args []string) {
 		"command": exePath,
 		"args":    []string{"mcp"},
 	}
-	
+
 	outBytes, _ := json.MarshalIndent(mcpData, "", "  ")
 	os.WriteFile(mcpJson, outBytes, 0644)
 	fmt.Printf("  + Configured: %s\n", mcpJson)
 	fmt.Println()
 
+	// Write a portable Cursor MCP config: the wrapper script ships inside
+	// the skill package, so ${workspaceFolder} keeps the config valid
+	// regardless of where this repo is checked out or moved to.
+	if err := writeMCPConfig(targetDir); err != nil {
+		fmt.Fprintf(os.Stderr, "Warning: could not write MCP config: %v\n", err)
+	}
 	fmt.Println(strings.Repeat("=", 60))
 	fmt.Println(" SUCCESS: Vibe Audit successfully configured for all active IDEs & CLIs!")
 	fmt.Println(strings.Repeat("=", 60))
@@ -636,6 +709,7 @@ func main() {
 		cmdPreflight(args)
 	case "init", "install":
 		cmdInstall(args)
+	default:
 		fmt.Printf("Unknown command: %s\nRun 'vibe-audit' without arguments to see available commands.\n", cmd)
 		os.Exit(1)
 	}
